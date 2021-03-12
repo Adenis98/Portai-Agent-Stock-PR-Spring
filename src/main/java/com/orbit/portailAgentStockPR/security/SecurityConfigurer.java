@@ -45,4 +45,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     {
         return NoOpPasswordEncoder.getInstance();
     }
+
+
+
 }

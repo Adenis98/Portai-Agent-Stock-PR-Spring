@@ -1,6 +1,7 @@
 package com.orbit.portailAgentStockPR.controller;
 
 
+import com.orbit.portailAgentStockPR.exception.ApiRequestException;
 import com.orbit.portailAgentStockPR.models.AuthenticationRequest;
 import com.orbit.portailAgentStockPR.models.AuthenticationResponse;
 import com.orbit.portailAgentStockPR.service.MyUserDetailsService;
@@ -11,6 +12,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 @RestController
@@ -31,8 +33,9 @@ public class LoginController {
             this.authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authenticationRequest.getUserName(),authenticationRequest.getPassword())
             ) ;
-        }catch(BadCredentialsException e) {
-            throw new Exception("nom d'utilisateur ou mot de passe incorrect",e);
+        }
+        catch(BadCredentialsException e) {
+            throw new ApiRequestException("mot de passe incorrect",e);
         }
         final UserDetails userDetails = userDetailService.loadUserByUsername(authenticationRequest.getUserName());
         final String jwt = jwtTokenUtil.generateToken(userDetails);

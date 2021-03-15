@@ -1,18 +1,17 @@
-package com.orbit.portailAgentStockPR.controller;
+package com.orbit.portailAgentStockPR.auth.controller;
 
 
 import com.orbit.portailAgentStockPR.exception.ApiRequestException;
-import com.orbit.portailAgentStockPR.models.AuthenticationRequest;
-import com.orbit.portailAgentStockPR.models.AuthenticationResponse;
-import com.orbit.portailAgentStockPR.service.MyUserDetailsService;
-import com.orbit.portailAgentStockPR.util.JwtUtil;
+import com.orbit.portailAgentStockPR.auth.models.AuthenticationRequest;
+import com.orbit.portailAgentStockPR.auth.models.AuthenticationResponse;
+import com.orbit.portailAgentStockPR.auth.service.MyUserDetailsService;
+import com.orbit.portailAgentStockPR.auth.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 @RestController
@@ -37,12 +36,16 @@ public class LoginController {
         catch(BadCredentialsException e) {
             throw new ApiRequestException("mot de passe incorrect",e);
         }
+        catch (Exception e)
+        {
+            throw new ApiRequestException("546465564////////////**************764456456546"+e.getMessage());
+        }
         final UserDetails userDetails = userDetailService.loadUserByUsername(authenticationRequest.getUserName());
         final String jwt = jwtTokenUtil.generateToken(userDetails);
         return ResponseEntity.ok(new AuthenticationResponse(jwt));
     }
 
-    @GetMapping("/ramez")
+    @GetMapping("/cmnd/valid")
     public String hello(){
         return "ramezz roamti " ;
     }

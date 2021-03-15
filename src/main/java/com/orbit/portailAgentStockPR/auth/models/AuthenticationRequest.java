@@ -1,4 +1,4 @@
-package com.orbit.portailAgentStockPR.models;
+package com.orbit.portailAgentStockPR.auth.models;
 
 public class AuthenticationRequest {
     private String userName ;

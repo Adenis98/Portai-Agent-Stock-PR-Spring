@@ -1,7 +1,7 @@
-package com.orbit.portailAgentStockPR.security;
+package com.orbit.portailAgentStockPR.auth.security;
 
-import com.orbit.portailAgentStockPR.filter.JwtRequestFilter;
-import com.orbit.portailAgentStockPR.service.MyUserDetailsService;
+import com.orbit.portailAgentStockPR.auth.filter.JwtRequestFilter;
+import com.orbit.portailAgentStockPR.auth.service.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;

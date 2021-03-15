@@ -1,25 +1,25 @@
-package com.orbit.portailAgentStockPR.auth.models;
+package com.orbit.portailAgentStockPR.utilisateur.models;
 
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "sDealer_Modules")
+@Table(name = "s_dealer_modules")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String code ;
+    private int code ;
     private String userName ;
     private String dealer_Number ;
     private int permis ;
     private String password ;
 
-    public String getCode() {
+    public int getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(int code) {
         this.code = code;
     }
 

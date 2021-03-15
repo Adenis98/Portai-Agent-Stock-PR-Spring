@@ -1,7 +1,7 @@
-package com.orbit.portailAgentStockPR.auth.security;
+package com.orbit.portailAgentStockPR.utilisateur.security;
 
-import com.orbit.portailAgentStockPR.auth.filter.JwtRequestFilter;
-import com.orbit.portailAgentStockPR.auth.service.MyUserDetailsService;
+import com.orbit.portailAgentStockPR.utilisateur.filter.JwtRequestFilter;
+import com.orbit.portailAgentStockPR.utilisateur.service.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;

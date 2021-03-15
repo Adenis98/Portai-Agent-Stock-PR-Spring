@@ -1,14 +1,13 @@
-package com.orbit.portailAgentStockPR.auth.service;
+package com.orbit.portailAgentStockPR.utilisateur.service;
 
-import com.orbit.portailAgentStockPR.auth.models.MyUserDetails;
-import com.orbit.portailAgentStockPR.auth.models.User;
+import com.orbit.portailAgentStockPR.utilisateur.models.MyUserDetails;
+import com.orbit.portailAgentStockPR.utilisateur.models.User;
 import com.orbit.portailAgentStockPR.exception.ApiRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Optional;
 
 @Service

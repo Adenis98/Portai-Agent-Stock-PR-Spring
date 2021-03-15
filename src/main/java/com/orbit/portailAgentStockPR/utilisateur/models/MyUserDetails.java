@@ -1,4 +1,4 @@
-package com.orbit.portailAgentStockPR.auth.models;
+package com.orbit.portailAgentStockPR.utilisateur.models;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

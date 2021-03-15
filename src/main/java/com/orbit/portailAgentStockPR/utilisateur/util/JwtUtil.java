@@ -1,4 +1,4 @@
-package com.orbit.portailAgentStockPR.auth.util;
+package com.orbit.portailAgentStockPR.utilisateur.util;
 
 import io.jsonwebtoken.Claims;
 

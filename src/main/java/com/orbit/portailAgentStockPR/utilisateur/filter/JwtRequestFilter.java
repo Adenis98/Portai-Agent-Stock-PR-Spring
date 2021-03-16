@@ -15,6 +15,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Enumeration;
+
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
 
@@ -28,12 +30,20 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
-        final String authorizationHeader = request.getHeader("Authorization");
+        final String authorizationHeader = request.getHeader("authorization");
 
         String username = null ;
         String jwt = null ;
+/* cors error
+        Enumeration<String> s=  request.getHeaderNames() ;
+        while(s.hasMoreElements())
+        {
+            String st = s.nextElement();
+            String hh = request.getHeader(st);
+            System.out.println(hh+"***");
+        }*/
 
-        if(authorizationHeader != null && authorizationHeader.startsWith("Bearer")){
+        if(authorizationHeader!= null && authorizationHeader.startsWith("Bearer")){
             jwt = authorizationHeader.substring(7);
             username = jwtUtil.extractUsername(jwt);
         }

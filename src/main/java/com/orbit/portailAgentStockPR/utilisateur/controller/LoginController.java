@@ -46,8 +46,5 @@ public class LoginController {
         return ResponseEntity.ok(new AuthenticationResponse(jwt));
     }
 
-    @GetMapping("/cmnd/valid")
-    public String hello(){
-        return "ramezz roamti " ;
-    }
+
 }

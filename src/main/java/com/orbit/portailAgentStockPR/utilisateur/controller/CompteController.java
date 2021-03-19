@@ -24,6 +24,7 @@ public class CompteController {
    //UPDATE retourne null si le user n'existe pas
     @PutMapping("/maj/{id}")
     public User majCompte(@RequestBody User user, @PathVariable int id){
+        System.out.println("************"+id+"****"+user);
         return compteService.update(user,id);
     }
 

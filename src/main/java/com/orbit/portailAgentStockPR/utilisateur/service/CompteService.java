@@ -28,8 +28,10 @@ public class CompteService {
     }
 
     public User update(User usr,int id){
-        if (delete(id))
+        if (delete(id)) {
             return save(usr);
+        }
+
         return null ;
     }
 }

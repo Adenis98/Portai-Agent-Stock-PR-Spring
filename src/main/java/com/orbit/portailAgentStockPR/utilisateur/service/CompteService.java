@@ -12,7 +12,6 @@ public class CompteService {
     UserRepository userRepository;
 
     public User save(User user){
-
         return userRepository.save(user);
     }
 
@@ -26,5 +25,11 @@ public class CompteService {
 
     public List<User> findAll(){
         return userRepository.findAll();
+    }
+
+    public User update(User usr,int id){
+        if (delete(id))
+            return save(usr);
+        return null ;
     }
 }

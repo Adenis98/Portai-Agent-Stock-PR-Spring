@@ -2,7 +2,6 @@ package com.orbit.portailAgentStockPR.utilisateur.controller;
 
 import com.orbit.portailAgentStockPR.utilisateur.models.User;
 import com.orbit.portailAgentStockPR.utilisateur.service.CompteService;
-import com.orbit.portailAgentStockPR.utilisateur.service.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,17 +20,20 @@ public class CompteController {
     {
         return compteService.save(user);
     }
-/* //UPDATE
+
+   //UPDATE retourne null si le user n'existe pas
     @PutMapping("/maj/{id}")
-    public boolean majCompte(@RequestBody User user,@PathVariable int id){
-        return false;
+    public User majCompte(@RequestBody User user, @PathVariable int id){
+        return compteService.update(user,id);
     }
-*/
+
     @DeleteMapping(path="/supprimer/{id}")
     public boolean suppCompte(@PathVariable int id)
     {
         return compteService.delete(id);
     }
+
+
     @GetMapping(path="/avoirTout")
     public List<User> getall()
     {

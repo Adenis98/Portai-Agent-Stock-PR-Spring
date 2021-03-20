@@ -14,6 +14,15 @@ public class User {
     private String dealer_Number ;
     private int permis ;
     private String password ;
+    private String img ;
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
 
     public int getCode() {
         return code;

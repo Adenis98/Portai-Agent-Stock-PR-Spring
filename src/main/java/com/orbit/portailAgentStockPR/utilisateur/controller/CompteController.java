@@ -40,4 +40,11 @@ public class CompteController {
     {
         return compteService.findAll();
     }
+
+
+    @PostMapping(path="/majPhoto")
+    public boolean majPhoto(@RequestBody String photo)
+    {
+        return false ;
+    }
 }

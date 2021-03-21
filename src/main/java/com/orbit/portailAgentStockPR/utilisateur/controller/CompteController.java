@@ -75,12 +75,12 @@ public class CompteController {
     }
 
 
-    @GetMapping(path="/getPhoto/{id}")
-    public String getPhoto(@PathVariable int id )
+    @GetMapping(path="/getPhoto/{userName}")
+    public String getPhoto(@PathVariable String userName )
     {
         try
         {
-            return compteService.getPhoto(id);
+            return compteService.getPhoto(userName);
         }catch(Exception e)
         {
             return "error : "+e;

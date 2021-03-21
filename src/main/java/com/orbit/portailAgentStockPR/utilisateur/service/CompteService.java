@@ -43,9 +43,16 @@ public class CompteService {
         return userRepository.updateimg(id,photo)>0;
     }
 
-    public String getPhoto(int id)
+    public String getPhoto(String userName)throws Exception
     {
-        byte[] img= userRepository.getOne(id).getImg();
+        int myUserId=-1;
+        for (User user:findAll()) {
+            if(user.getUserName().equals(userName))
+                myUserId=user.getCode();
+        }
+        if(myUserId==-1)
+            throw new Exception("utilisateur inconnue");
+        byte[] img= userRepository.getOne(myUserId).getImg();
         if(img!=null)
             return Base64.encodeBase64String(img);
         return "pas d'image";

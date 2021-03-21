@@ -14,13 +14,15 @@ public class User {
     private String dealer_Number ;
     private int permis ;
     private String password ;
-    private String img ;
+    @Lob
+    @Column(length = Integer.MAX_VALUE)
+    private byte[] img ;
 
-    public String getImg() {
+    public byte[] getImg() {
         return img;
     }
 
-    public void setImg(String img) {
+    public void setImg(byte[] img) {
         this.img = img;
     }
 

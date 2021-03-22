@@ -1,5 +1,6 @@
 package com.orbit.portailAgentStockPR.utilisateur.controller;
 
+import com.orbit.portailAgentStockPR.exception.ApiRequestException;
 import com.orbit.portailAgentStockPR.utilisateur.models.User;
 import com.orbit.portailAgentStockPR.utilisateur.service.CompteService;
 import org.apache.tomcat.util.codec.binary.Base64;
@@ -32,8 +33,12 @@ public class CompteController {
    //UPDATE retourne null si le user n'existe pas
     @PutMapping("/maj/{id}")
     public User majCompte(@RequestBody User user, @PathVariable int id){
-        System.out.println("************"+id+"****"+user);
-        return compteService.update(user,id);
+        try{
+            return compteService.updateUser(user,id);
+        }catch(Exception e){
+            throw new ApiRequestException(e.getMessage());
+        }
+
     }
 
     @DeleteMapping(path="/supprimer/{id}")
@@ -56,8 +61,8 @@ public class CompteController {
         return compteService.majPhoto(id, photo);
     }*/
 
-    @PostMapping(path="/majPhoto/{id}")
-    public String uploadImage(@RequestBody String photo,@PathVariable int id)
+    @PostMapping(path="/majPhoto/{userName}")
+    public String uploadImage(@RequestBody String photo,@PathVariable String userName)
     {
         try
         {
@@ -65,7 +70,7 @@ public class CompteController {
             byte[] imageByte;
             imageByte = Base64.decodeBase64(photo);
 
-            compteService.majPhoto(id,imageByte);
+            compteService.majPhoto(userName,imageByte);
             return "success ";
         }
         catch(Exception e)

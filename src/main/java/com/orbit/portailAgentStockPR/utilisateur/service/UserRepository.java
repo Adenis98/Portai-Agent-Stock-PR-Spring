@@ -33,4 +33,17 @@ public interface UserRepository extends JpaRepository<User, Integer>{
     @Query("UPDATE User u SET u.img = :photo WHERE u.code = :userId")
     int updateimg(@Param("userId") int id, @Param("photo") byte[] photo);
 
+    @Modifying
+    @Transactional
+    @Query( " UPDATE User u SET" +
+            " u.userName = :usrName ," +
+            " u.dealer_Number = :usrNumber," +
+            " u.permis = :usrPermis," +
+            " u.password = :usrPassword WHERE u.code = :usrId")
+    int updateUser(@Param("usrId") int id ,
+                   @Param("usrName") String userName ,
+                   @Param("usrNumber")String dNumber ,
+                   @Param("usrPermis")int permis ,
+                   @Param("usrPassword") String password );
+
 }

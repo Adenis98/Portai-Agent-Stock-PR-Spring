@@ -82,6 +82,6 @@ public class CompteService {
         byte[] img= userRepository.getOne(myUserId).getImg();
         if(img!=null)
             return Base64.encodeBase64String(img);
-        return "pas d'image";
+        throw new Exception("pas d'image ");
     }
 }

@@ -93,7 +93,7 @@ public class CompteController {
             return compteService.getPhoto(userName);
         }catch(Exception e)
         {
-            return "error : "+e;
+            throw new ApiRequestException(e.getMessage());
         }
     }
 }

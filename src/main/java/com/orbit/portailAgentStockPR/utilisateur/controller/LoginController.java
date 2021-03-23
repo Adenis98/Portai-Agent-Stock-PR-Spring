@@ -4,6 +4,7 @@ package com.orbit.portailAgentStockPR.utilisateur.controller;
 import com.orbit.portailAgentStockPR.exception.ApiRequestException;
 import com.orbit.portailAgentStockPR.utilisateur.models.AuthenticationRequest;
 import com.orbit.portailAgentStockPR.utilisateur.models.AuthenticationResponse;
+import com.orbit.portailAgentStockPR.utilisateur.models.MyUserDetails;
 import com.orbit.portailAgentStockPR.utilisateur.service.MyUserDetailsService;
 import com.orbit.portailAgentStockPR.utilisateur.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,7 @@ public class LoginController {
         {
             throw new ApiRequestException("exception inconnu "+e.getMessage());
         }
-        final UserDetails userDetails = userDetailService.loadUserByUsername(authenticationRequest.getUserName());
+        final MyUserDetails userDetails = (MyUserDetails) userDetailService.loadUserByUsername(authenticationRequest.getUserName());
         final String jwt = jwtTokenUtil.generateToken(userDetails);
         return ResponseEntity.ok(new AuthenticationResponse(jwt));
     }

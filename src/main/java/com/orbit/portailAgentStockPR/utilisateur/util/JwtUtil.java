@@ -1,5 +1,6 @@
 package com.orbit.portailAgentStockPR.utilisateur.util;
 
+import com.orbit.portailAgentStockPR.utilisateur.models.MyUserDetails;
 import io.jsonwebtoken.Claims;
 
 import io.jsonwebtoken.Jwts;
@@ -40,8 +41,9 @@ public class JwtUtil {
         return extractExpiration(token).before(new Date());
     }
 
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(MyUserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
+        claims.put("code",userDetails.getCode());
         return createToken(claims, userDetails.getUsername());
     }
 

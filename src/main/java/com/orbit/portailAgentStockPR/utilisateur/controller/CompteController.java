@@ -27,7 +27,12 @@ public class CompteController {
     @RequestMapping(path = "/ajout",method = RequestMethod.POST)
     public User ajouterCompte(@RequestBody User user)
     {
-        return compteService.save(user);
+        try{
+            return compteService.save(user);
+        }catch(Exception e){
+            throw new ApiRequestException(e.getMessage());
+        }
+
     }
 
    //UPDATE retourne null si le user n'existe pas

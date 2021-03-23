@@ -17,8 +17,20 @@ public class CompteService {
     UserRepository userRepository;
 
 
+    private boolean userNameExists(String userName)
+    {
+        int myUserId=-1;
+        for (User user:findAll()) {
+            if(user.getUserName().equals(userName))
+                return true ;
+        }
+        return false ;
+    }
 
-    public User save(User user){
+    public User save(User user) throws Exception
+    {
+        if(userNameExists((user.getUserName())))
+            throw new Exception(" nom d'utilisateur existe dèja ");
         return userRepository.save(user);
     }
 
@@ -40,9 +52,11 @@ public class CompteService {
         }
         return null ;
     }*/
-    public User updateUser(User user,int id){
-            int nbLigne = userRepository.updateUser(id,user.getUserName(),user.getDealer_Number(),user.getPermis(),user.getPassword());
-            return userRepository.findById(id).get();
+    public User updateUser(User user,int id) throws Exception {
+        if(userNameExists((user.getUserName())))
+            throw new Exception(" nom d'utilisateur existe dèja ");
+        int nbLigne = userRepository.updateUser(id,user.getUserName(),user.getDealer_Number(),user.getPermis(),user.getPassword());
+        return userRepository.findById(id).get();
     }
 
     private int getIdByUserName(String userName)throws Exception
@@ -53,7 +67,7 @@ public class CompteService {
                 myUserId=user.getCode();
         }
         if(myUserId==-1)
-            throw new Exception("utilisateur inconnue");
+            throw new Exception("nom d'utilisateur n'existe pas");
         return myUserId ;
     }
     public boolean  majPhoto(String userName,byte[] photo) throws Exception

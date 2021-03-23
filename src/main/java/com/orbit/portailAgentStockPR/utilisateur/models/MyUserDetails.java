@@ -9,16 +9,22 @@ public class MyUserDetails implements UserDetails {
 
     private String userName;
     private String password ;
+    private int code ;
 
     public MyUserDetails(User user)
     {
         this.userName=user.getUserName();
         this.password = user.getPassword();
+        this.code = user.getCode();
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
+    }
+
+    public int getCode() {
+        return this.code;
     }
 
     @Override

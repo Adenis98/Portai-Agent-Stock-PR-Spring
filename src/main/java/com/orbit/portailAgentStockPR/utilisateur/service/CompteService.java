@@ -53,10 +53,11 @@ public class CompteService {
         return null ;
     }*/
     public User updateUser(User user,int id) throws Exception {
-        if(userNameExists((user.getUserName())))
+        if(!userRepository.findById(id).get().getUserName().equals(user.getUserName())&&userNameExists((user.getUserName())))
             throw new Exception(" nom d'utilisateur existe dèja ");
-        int nbLigne = userRepository.updateUser(id,user.getUserName(),user.getDealer_Number(),user.getPermis(),user.getPassword());
+        userRepository.updateUser(id,user.getUserName(),user.getDealer_Number(),user.getPermis(),user.getPassword());
         return userRepository.findById(id).get();
+
     }
 
     private int getIdByUserName(String userName)throws Exception

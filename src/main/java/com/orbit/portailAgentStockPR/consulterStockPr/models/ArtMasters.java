@@ -2,9 +2,10 @@ package com.orbit.portailAgentStockPR.consulterStockPr.models;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
-public class ArtMaster {
+public class ArtMasters {
     @Id
     private String codArt ;
     private String libelle ;

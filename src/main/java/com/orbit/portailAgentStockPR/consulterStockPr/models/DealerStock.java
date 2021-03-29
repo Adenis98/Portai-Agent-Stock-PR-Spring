@@ -1,23 +1,24 @@
 package com.orbit.portailAgentStockPR.consulterStockPr.models;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class DealerStock {
 
-    private int dealer_number;
+    @ManyToOne
+    @JoinColumn(name="dealer_number")
+    private Dealers dealer_number;
     private int ug;
     @Id
     private String codArt;
     private int stock;
     private int qte_achat;
 
-    public int getDealer_number() {
+    public Dealers getDealer_number() {
         return dealer_number;
     }
 
-    public void setDealer_number(int dealer_number) {
+    public void setDealer_number(Dealers dealer_number) {
         this.dealer_number = dealer_number;
     }
 

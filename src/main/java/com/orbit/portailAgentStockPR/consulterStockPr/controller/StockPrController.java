@@ -19,7 +19,7 @@ public class StockPrController {
     StockPrService stockPrService;
 
     @GetMapping
-    public ResponseEntity<?> getArt(@RequestBody ListeStockAgentRequest req)
+    public ResponseEntity<?> listeStockAgentWS(@RequestBody ListeStockAgentRequest req)
     {
         return ResponseEntity.ok(stockPrService.getArt(req));
     }

@@ -11,9 +11,9 @@ INSERT INTO art_masters (cod_art, h, ht, htg, libelle , pu_agents, remisable) VA
 
 /*inserrer les ligne de Dealers */
 
-INSERT INTO dealers (ldb_dealer_number ,dealer_name  , dealer_phone_no  , sales_man )VALUES (00,"AGENCE KRAM","","CL000001")  ;
+/*INSERT INTO dealers (ldb_dealer_number ,dealer_name  , dealer_phone_no  , sales_man )VALUES (00,"AGENCE KRAM","","CL000001")  ;
 INSERT INTO dealers (ldb_dealer_number ,dealer_name  , dealer_phone_no  , sales_man )VALUES (001,"COMPTOIR CC","","CL000001")  ;
 INSERT INTO dealers (ldb_dealer_number ,dealer_name  , dealer_phone_no  , sales_man )VALUES (002,"ATELIER CC","","CL000001")  ;
 INSERT INTO dealers (ldb_dealer_number ,dealer_name  , dealer_phone_no  , sales_man )VALUES (003,"GARANTIE CC","","CL000001")  ;
 INSERT INTO dealers (ldb_dealer_number ,dealer_name  , dealer_phone_no  , sales_man )VALUES (004,"GARANTIE AGENCE","","CL000001")  ;
-/*INSERT INTO dealers (ldb_dealer_number ,dealer_name  , dealer_phone_no  , sales_man )VALUES (95,"AGENCE CHARGUIA","","CL000078")  ;*/
+INSERT INTO dealers (ldb_dealer_number ,dealer_name  , dealer_phone_no  , sales_man )VALUES (95,"AGENCE CHARGUIA","","CL000078")  ;*/

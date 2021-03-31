@@ -3,11 +3,14 @@ package com.orbit.portailAgentStockPR.consulterStockPr.models;
 import javax.persistence.*;
 
 @Entity
+@IdClass(DealerStockId.class)
 public class DealerStock {
 
     @ManyToOne
     @JoinColumn(name="dealer_number")
+    @Id
     private Dealers dealer_number;
+    @Id
     private int ug;
     @Id
     private String codArt;

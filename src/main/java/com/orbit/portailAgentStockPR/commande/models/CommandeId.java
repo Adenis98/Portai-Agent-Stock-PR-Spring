@@ -5,7 +5,6 @@ import com.orbit.portailAgentStockPR.consulterStockPr.models.Dealers;
 import java.io.Serializable;
 
 public class CommandeId implements Serializable {
-    private Dealers dealer_Number ;
     private int numCde ;
-
+    private Dealers ss ;
 }

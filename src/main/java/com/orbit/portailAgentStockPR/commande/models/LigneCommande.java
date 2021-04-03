@@ -3,6 +3,7 @@ package com.orbit.portailAgentStockPR.commande.models;
 
 import com.orbit.portailAgentStockPR.consulterStockPr.models.ArtMasters;
 import com.orbit.portailAgentStockPR.consulterStockPr.models.Dealers;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
@@ -10,17 +11,20 @@ import javax.persistence.*;
 @IdClass(LigneCommandeId.class)
 public class LigneCommande {
 
-
-    @ManyToOne
-    @JoinColumn(name = "dealer_nbr")
-    @Id
-    private Dealers dealer_number;
-
-    @Id
-    private int numCde ;
-
+    @GeneratedValue(
+            strategy= GenerationType.AUTO,
+            generator="native"
+    )
+    @GenericGenerator(
+            name = "native",
+            strategy = "native"
+    )
     @Id
     private int numLigne ;
+
+    @Id
+    @ManyToOne
+    private Commande ss;
 
     private String codeArt ;
     private double qte ;
@@ -34,28 +38,21 @@ public class LigneCommande {
     private String nomClient ;
     private double qteFacturee ;
 
-    public Dealers getDealer_number() {
-        return dealer_number;
-    }
-
-    public void setDealer_number(Dealers dealer_number) {
-        this.dealer_number = dealer_number;
-    }
-
-    public int getNumCde() {
-        return numCde;
-    }
-
-    public void setNumCde(int numCde) {
-        this.numCde = numCde;
-    }
-
     public int getNumLigne() {
         return numLigne;
     }
 
     public void setNumLigne(int numLigne) {
         this.numLigne = numLigne;
+    }
+
+
+    public Commande getNumCmnd() {
+        return ss;
+    }
+
+    public void setNumCmnd(Commande ss) {
+        this.ss = ss;
     }
 
     public String getCodeArt() {

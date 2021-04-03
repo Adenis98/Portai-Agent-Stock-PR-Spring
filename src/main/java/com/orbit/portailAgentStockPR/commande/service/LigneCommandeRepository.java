@@ -14,11 +14,10 @@ public interface LigneCommandeRepository extends JpaRepository<LigneCommande, Li
 
     @Modifying
     @Transactional
-    @Query( value = "insert into ligne_commande  (num_cde,num_ligne,pu,qte,qte_facturee,qte_livree,tot_ligne_ht,type_cmd,dealer_nbr)" +
-            " values (:num_cde , :num_ligne ,:pu,:qte,:qte_facturee,:qte_livree,:tot_ligne_ht,:type_cmd,:dealer_nbr)" , nativeQuery = true)
+    @Query( value = "insert into ligne_commande  (ss_num_cde,pu,qte,qte_facturee,qte_livree,tot_ligne_ht,type_cmd,ss_dealer_number)" +
+            " values (:num_cde , :pu,:qte,:qte_facturee,:qte_livree,:tot_ligne_ht,:type_cmd,:dealer_nbr)" , nativeQuery = true)
     int insertPanier(
                        @Param("num_cde") int num_cmd ,
-                       @Param("num_ligne") int num_ligne ,
                        @Param("pu")double pu ,
                        @Param("qte")double qte ,
                        @Param("qte_facturee") double qte_facturee ,

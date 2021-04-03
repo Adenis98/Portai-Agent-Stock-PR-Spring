@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 public class LigneCommandeId implements Serializable {
 
-    private Dealers dealer_number;
-    private int numCde ;
+    private Commande ss ;
     private int numLigne ;
+
 }

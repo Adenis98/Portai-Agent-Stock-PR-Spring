@@ -2,6 +2,7 @@ package com.orbit.portailAgentStockPR.commande.models;
 
 
 import com.orbit.portailAgentStockPR.consulterStockPr.models.Dealers;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -10,12 +11,24 @@ import java.util.Date;
 @IdClass(CommandeId.class)
 public class Commande {
 
+
+    @GeneratedValue(
+            strategy= GenerationType.AUTO,
+            generator="native"
+    )
+    @GenericGenerator(
+            name = "native",
+            strategy = "native"
+    )
+    @Id
+    private int numCde ;
+
+
     @Id
     @ManyToOne
-    private Dealers dealer_Number ;
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int numCde ;
+    @JoinColumn(name = "dealer_number")
+    private Dealers ss ;
+
     private int panier ;
     private double toHt ;
     private Date date_Creation;
@@ -24,28 +37,27 @@ public class Commande {
     private String type_Cmd ;
     private String mode_Paiement ;
     private String ref_Cmd ;
+    @Column(nullable=true)
     private int enregistree ;
     private String ref_Enregistrement ;
     private Date date_Enregistrement ;
+    @Column(nullable=true)
     private int livree ;
     private Date date_Liv ;
     private Date date_Liv_S;
+    @Column(nullable=true)
     private int facturee;
     private Date date_Facture ;
+    @Column(nullable=true)
     private double montant_Facture ;
     private String n_Facture ;
+    @Column(nullable=true)
     private int annulee ;
+    @Column(nullable=true)
     private int archivee ;
     private Date date_Annulation ;
     private Date date_Archivage ;
 
-    public Dealers getDealer_Number() {
-        return dealer_Number;
-    }
-
-    public void setDealer_Number(Dealers dealer_Number) {
-        this.dealer_Number = dealer_Number;
-    }
 
     public int getNumCde() {
         return numCde;
@@ -53,6 +65,14 @@ public class Commande {
 
     public void setNumCde(int numCde) {
         this.numCde = numCde;
+    }
+
+    public Dealers getDealer_Number() {
+        return ss;
+    }
+
+    public void setDealer_Number(Dealers dealer_Number) {
+        this.ss = dealer_Number;
     }
 
     public int getPanier() {

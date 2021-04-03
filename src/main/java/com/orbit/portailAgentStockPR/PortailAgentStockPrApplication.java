@@ -1,6 +1,5 @@
 package com.orbit.portailAgentStockPR;
 
-import com.orbit.portailAgentStockPR.commande.models.LigneCommande;
 import com.orbit.portailAgentStockPR.commande.service.LigneCommandeRepository;
 import com.orbit.portailAgentStockPR.consulterStockPr.service.DealerStockRepository;
 import com.orbit.portailAgentStockPR.utilisateur.service.UserRepository;

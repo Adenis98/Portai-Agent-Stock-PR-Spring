@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+
 @Service
 public class PanierService {
 
@@ -29,10 +29,10 @@ public class PanierService {
                 numCmd= listeLigneExistant.get(0).getNumCde();
 
             LigneCommande ligne = new LigneCommande();
+            ligne.setNumLigne(415);
             ligne.setNumCde(numCmd);
             Dealers dealer = dealersRepository.getOne(req.getDealerNumber());
-            ligne.setDealer_Number(dealer);
-
+            ligne.setDealer_number(dealer);
             ligne.setCodeArt(req.getCodeArt());
             ligne.setQte(req.getQte());
             ligne.setPu(req.getPu());
@@ -41,14 +41,14 @@ public class PanierService {
             ligne.setNumInterv(req.getNumInterv());
             ligne.setNomClient(req.getNomClient());
 
-            ligneCommandeRepository.save(ligne);
-            System.out.println("****************-----------------");
+            ligneCommandeRepository.insertPanier(ligne.getNumCde(),ligne.getNumLigne(),ligne.getPu(),ligne.getQte(),ligne.getQteFacturee(),ligne.getQteLivree(),ligne.getTotLigneHt(),ligne.getType_Cmd(),ligne.getDealer_number().getLdbDealerNumber());
+
             LignePanierResponse resp =  new LignePanierResponse();
             resp.setRetMsg("Ajouté avec succès !!");
             resp.setRetCd(0);
             return resp ;
         }catch(Exception e){
-            throw new ApiRequestException(e+"message d'erreur : "+e.getMessage());
+            throw new ApiRequestException(e.toString()+"*/*//*/**/*/*//*/*: "+e.getMessage());
         }
     }
     public void  deleteLigneCommande(LignePanierRequest req )

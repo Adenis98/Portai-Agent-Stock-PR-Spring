@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import javax.transaction.Transactional;
+import java.util.Date;
 
 @Repository
 public interface CommandeRepository extends JpaRepository<Commande, CommandeId> {
@@ -15,11 +16,12 @@ public interface CommandeRepository extends JpaRepository<Commande, CommandeId> 
 
     @Modifying
     @Transactional
-    @Query( value = "insert into commande  (panier,to_ht,dealer_number)" +
-            " values (:panier , :totHt ,:dealer)" , nativeQuery = true)
+    @Query( value = "insert into commande  (panier,tot_ht,dealer_number,date_creation)" +
+            " values (:panier , :totHt ,:dealer,:datecrea)" , nativeQuery = true)
     int insertCommande(
             @Param("panier") int panier ,
             @Param("totHt") double totHt ,
-            @Param("dealer")int dealer
+            @Param("dealer")int dealer,
+            @Param("datecrea") Date datecrea
     );
 }

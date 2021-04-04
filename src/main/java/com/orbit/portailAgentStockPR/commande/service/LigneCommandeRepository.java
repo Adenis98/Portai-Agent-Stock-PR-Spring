@@ -12,6 +12,8 @@ import javax.transaction.Transactional;
 @Repository
 public interface LigneCommandeRepository extends JpaRepository<LigneCommande, LigneCommandeId> {
 
+
+
     @Modifying
     @Transactional
     @Query( value = "insert into ligne_commande  (ss_num_cde,pu,qte,qte_facturee,qte_livree,tot_ligne_ht,type_cmd,ss_dealer_number)" +

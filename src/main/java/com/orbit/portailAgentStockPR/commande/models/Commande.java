@@ -30,7 +30,7 @@ public class Commande {
     private Dealers ss ;
 
     private int panier ;
-    private double toHt ;
+    private Double totHt ;
     private Date date_Creation;
     private Date date_Cmd ;
     private String heure_Cmd ;
@@ -38,23 +38,23 @@ public class Commande {
     private String mode_Paiement ;
     private String ref_Cmd ;
     @Column(nullable=true)
-    private int enregistree ;
+    private Integer enregistree ;
     private String ref_Enregistrement ;
     private Date date_Enregistrement ;
     @Column(nullable=true)
-    private int livree ;
+    private Integer livree ;
     private Date date_Liv ;
     private Date date_Liv_S;
     @Column(nullable=true)
-    private int facturee;
+    private Integer facturee;
     private Date date_Facture ;
     @Column(nullable=true)
-    private double montant_Facture ;
+    private Double montant_Facture ;
     private String n_Facture ;
     @Column(nullable=true)
-    private int annulee ;
+    private Integer annulee ;
     @Column(nullable=true)
-    private int archivee ;
+    private Integer archivee ;
     private Date date_Annulation ;
     private Date date_Archivage ;
 
@@ -83,12 +83,12 @@ public class Commande {
         this.panier = panier;
     }
 
-    public double getToHt() {
-        return toHt;
+    public double getTotHt() {
+        return totHt;
     }
 
-    public void setToHt(double toHt) {
-        this.toHt = toHt;
+    public void setTotHt(double totHt) {
+        this.totHt = totHt;
     }
 
     public Date getDate_Creation() {

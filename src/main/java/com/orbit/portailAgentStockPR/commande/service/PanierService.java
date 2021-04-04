@@ -1,9 +1,6 @@
 package com.orbit.portailAgentStockPR.commande.service;
 
-import com.orbit.portailAgentStockPR.commande.models.Commande;
-import com.orbit.portailAgentStockPR.commande.models.LigneCommande;
-import com.orbit.portailAgentStockPR.commande.models.LignePanierRequest;
-import com.orbit.portailAgentStockPR.commande.models.LignePanierResponse;
+import com.orbit.portailAgentStockPR.commande.models.*;
 import com.orbit.portailAgentStockPR.consulterStockPr.models.Dealers;
 import com.orbit.portailAgentStockPR.consulterStockPr.service.DealersRepository;
 import com.orbit.portailAgentStockPR.exception.ApiRequestException;
@@ -12,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -80,4 +78,72 @@ public class PanierService {
     {
 
     }
+
+
+    //***********************************   GET PANIER API ***********************************
+    private List<LigneCommande> findLigneCmndByDealerNbr(List<LigneCommande> all , int dealerNbr )
+    {
+        List<LigneCommande> newList = new ArrayList<>();
+        for(int i=0;i< all.size();i++)
+        {
+            if(all.get(i).getNumCmnd().getDealer_Number().getLdbDealerNumber()==dealerNbr)
+                newList.add(all.get(i));
+        }
+        return newList ;
+    }
+    private List<GetLignePanier>  createResponseList(List<LigneCommande> newList)
+    {
+        List<GetLignePanier> respList = new ArrayList<>();
+        for(int i=0;i< newList.size();i++)
+        {
+            GetLignePanier ligneGet = new GetLignePanier();
+            ligneGet.setLibelle(newList.get(i).getLibelle());
+            ligneGet.setCodeArt(newList.get(i).getCodeArt());
+            ligneGet.setNumLigne(newList.get(i).getNumLigne());
+            ligneGet.setTotLigneHt(newList.get(i).getTotLigneHt());
+            ligneGet.setNomClient(newList.get(i).getNomClient());
+            ligneGet.setPu(newList.get(i).getPu());
+            ligneGet.setNumInterv(newList.get(i).getNumInterv());
+            ligneGet.setVin(newList.get(i).getVin());
+            ligneGet.setQte(newList.get(i).getQte());
+            ligneGet.setTypeCmd(newList.get(i).getType_Cmd());
+            respList.add(ligneGet);
+        }
+        return respList ;
+    }
+    public GetPanierWsResponse  getPanier(int dealerNbr )
+    {
+        try
+        {
+            List<LigneCommande> newList = findLigneCmndByDealerNbr(ligneCommandeRepository.findAll(),dealerNbr);
+
+            GetPanierWsResponse resp = new GetPanierWsResponse();
+            //**********************declaration des variables*********************
+            Date dateCreation = new Date();
+            double totHt=0;
+            int retCd = 1 ;
+            String message = "Panier vide";
+            if(newList.size()>0)
+            {
+                dateCreation= newList.get(0).getNumCmnd().getDate_Creation();
+                totHt=newList.get(0).getNumCmnd().getTotHt();
+                retCd = 0 ;
+                message = "Panier non vide";
+            }
+            //********************************************************************
+            resp.setdNbr(dealerNbr);
+            resp.setDateCreation(dateCreation);
+            resp.setRetMsg(message);
+            resp.setRetCd(retCd);
+            resp.setTotHt(totHt);
+            resp.setLignesPanier(createResponseList(newList));
+            return resp ;
+        }
+        catch(Exception e)
+        {
+            throw new ApiRequestException("message d'erreur getPanier : "+e.getMessage());
+        }
+    }
+
+    //*****************************************************************************
 }

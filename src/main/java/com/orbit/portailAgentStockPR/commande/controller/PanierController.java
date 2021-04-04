@@ -1,6 +1,7 @@
 package com.orbit.portailAgentStockPR.commande.controller;
 
 
+import com.orbit.portailAgentStockPR.commande.models.GetPanierWsResponse;
 import com.orbit.portailAgentStockPR.commande.models.LignePanierRequest;
 import com.orbit.portailAgentStockPR.commande.models.LignePanierResponse;
 import com.orbit.portailAgentStockPR.commande.service.PanierService;
@@ -21,7 +22,7 @@ public class PanierController {
     }
 
     @GetMapping("/GetPanierWS")
-    public void GetPanierWS(){
-
+    public GetPanierWsResponse GetPanierWS(@RequestHeader("DealerNumber") int dNbr){
+        return panierService.getPanier(dNbr);
     }
 }

@@ -16,8 +16,8 @@ public interface LigneCommandeRepository extends JpaRepository<LigneCommande, Li
 
     @Modifying
     @Transactional
-    @Query( value = "insert into ligne_commande  (ss_num_cde,pu,qte,qte_facturee,qte_livree,tot_ligne_ht,type_cmd,ss_dealer_number)" +
-            " values (:num_cde , :pu,:qte,:qte_facturee,:qte_livree,:tot_ligne_ht,:type_cmd,:dealer_nbr)" , nativeQuery = true)
+    @Query( value = "insert into ligne_commande  (ss_num_cde,pu,qte,qte_facturee,qte_livree,tot_ligne_ht,type_cmd,ss_dealer_number,vin,libelle,nom_client,num_interv,code_art)" +
+            " values (:num_cde , :pu,:qte,:qte_facturee,:qte_livree,:tot_ligne_ht,:type_cmd,:dealer_nbr,:vin,:lib,:nomClient,:numInterv,:codArt)" , nativeQuery = true)
     int insertPanier(
                        @Param("num_cde") int num_cmd ,
                        @Param("pu")double pu ,
@@ -26,7 +26,12 @@ public interface LigneCommandeRepository extends JpaRepository<LigneCommande, Li
                        @Param("qte_livree")double qte_livree ,
                        @Param("tot_ligne_ht")double tot_ligne_ht ,
                        @Param("type_cmd")int type_cmd ,
-                       @Param("dealer_nbr")int dealerNbr
+                       @Param("dealer_nbr")int dealerNbr,
+                       @Param("vin") String vin ,
+                       @Param("lib")String lib ,
+                       @Param("nomClient")String nomClient ,
+                       @Param("numInterv")String numInterv,
+                       @Param("codArt")String codArt
     );
 
 }

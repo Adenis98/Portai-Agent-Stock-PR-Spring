@@ -25,21 +25,34 @@ public class PanierService {
     @Autowired
     CommandeRepository commandeRepository;
 
+    private double totHtCommande(List<LigneCommande> listLigneCom)
+    {
+        double result =0;
+        for(int i = 0 ; i< listLigneCom.size();i++)
+            result = result + listLigneCom.get(i).getTotLigneHt();
+        return result ;
+    }
+    /*private LigneCommande ancienLigneCmd(List<LigneCommande> listLigneCom,int dealerNbr )
+    {
+        for(int i = 0 ; i< listLigneCom.size();i++)
+            if(listLigneCom.get(i).getNumCmnd().getDealer_Number().getLdbDealerNumber() == dealerNbr)
+                return listLigneCom.get(i);
+        return null;
+    }*/
     public LignePanierResponse insertLigneCommande(LignePanierRequest req )
     {
         try{
-            int result=-999;
             List<LigneCommande> listeLigneExistant = ligneCommandeRepository.findAll() ;
             Commande cmd= new Commande();
             if(listeLigneExistant.size()>0)
             {
                 cmd= listeLigneExistant.get(0).getNumCmnd();
-                //mise a jours
-                // tot_ht
+                cmd.setTotHt(totHtCommande(listeLigneExistant)+req.getQte()*req.getPu());
+                commandeRepository.updateTot(cmd.getTotHt(),cmd.getNumCde(),cmd.getDealer_Number().getLdbDealerNumber());
             }
             else{
                 cmd.setPanier(-1);
-                cmd.setTotHt(1695.7);
+                cmd.setTotHt(req.getQte()*req.getPu());
                 Dealers d = dealersRepository.getOne(req.getDealerNumber());
                 cmd.setDealer_Number(d);
                 //************* datte de creation *************
@@ -50,7 +63,7 @@ public class PanierService {
                 Date dateCreation = new SimpleDateFormat(pattern).parse(mysqlDateString);
                 cmd.setDate_Creation(dateCreation);
                 //************************************************
-                result = commandeRepository.insertCommande(cmd.getPanier(),cmd.getTotHt(),cmd.getDealer_Number().getLdbDealerNumber(),cmd.getDate_Creation());
+                commandeRepository.insertCommande(cmd.getPanier(),cmd.getTotHt(),cmd.getDealer_Number().getLdbDealerNumber(),cmd.getDate_Creation());
             }
             List<Commande> listCmd = commandeRepository.findAll();
             Commande lastElmnt = listCmd.get(listCmd.size()-1);
@@ -63,8 +76,23 @@ public class PanierService {
             ligne.setVin(req.getVin());
             ligne.setNumInterv(req.getNumInterv());
             ligne.setNomClient(req.getNomClient());
-            System.out.println("*****"+lastElmnt.getNumCde());
-            ligneCommandeRepository.insertPanier(lastElmnt.getNumCde(),ligne.getPu(),ligne.getQte(),ligne.getQteFacturee(),ligne.getQteLivree(),ligne.getTotLigneHt(),ligne.getType_Cmd(),ligne.getNumCmnd().getDealer_Number().getLdbDealerNumber());
+            ligne.setTotLigneHt(req.getQte()*req.getPu());
+            ligne.setLibelle(req.getLibelle());
+            ligneCommandeRepository.insertPanier(
+                    lastElmnt.getNumCde(),
+                    ligne.getPu(),
+                    ligne.getQte(),
+                    ligne.getQteFacturee(),
+                    ligne.getQteLivree(),
+                    ligne.getTotLigneHt(),
+                    ligne.getType_Cmd(),
+                    ligne.getNumCmnd().getDealer_Number().getLdbDealerNumber(),
+                    ligne.getVin(),
+                    ligne.getLibelle(),
+                    ligne.getNomClient(),
+                    ligne.getNumInterv(),
+                    ligne.getCodeArt()
+            );
 
             LignePanierResponse resp =  new LignePanierResponse();
             resp.setRetMsg("Ajouté avec succès !!");

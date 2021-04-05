@@ -10,17 +10,29 @@ public class MyUserDetails implements UserDetails {
     private String userName;
     private String password ;
     private int code ;
+    private int dealerNumber ;
+    private int permis ;
 
     public MyUserDetails(User user)
     {
         this.userName=user.getUserName();
         this.password = user.getPassword();
         this.code = user.getCode();
+        this.dealerNumber = user.getDealer_Number();
+        this.permis = user.getPermis() ;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
+    }
+
+    public int getPermis() {
+        return permis;
+    }
+
+    public int getDealerNumber() {
+        return dealerNumber;
     }
 
     public int getCode() {

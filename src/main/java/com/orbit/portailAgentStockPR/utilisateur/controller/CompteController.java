@@ -53,10 +53,10 @@ public class CompteController {
     }
 
 
-    @GetMapping(path="/avoirTout")
-    public List<User> getall()
+    @GetMapping(path="/avoirTout/{dNbr}")
+    public List<User> getall(@PathVariable int dNbr)
     {
-        return compteService.findAll();
+        return compteService.findAll(dNbr);
     }
 
 

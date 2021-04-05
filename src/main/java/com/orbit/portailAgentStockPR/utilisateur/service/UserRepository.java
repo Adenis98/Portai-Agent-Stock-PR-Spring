@@ -42,7 +42,7 @@ public interface UserRepository extends JpaRepository<User, Integer>{
             " u.password = :usrPassword WHERE u.code = :usrId")
     int updateUser(@Param("usrId") int id ,
                    @Param("usrName") String userName ,
-                   @Param("usrNumber")String dNumber ,
+                   @Param("usrNumber")int dNumber ,
                    @Param("usrPermis")int permis ,
                    @Param("usrPassword") String password );
 

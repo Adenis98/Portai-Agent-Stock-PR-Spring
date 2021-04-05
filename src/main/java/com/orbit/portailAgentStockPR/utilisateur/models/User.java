@@ -1,17 +1,26 @@
 package com.orbit.portailAgentStockPR.utilisateur.models;
 
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "s_dealer_modules")
 public class User {
 
+    @GeneratedValue(
+            strategy= GenerationType.AUTO,
+            generator="native"
+    )
+    @GenericGenerator(
+            name = "native",
+            strategy = "native"
+    )
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private int code ;
     private String userName ;
-    private String dealer_Number ;
+    private int dealer_Number ;
     private int permis ;
     private String password ;
     @Lob
@@ -42,11 +51,11 @@ public class User {
         this.userName = userName;
     }
 
-    public String getDealer_Number() {
+    public int getDealer_Number() {
         return dealer_Number;
     }
 
-    public void setDealer_Number(String dealer_Number) {
+    public void setDealer_Number(int dealer_Number) {
         this.dealer_Number = dealer_Number;
     }
 

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transaction;
+import java.util.ArrayList;
 import java.util.List;
 @Service
 public class CompteService {
@@ -40,6 +41,15 @@ public class CompteService {
             return true ;
         }
         return false;
+    }
+
+    public List<User> findAll(int dNbr){
+        List<User> allUsers = userRepository.findAll();
+        List<User> newList = new ArrayList<>();
+        for(int i = 0 ; i<allUsers.size() ; i++)
+            if(allUsers.get(i).getDealer_Number()==dNbr)
+                newList.add(allUsers.get(i));
+        return newList;
     }
 
     public List<User> findAll(){

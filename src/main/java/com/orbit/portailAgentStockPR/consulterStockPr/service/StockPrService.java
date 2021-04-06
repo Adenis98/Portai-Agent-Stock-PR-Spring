@@ -45,7 +45,7 @@ public class StockPrService {
                 l =  this.getListArt(am) ;
                 if(l.size()==0)
                 {
-                    ListeStockAgentResponse liste = new ListeStockAgentResponse(0,"","","","","","","",0,-1,0,0);
+                    ListeStockAgentResponse liste = new ListeStockAgentResponse(0,"inconnu","inconnu","inconnu","inconnu","","","",0,-1,0,0);
                     ArrayList<ListeStockAgentResponse> retList = new ArrayList<>();
                     retList.add(liste);
                     return  retList;

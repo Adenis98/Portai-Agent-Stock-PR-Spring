@@ -13,6 +13,6 @@ import java.util.ArrayList;
 @Repository
 public interface ArtMastersRepository extends JpaRepository<ArtMasters , String> {
 
-    @Query("SELECT a from ArtMasters a where a.libelle = :lib")
+    @Query("SELECT a from ArtMasters a where a.libelle like :lib ")
     ArrayList<ArtMasters> findByLibelle(@Param("lib") String lib);
 }

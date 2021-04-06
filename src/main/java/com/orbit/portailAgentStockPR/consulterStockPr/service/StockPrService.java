@@ -47,7 +47,7 @@ public class StockPrService {
             }
             else if(req.getLibelle().length()>0)
             {
-                ArrayList<ArtMasters>  aml= artMastersRepository.findByLibelle(req.getLibelle());
+                ArrayList<ArtMasters>  aml= artMastersRepository.findByLibelle("%"+req.getLibelle()+"%");
                 if(aml.size()==0)
                     throw new ApiRequestException("Libelle introuvable !!");
                 l =  this.getListArt(aml.get(0)) ;

@@ -4,6 +4,7 @@ import com.orbit.portailAgentStockPR.commande.models.*;
 import com.orbit.portailAgentStockPR.consulterStockPr.models.Dealers;
 import com.orbit.portailAgentStockPR.consulterStockPr.service.DealersRepository;
 import com.orbit.portailAgentStockPR.exception.ApiRequestException;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,30 +26,32 @@ public class PanierService {
     @Autowired
     CommandeRepository commandeRepository;
 
-    private double totHtCommande(List<LigneCommande> listLigneCom)
+    private double totHtCommande(List<LigneCommande> listLigneCom,int dealerNbr)
     {
         double result =0;
         for(int i = 0 ; i< listLigneCom.size();i++)
-            result = result + listLigneCom.get(i).getTotLigneHt();
+            if(listLigneCom.get(i).getNumCmnd().getDealer_Number().getLdbDealerNumber()==dealerNbr)
+                result = result + listLigneCom.get(i).getTotLigneHt();
         return result ;
     }
-    /*private LigneCommande ancienLigneCmd(List<LigneCommande> listLigneCom,int dealerNbr )
+    private LigneCommande ancienLigneCmd(List<LigneCommande> listLigneCom,int dealerNbr )
     {
         for(int i = 0 ; i< listLigneCom.size();i++)
             if(listLigneCom.get(i).getNumCmnd().getDealer_Number().getLdbDealerNumber() == dealerNbr)
                 return listLigneCom.get(i);
         return null;
-    }*/
+    }
     public LignePanierResponse insertLigneCommande(LignePanierRequest req )
     {
         try{
             List<LigneCommande> listeLigneExistant = ligneCommandeRepository.findAll() ;
             Commande cmd= new Commande();
-            if(listeLigneExistant.size()>0)
+            LigneCommande oldCmdLigne = ancienLigneCmd(listeLigneExistant,req.getDealerNumber());
+            if(oldCmdLigne!=null)
             {
-                cmd= listeLigneExistant.get(0).getNumCmnd();
-                cmd.setTotHt(totHtCommande(listeLigneExistant)+req.getQte()*req.getPu());
-                commandeRepository.updateTot(cmd.getTotHt(),cmd.getNumCde(),cmd.getDealer_Number().getLdbDealerNumber());
+                cmd= oldCmdLigne.getNumCmnd();
+                cmd.setTotHt(totHtCommande(listeLigneExistant,req.getDealerNumber())+req.getQte()*req.getPu());
+                int res = commandeRepository.updateTot(cmd.getTotHt(),cmd.getNumCde(),cmd.getDealer_Number().getLdbDealerNumber());
             }
             else{
                 cmd.setPanier(-1);
@@ -65,8 +68,7 @@ public class PanierService {
                 //************************************************
                 commandeRepository.insertCommande(cmd.getPanier(),cmd.getTotHt(),cmd.getDealer_Number().getLdbDealerNumber(),cmd.getDate_Creation());
             }
-            List<Commande> listCmd = commandeRepository.findAll();
-            Commande lastElmnt = listCmd.get(listCmd.size()-1);
+
             LigneCommande ligne = new LigneCommande();
             ligne.setNumCmnd(cmd);
             ligne.setCodeArt(req.getCodeArt());
@@ -79,7 +81,7 @@ public class PanierService {
             ligne.setTotLigneHt(req.getQte()*req.getPu());
             ligne.setLibelle(req.getLibelle());
             ligneCommandeRepository.insertPanier(
-                    lastElmnt.getNumCde(),
+                    cmd.getNumCde(),
                     ligne.getPu(),
                     ligne.getQte(),
                     ligne.getQteFacturee(),
@@ -169,7 +171,7 @@ public class PanierService {
         }
         catch(Exception e)
         {
-            throw new ApiRequestException("message d'erreur getPanier : "+e.getMessage());
+            throw new ApiRequestException(e+" | "+e.getMessage());
         }
     }
 

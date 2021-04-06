@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -43,7 +44,13 @@ public class StockPrService {
                 ArtMasters am = artMastersRepository.getOne(req.getCodeArt());
                 l =  this.getListArt(am) ;
                 if(l.size()==0)
-                    throw new ApiRequestException("Code article introuvable !!");
+                {
+                    ListeStockAgentResponse liste = new ListeStockAgentResponse(0,"","","","","","","",0,-1,0,0);
+                    ArrayList<ListeStockAgentResponse> retList = new ArrayList<>();
+                    retList.add(liste);
+                    return  retList;
+                }
+
             }
             else if(req.getLibelle().length()>0)
             {

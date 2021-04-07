@@ -48,7 +48,6 @@ public class PanierService {
             LigneCommande oldCmdLigne = ancienLigneCmd(listeLigneExistant,req.getDealerNumber());
             for(int i =0; i< listeLigneExistant.size() ; i++)
             {
-                System.out.println(listeLigneExistant.get(i).getCodeArt().equals(req.getCodeArt()));
                 if(listeLigneExistant.get(i).getCodeArt().equals(req.getCodeArt()))
                     throw new ApiRequestException("article existe dèja !!");
             }
@@ -198,7 +197,7 @@ public class PanierService {
                 //update ligne commande
                 cmd.setTotHt(cmd.getTotHt()-ligneCom.getTotLigneHt());
                 commandeRepository.updateTot(cmd.getTotHt(),cmd.getNumCde(),cmd.getDealer_Number().getLdbDealerNumber());
-                return "supprimé avec succès !! ";
+                return "supprimé avec succès ✓ ";
             }
             else
                 return "sppression impossible !! ";

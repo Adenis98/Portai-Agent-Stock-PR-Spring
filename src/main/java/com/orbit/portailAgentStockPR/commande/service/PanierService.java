@@ -39,6 +39,7 @@ public class PanierService {
                 return listLigneCom.get(i);
         return null;
     }
+
     public LignePanierResponse insertLigneCommande(LignePanierRequest req )
     {
         try{
@@ -174,23 +175,27 @@ public class PanierService {
     public String supprimerLigne(int lignePanier)
     {
         try{
-            List<LigneCommande> listLigneCommande = ligneCommandeRepository.findAll();
-            int oldSize = listLigneCommande.size();
-            LigneCommande myLine = null;
-            Iterator<LigneCommande> itLiCom = listLigneCommande.iterator() ;
-            while(itLiCom.hasNext())
+            List<LigneCommande> listeLigne = ligneCommandeRepository.findAll();
+            Iterator<LigneCommande> it = listeLigne.iterator();
+            LigneCommande ligneCom =null;
+            while(it.hasNext())
             {
-                LigneCommande next = itLiCom.next() ;
-                if(next.getNumLigne()==lignePanier)
-                    myLine = next ;
+                LigneCommande ligne = it.next() ;
+                if(ligne.getNumLigne() == lignePanier )
+                    ligneCom = ligne ;
             }
-            System.out.println("******************"+myLine.getNumCmnd().getNumCde()+"/"+myLine.getNumCmnd().getDealer_Number().getDealerName());
-            ligneCommandeRepository.delete(myLine);
-            System.out.println("******************");
-            if(oldSize>ligneCommandeRepository.findAll().size())
-                return "supprimer avec succès !! ";
+            Commande cmd = ligneCom.getNumCmnd() ;
+            int res = ligneCommandeRepository.deleteLignePanier(lignePanier);
+            System.out.println("***********************"+res);
+            if(res==1 )
+            {
+                //update ligne commande
+                cmd.setTotHt(cmd.getTotHt()-ligneCom.getTotLigneHt());
+                commandeRepository.updateTot(cmd.getTotHt(),cmd.getNumCde(),cmd.getDealer_Number().getLdbDealerNumber());
+                return "supprimé avec succès !! ";
+            }
             else
-                return "erreur de suppression !! ";
+                return "sppression impossible !! ";
         }catch(Exception e )
         {
             throw  new ApiRequestException(""+e);

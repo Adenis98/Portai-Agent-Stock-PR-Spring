@@ -34,4 +34,11 @@ public interface LigneCommandeRepository extends JpaRepository<LigneCommande, Li
                        @Param("codArt")String codArt
     );
 
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM LigneCommande l WHERE l.numLigne = :numLigne" )
+    int deleteLignePanier(
+            @Param("numLigne") int numLigne
+    );
+
 }

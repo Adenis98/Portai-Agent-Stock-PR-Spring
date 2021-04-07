@@ -46,6 +46,12 @@ public class PanierService {
             List<LigneCommande> listeLigneExistant = ligneCommandeRepository.findAll() ;
             Commande cmd= new Commande();
             LigneCommande oldCmdLigne = ancienLigneCmd(listeLigneExistant,req.getDealerNumber());
+            for(int i =0; i< listeLigneExistant.size() ; i++)
+            {
+                System.out.println(listeLigneExistant.get(i).getCodeArt().equals(req.getCodeArt()));
+                if(listeLigneExistant.get(i).getCodeArt().equals(req.getCodeArt()))
+                    throw new ApiRequestException("article existe dèja !!");
+            }
             if(oldCmdLigne!=null)
             {
                 cmd= oldCmdLigne.getNumCmnd();

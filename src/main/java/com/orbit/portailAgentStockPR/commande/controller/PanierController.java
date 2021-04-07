@@ -17,12 +17,17 @@ public class PanierController {
     PanierService panierService ;
 
     @PostMapping("/LignePanier")
-    public LignePanierResponse LignePanier(@RequestBody LignePanierRequest lpr){
+    public LignePanierResponse lignePanier(@RequestBody LignePanierRequest lpr){
         return panierService.insertLigneCommande(lpr);
     }
 
     @GetMapping("/GetPanierWS")
-    public GetPanierWsResponse GetPanierWS(@RequestHeader("DealerNumber") int dNbr){
+    public GetPanierWsResponse getPanierWS(@RequestHeader("DealerNumber") int dNbr){
         return panierService.getPanier(dNbr);
+    }
+
+    @DeleteMapping("/DeleteLignePanier/{numLigne}")
+    public String  deletePanierWS(@PathVariable("numLigne") int numLigne){
+        return panierService.supprimerLigne(numLigne) ;
     }
 }

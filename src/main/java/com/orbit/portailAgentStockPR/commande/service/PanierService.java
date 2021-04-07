@@ -10,10 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class PanierService {
@@ -26,6 +23,7 @@ public class PanierService {
     @Autowired
     CommandeRepository commandeRepository;
 
+    //**************************** Ajouter Ligne PANIER  ********************************
     private double totHtCommande(List<LigneCommande> listLigneCom,int dealerNbr)
     {
         double result =0;
@@ -67,6 +65,8 @@ public class PanierService {
                 cmd.setDate_Creation(dateCreation);
                 //************************************************
                 commandeRepository.insertCommande(cmd.getPanier(),cmd.getTotHt(),cmd.getDealer_Number().getLdbDealerNumber(),cmd.getDate_Creation());
+                List<Commande> cmndList= commandeRepository.findAll();
+                cmd = cmndList.get(cmndList.size()-1);
             }
 
             LigneCommande ligne = new LigneCommande();
@@ -104,13 +104,8 @@ public class PanierService {
             throw new ApiRequestException("message d'erreur : "+e.getMessage());
         }
     }
-    public void  deleteLigneCommande(LignePanierRequest req )
-    {
-
-    }
-
-
-    //***********************************   GET PANIER API ***********************************
+    //******************************************************************************
+    //**************************** GET Ligne PANIER  ********************************
     private List<LigneCommande> findLigneCmndByDealerNbr(List<LigneCommande> all , int dealerNbr )
     {
         List<LigneCommande> newList = new ArrayList<>();
@@ -174,6 +169,32 @@ public class PanierService {
             throw new ApiRequestException(e+" | "+e.getMessage());
         }
     }
-
-    //*****************************************************************************
+    //********************************************************************************
+    //************************** Supprimer ligne PANIER ******************************
+    public String supprimerLigne(int lignePanier)
+    {
+        try{
+            List<LigneCommande> listLigneCommande = ligneCommandeRepository.findAll();
+            int oldSize = listLigneCommande.size();
+            LigneCommande myLine = null;
+            Iterator<LigneCommande> itLiCom = listLigneCommande.iterator() ;
+            while(itLiCom.hasNext())
+            {
+                LigneCommande next = itLiCom.next() ;
+                if(next.getNumLigne()==lignePanier)
+                    myLine = next ;
+            }
+            System.out.println("******************"+myLine.getNumCmnd().getNumCde()+"/"+myLine.getNumCmnd().getDealer_Number().getDealerName());
+            ligneCommandeRepository.delete(myLine);
+            System.out.println("******************");
+            if(oldSize>ligneCommandeRepository.findAll().size())
+                return "supprimer avec succès !! ";
+            else
+                return "erreur de suppression !! ";
+        }catch(Exception e )
+        {
+            throw  new ApiRequestException(""+e);
+        }
+    }
+    //********************************************************************************
 }

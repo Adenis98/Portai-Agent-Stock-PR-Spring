@@ -85,7 +85,7 @@ public class CommandeService {
         {
             int res =0;
             List<LigneCommande> ligneCmdList =ligneCommandeRepositoryList(ligneCommandeRepository.findAll(),req.getDealerNumber(),req.getTypeCmd());
-            if(req.getTypeCmd()==0&&ligneCmdList.size()==ligneCommandeRepository.findAll().size())
+            if(req.getTypeCmd()==1&&ligneCmdList.size()==ligneCommandeRepository.findAll().size())
             {
                 //Commande ferme sans creation d'un autre ligne commande avec update Commande
                 Commande newCmdFerme = existingCmd(req , ligneCmdList);
@@ -105,7 +105,7 @@ public class CommandeService {
                 //delete all "ligne commande"
                 deleteAllLigneCommande(req.getDealerNumber(),ligneCommandeRepository.findAll());
                 commandeRepository.deleteCommandeNumCmd9999(req.getDealerNumber());
-            }else if(req.getTypeCmd()==1&&ligneCmdList.size()==ligneCommandeRepository.findAll().size())
+            }else if(req.getTypeCmd()==0&&ligneCmdList.size()==ligneCommandeRepository.findAll().size())
             {
 
                 //Commande normal sans creation d'un autre ligne commande avec update Commande

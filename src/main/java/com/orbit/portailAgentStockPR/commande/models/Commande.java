@@ -11,15 +11,6 @@ import java.util.Date;
 @IdClass(CommandeId.class)
 public class Commande {
 
-
-    @GeneratedValue(
-            strategy= GenerationType.AUTO,
-            generator="native"
-    )
-    @GenericGenerator(
-            name = "native",
-            strategy = "native"
-    )
     @Id
     private int numCde ;
 
@@ -34,7 +25,7 @@ public class Commande {
     private Date date_Creation;
     private Date date_Cmd ;
     private String heure_Cmd ;
-    private String type_Cmd ;
+    private Integer type_Cmd ;
     private String mode_Paiement ;
     private String ref_Cmd ;
     @Column(nullable=true)
@@ -115,11 +106,11 @@ public class Commande {
         this.heure_Cmd = heure_Cmd;
     }
 
-    public String getType_Cmd() {
+    public int getType_Cmd() {
         return type_Cmd;
     }
 
-    public void setType_Cmd(String type_Cmd) {
+    public void setType_Cmd(int type_Cmd) {
         this.type_Cmd = type_Cmd;
     }
 

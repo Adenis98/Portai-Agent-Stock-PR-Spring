@@ -70,7 +70,7 @@ public class PanierService {
                 Date dateCreation = new SimpleDateFormat(pattern).parse(mysqlDateString);
                 cmd.setDate_Creation(dateCreation);
                 //************************************************
-                commandeRepository.insertCommande(cmd.getPanier(),cmd.getTotHt(),cmd.getDealer_Number().getLdbDealerNumber(),cmd.getDate_Creation());
+                commandeRepository.insertCommande(9999,cmd.getPanier(),cmd.getTotHt(),cmd.getDealer_Number().getLdbDealerNumber(),cmd.getDate_Creation());
                 List<Commande> cmndList= commandeRepository.findAll();
                 cmd = cmndList.get(cmndList.size()-1);
             }
@@ -194,10 +194,15 @@ public class PanierService {
             System.out.println("***********************"+res);
             if(res==1 )
             {
-                //update ligne commande
-                cmd.setTotHt(cmd.getTotHt()-ligneCom.getTotLigneHt());
-                commandeRepository.updateTot(cmd.getTotHt(),cmd.getNumCde(),cmd.getDealer_Number().getLdbDealerNumber());
-                return "supprimé avec succès ✓ ";
+                double newTot = cmd.getTotHt()-ligneCom.getTotLigneHt();
+                if(newTot>0)
+                {
+                    //update ligne commande
+                    cmd.setTotHt(newTot);
+                    commandeRepository.updateTot(cmd.getTotHt(),cmd.getNumCde(),cmd.getDealer_Number().getLdbDealerNumber());
+                }else
+                    commandeRepository.deleteCommande(cmd.getDealer_Number().getLdbDealerNumber());
+                return "supprimé avec succès ";
             }
             else
                 return "sppression impossible !! ";

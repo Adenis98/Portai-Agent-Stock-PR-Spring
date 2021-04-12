@@ -16,13 +16,30 @@ public interface CommandeRepository extends JpaRepository<Commande, CommandeId> 
 
     @Modifying
     @Transactional
-    @Query( value = "insert into commande  (panier,tot_ht,dealer_number,date_creation)" +
-            " values (:panier , :totHt ,:dealer,:datecrea)" , nativeQuery = true)
+    @Query( value = "insert into commande  (num_cde,panier,tot_ht,dealer_number,date_creation)" +
+            " values (:pk,:panier , :totHt ,:dealer,:datecrea)" , nativeQuery = true)
     int insertCommande(
+            @Param("pk") int pk ,
             @Param("panier") int panier ,
             @Param("totHt") double totHt ,
             @Param("dealer")int dealer,
             @Param("datecrea") Date datecrea
+    );
+    @Modifying
+    @Transactional
+    @Query( value = "insert into commande  (num_cde,panier,tot_ht,dealer_number,date_creation ," +
+             "type_cmd ,mode_paiement,ref_cmd , date_liv_s )"+
+            " values (:pk,:panier , :totHt ,:dealer,:datecrea,:typeCmd,:modeP,:refCmd,:dateLivS)" , nativeQuery = true)
+    int passerCommandeIns(
+            @Param("pk") int pk ,
+            @Param("panier") int panier ,
+            @Param("totHt") double totHt ,
+            @Param("dealer")int dealer,
+            @Param("datecrea") Date datecrea,
+            @Param("typeCmd")int typeCmd,
+            @Param("modeP") String modeP,
+            @Param("refCmd") String refCmd ,
+            @Param("dateLivS") Date dateLivS
     );
 
     @Modifying
@@ -33,5 +50,34 @@ public interface CommandeRepository extends JpaRepository<Commande, CommandeId> 
             @Param("totHt") double totHt ,
             @Param("numCde") int numCde ,
             @Param("dealNbr") int dealNbr
+    );
+
+
+    @Modifying
+    @Transactional
+    @Query( " UPDATE Commande c SET" +
+            " c.numCde= :pKey ,c.type_Cmd = :typeCmd , c.mode_Paiement = :modePaiement , c.ref_Cmd = :refCmd, c.date_Liv_S = :dateLS "+
+            " WHERE c.panier = -1 and c.ss.ldbDealerNumber =:dealNbr")
+    int passerCommandeUpd(
+            @Param("pKey") int pKey  ,
+            @Param("dealNbr") int dNbr  ,
+            @Param("typeCmd") int typeCmd  ,
+            @Param("modePaiement") String modePaiement ,
+            @Param("refCmd") String refCmd ,
+            @Param("dateLS") Date dateLS
+    );
+
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM Commande c WHERE c.ss.ldbDealerNumber= :dNbr" )
+    int deleteCommande(
+            @Param("dNbr") int dNbr
+    );
+
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM Commande c WHERE c.ss.ldbDealerNumber= :dNbr and c.numCde = 9999" )
+    int deleteCommandeNumCmd9999(
+            @Param("dNbr") int dNbr
     );
 }

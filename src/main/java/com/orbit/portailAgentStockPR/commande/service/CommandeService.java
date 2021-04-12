@@ -85,8 +85,7 @@ public class CommandeService {
         {
             int res =0;
             List<LigneCommande> ligneCmdList =ligneCommandeRepositoryList(ligneCommandeRepository.findAll(),req.getDealerNumber(),req.getTypeCmd());
-
-            if(req.getTypeCmd()==1&&ligneCmdList.size()==ligneCommandeRepository.findAll().size())
+            if(req.getTypeCmd()==0&&ligneCmdList.size()==ligneCommandeRepository.findAll().size())
             {
                 //Commande ferme sans creation d'un autre ligne commande avec update Commande
                 Commande newCmdFerme = existingCmd(req , ligneCmdList);
@@ -106,8 +105,9 @@ public class CommandeService {
                 //delete all "ligne commande"
                 deleteAllLigneCommande(req.getDealerNumber(),ligneCommandeRepository.findAll());
                 commandeRepository.deleteCommandeNumCmd9999(req.getDealerNumber());
-            }else if(req.getTypeCmd()==2&&ligneCmdList.size()==ligneCommandeRepository.findAll().size())
+            }else if(req.getTypeCmd()==1&&ligneCmdList.size()==ligneCommandeRepository.findAll().size())
             {
+
                 //Commande normal sans creation d'un autre ligne commande avec update Commande
                 Commande newCmdNormale = existingCmd(req , ligneCmdList);
                 //update the existing commande
@@ -145,7 +145,7 @@ public class CommandeService {
                 //************************************************
                 res=commandeRepository.passerCommandeIns(
                         numCommandePasser()+1,
-                        cmd.getPanier(),
+                        0,
                         cmd.getTotHt(),
                         cmd.getDealer_Number().getLdbDealerNumber(),
                         cmd.getDate_Creation(),
@@ -154,7 +154,7 @@ public class CommandeService {
                         cmd.getRef_Cmd(),
                         cmd.getDate_Liv_S()
                 );
-                deleteAllLigneCommande(req.getDealerNumber(),ligneCommandeRepository.findAll());
+                deleteLigneCommandeType(req.getDealerNumber(),ligneCommandeRepository.findAll(),req.getTypeCmd());
             }
             return res ;
         }catch(Exception e )

@@ -1,9 +1,6 @@
 package com.orbit.portailAgentStockPR.commande.controller;
 
-import com.orbit.portailAgentStockPR.commande.models.Commande;
-import com.orbit.portailAgentStockPR.commande.models.GetCommandeResponse;
-import com.orbit.portailAgentStockPR.commande.models.LigneCommande;
-import com.orbit.portailAgentStockPR.commande.models.PasserCommandeRequest;
+import com.orbit.portailAgentStockPR.commande.models.*;
 import com.orbit.portailAgentStockPR.commande.service.CommandeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +28,7 @@ public class CommandeController {
     }
 
     @GetMapping("/afficher/ligneCmd/{nCmd}")
-    public List<LigneCommande>  afficherLigneCommande(@PathVariable int nCmd)
+    public List<GetLigneCommandeResponse>  afficherLigneCommande(@PathVariable int nCmd)
     {
         return commandeService.getLigneCommande(nCmd) ;
     }

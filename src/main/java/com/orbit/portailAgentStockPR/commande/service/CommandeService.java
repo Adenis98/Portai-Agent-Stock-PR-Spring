@@ -1,9 +1,6 @@
 package com.orbit.portailAgentStockPR.commande.service;
 
-import com.orbit.portailAgentStockPR.commande.models.Commande;
-import com.orbit.portailAgentStockPR.commande.models.GetCommandeResponse;
-import com.orbit.portailAgentStockPR.commande.models.LigneCommande;
-import com.orbit.portailAgentStockPR.commande.models.PasserCommandeRequest;
+import com.orbit.portailAgentStockPR.commande.models.*;
 import com.orbit.portailAgentStockPR.consulterStockPr.models.Dealers;
 import com.orbit.portailAgentStockPR.consulterStockPr.service.DealersRepository;
 import com.orbit.portailAgentStockPR.exception.ApiRequestException;
@@ -244,27 +241,41 @@ public class CommandeService {
                     }catch(Exception e){
 
                     }
-
-
                     resList.add(rObj);
                 }
             }
-
             return resList ;
         }catch(Exception e ){
             throw new ApiRequestException(""+e);
         }
     }
     /*****************************************************************************************/
-    public List<LigneCommande> getLigneCommande(int nCmd)
+    public List<GetLigneCommandeResponse> getLigneCommande(int nCmd)
     {
         try
         {
-            List<LigneCommande> listLigneCmd  = ligneCommandeRepository.findAll() ,listLigneCmdResp = new ArrayList<>();
+            List<LigneCommande> listLigneCmd  = ligneCommandeRepository.findAll() ;
+            List<GetLigneCommandeResponse> listLigneCmdResp = new ArrayList<>();
             for(int i = 0 ; i< listLigneCmd.size() ; i++)
             {
                 if(listLigneCmd.get(i).getNumCmnd().getNumCde() == nCmd)
-                    listLigneCmdResp.add(listLigneCmd.get(i)) ;
+                {
+                    GetLigneCommandeResponse resp = new GetLigneCommandeResponse() ;
+                    resp.setNumLigne(listLigneCmd.get(i).getNumLigne());
+                    resp.setQte(listLigneCmd.get(i).getQte());
+                    resp.setPu(listLigneCmd.get(i).getPu());
+                    resp.setTotLigneHt(listLigneCmd.get(i).getTotLigneHt());
+                    resp.setLibelle(listLigneCmd.get(i).getLibelle());
+                    resp.setQteLivree(listLigneCmd.get(i).getQteLivree());
+                    resp.setType_Cmd(listLigneCmd.get(i).getType_Cmd());
+                    resp.setVin(listLigneCmd.get(i).getVin());
+                    resp.setNumInterv(listLigneCmd.get(i).getNumInterv());
+                    resp.setNomClient(listLigneCmd.get(i).getNomClient());
+                    resp.setQteFacturee(listLigneCmd.get(i).getQteFacturee());
+
+                    listLigneCmdResp.add(resp) ;
+                }
+
             }
             return listLigneCmdResp ;
         }catch(Exception e )

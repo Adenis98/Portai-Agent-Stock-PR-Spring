@@ -8,6 +8,7 @@ import com.orbit.portailAgentStockPR.consulterStockPr.models.Dealers;
 import com.orbit.portailAgentStockPR.consulterStockPr.service.DealersRepository;
 import com.orbit.portailAgentStockPR.exception.ApiRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
@@ -29,24 +30,16 @@ public class CommandeService {
 
     /************************************ PASSER COMMANDE ****************************************/
 
-    private Commande guessCommande(int dNbr)
-    {
-        List<Commande> oldList = commandeRepository.findAll();
-        for(int i = 0 ; i< oldList.size();i++)
-        {
-            if(oldList.get(i).getDealer_Number().getLdbDealerNumber() == dNbr && oldList.get(i).getNumCde()==9999)
-            {
-                return oldList.get(i) ;
-            }
-        }
-        throw new ApiRequestException("dealer number n'existe pas !!");
-    }
-    private List<LigneCommande> ligneCommandeRepositoryList(List<LigneCommande> oldList,int numCmd,int typeCmd  )
+
+    private List<LigneCommande> ligneCommandeRepositoryList(List<LigneCommande> oldList,int dNbr,int typeCmd  )
     {
         List<LigneCommande> newList = new ArrayList<>();
         for(int i =0;i<oldList.size() ; i++ )
         {
-            if(oldList.get(i).getNumCmnd().getNumCde() == numCmd && typeCmd == oldList.get(i).getType_Cmd())
+            if(oldList.get(i).getNumCmnd().getNumCde() == 9999 &&
+                    typeCmd == oldList.get(i).getType_Cmd() &&
+                    oldList.get(i).getNumCmnd().getDealer_Number().getLdbDealerNumber() == dNbr
+            )
                 newList.add(oldList.get(i));
 
         }
@@ -96,21 +89,40 @@ public class CommandeService {
         return ligneSupprimee;
     }
 
+    private int updateLigneCmd(int dNbr , int nCmd ,int typeCmd )
+    {
+        return ligneCommandeRepository.updateNcmd(dNbr , nCmd ,typeCmd);
+    }
+
+    private int nombreLigneCmdByDn(int dNbr )
+    {
+        List<LigneCommande> listLigneCmd = ligneCommandeRepository.findAll();
+        int taille =0;
+        for(int i = 0 ;i<listLigneCmd.size();i++)
+        {
+            if(listLigneCmd.get(i).getNumCmnd().getDealer_Number().getLdbDealerNumber() == dNbr &&
+                listLigneCmd.get(i).getNumCmnd().getNumCde() == 9999
+            )
+                taille ++ ;
+        }
+        return taille ;
+    }
+
     public int  passerCommande(PasserCommandeRequest req )
     {
         try
         {
             int res =0;
-            Commande myCmd = guessCommande(req.getDealerNumber());
-            List<LigneCommande> ligneCmdList =ligneCommandeRepositoryList(ligneCommandeRepository.findAll(),myCmd.getNumCde(),req.getTypeCmd());
-            if(req.getTypeCmd()==1&&ligneCmdList.size()==ligneCommandeRepository.findAll().size())
+            List<LigneCommande> ligneCmdList =ligneCommandeRepositoryList(ligneCommandeRepository.findAll(),req.getDealerNumber(),req.getTypeCmd());
+            if(req.getTypeCmd()==1&&ligneCmdList.size()==nombreLigneCmdByDn(req.getDealerNumber()))
             {
+                System.out.println("*** COMMANDE FERME ***");
                 //Commande ferme sans creation d'un autre ligne commande avec update Commande
                 Commande newCmdFerme = existingCmd(req , ligneCmdList);
                 //update the existing commande
-
+                int pk = numCommandePasser()+10000000+1;
                 res=commandeRepository.passerCommandeIns(
-                        numCommandePasser()+10000000+1,
+                        pk,
                         newCmdFerme.getPanier(),
                         newCmdFerme.getTotHt(),
                         newCmdFerme.getDealer_Number().getLdbDealerNumber(),
@@ -122,16 +134,18 @@ public class CommandeService {
                 );
                 //delete all "ligne commande"
                 //deleteAllLigneCommande(req.getDealerNumber(),ligneCommandeRepository.findAll());
-                commandeRepository.deleteCommandeNumCmd9999(req.getDealerNumber());
-            }else if(req.getTypeCmd()==0&&ligneCmdList.size()==ligneCommandeRepository.findAll().size())
-            {
+                updateLigneCmd(req.getDealerNumber() , pk, req.getTypeCmd());
 
+                commandeRepository.deleteCommandeNumCmd9999(req.getDealerNumber());
+            }else if(req.getTypeCmd()==0&&ligneCmdList.size()==nombreLigneCmdByDn(req.getDealerNumber()))
+            {
+                System.out.println("*** COMMANDE NORMAL ***");
                 //Commande normal sans creation d'un autre ligne commande avec update Commande
                 Commande newCmdNormale = existingCmd(req , ligneCmdList);
                 //update the existing commande
-
+                int pk = numCommandePasser()+10000000+1 ;
                 res=commandeRepository.passerCommandeIns(
-                        numCommandePasser()+10000000+1,
+                        pk,
                         0,
                         newCmdNormale.getTotHt(),
                         newCmdNormale.getDealer_Number().getLdbDealerNumber(),
@@ -143,9 +157,11 @@ public class CommandeService {
                 );
                 //delete all "ligne commande"
                 //deleteAllLigneCommande(req.getDealerNumber(),ligneCommandeRepository.findAll());
-                commandeRepository.deleteCommandeNumCmd9999(req.getDealerNumber());
+                int updLigneCmd = updateLigneCmd(req.getDealerNumber() , pk, req.getTypeCmd());
+                int del = commandeRepository.deleteCommandeNumCmd9999(req.getDealerNumber());
             }else if(ligneCmdList.size()!=0)
             {
+                System.out.println("*** COMMANDE NORMAL et FERME ***");
                 //creation d'un nouveau ligne commande avec changement du clé étrangère des ligne commande
                 Commande cmd = new Commande();
                 cmd = existingCmd(req , ligneCmdList);
@@ -161,8 +177,9 @@ public class CommandeService {
                 Date dateCreation = new SimpleDateFormat(pattern).parse(mysqlDateString);
                 cmd.setDate_Creation(dateCreation);
                 //************************************************
+                int pk = numCommandePasser()+10000000+1;
                 res=commandeRepository.passerCommandeIns(
-                        numCommandePasser()+10000000+1,
+                        pk,
                         0,
                         cmd.getTotHt(),
                         cmd.getDealer_Number().getLdbDealerNumber(),
@@ -173,6 +190,7 @@ public class CommandeService {
                         cmd.getDate_Liv_S()
                 );
                 //deleteLigneCommandeType(req.getDealerNumber(),ligneCommandeRepository.findAll(),req.getTypeCmd());
+                updateLigneCmd(req.getDealerNumber() , pk, req.getTypeCmd());
             }
             return res ;
         }catch(Exception e )

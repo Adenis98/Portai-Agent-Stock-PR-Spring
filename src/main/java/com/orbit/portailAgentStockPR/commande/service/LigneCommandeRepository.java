@@ -41,4 +41,14 @@ public interface LigneCommandeRepository extends JpaRepository<LigneCommande, Li
             @Param("numLigne") int numLigne
     );
 
+
+    @Modifying
+    @Transactional
+    @Query( value = " UPDATE ligne_commande SET" +
+            " ss_num_cde = :nCmd  WHERE ss_num_cde = 9999 and ss_dealer_number =:dealNbr and type_cmd = :typeCmd " , nativeQuery = true)
+    int updateNcmd(
+            @Param("dealNbr") int dealNbr,
+            @Param("nCmd") int nCmd ,
+            @Param("typeCmd") int typeCmd
+            );
 }

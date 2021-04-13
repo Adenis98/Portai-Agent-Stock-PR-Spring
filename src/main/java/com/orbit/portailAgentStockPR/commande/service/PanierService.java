@@ -32,10 +32,11 @@ public class PanierService {
                 result = result + listLigneCom.get(i).getTotLigneHt();
         return result ;
     }
-    private LigneCommande ancienLigneCmd(List<LigneCommande> listLigneCom,int dealerNbr )
+    private Commande ancienLigneCmd(int dealerNbr )
     {
+        List<Commande> listLigneCom = commandeRepository.findAll();
         for(int i = 0 ; i< listLigneCom.size();i++)
-            if(listLigneCom.get(i).getNumCmnd().getDealer_Number().getLdbDealerNumber() == dealerNbr)
+            if(listLigneCom.get(i).getDealer_Number().getLdbDealerNumber() == dealerNbr && listLigneCom.get(i).getNumCde()==9999)
                 return listLigneCom.get(i);
         return null;
     }
@@ -43,26 +44,32 @@ public class PanierService {
     public LignePanierResponse insertLigneCommande(LignePanierRequest req )
     {
         try{
+            int pk = -1 ;
             List<LigneCommande> listeLigneExistant = ligneCommandeRepository.findAll() ;
             Commande cmd= new Commande();
-            LigneCommande oldCmdLigne = ancienLigneCmd(listeLigneExistant,req.getDealerNumber());
+            Commande oldCmdLigne = ancienLigneCmd(req.getDealerNumber());
             for(int i =0; i< listeLigneExistant.size() ; i++)
             {
-                if(listeLigneExistant.get(i).getCodeArt().equals(req.getCodeArt()))
+                if(listeLigneExistant.get(i).getCodeArt().equals(req.getCodeArt())  &&
+                        req.getDealerNumber()==listeLigneExistant.get(i).getNumCmnd().getDealer_Number().getLdbDealerNumber()  &&
+                        listeLigneExistant.get(i).getNumCmnd().getNumCde() == 9999
+                )
                     throw new ApiRequestException("article existe dèja !!");
             }
             if(oldCmdLigne!=null)
             {
-                cmd= oldCmdLigne.getNumCmnd();
+                pk = oldCmdLigne.getNumCde() ;
+                cmd= oldCmdLigne;
                 cmd.setTotHt(totHtCommande(listeLigneExistant,req.getDealerNumber())+req.getQte()*req.getPu());
                 int res = commandeRepository.updateTot(cmd.getTotHt(),cmd.getNumCde(),cmd.getDealer_Number().getLdbDealerNumber());
             }
             else{
+                pk = 9999 ;
                 cmd.setPanier(-1);
                 cmd.setTotHt(req.getQte()*req.getPu());
                 Dealers d = dealersRepository.getOne(req.getDealerNumber());
                 cmd.setDealer_Number(d);
-                //************* datte de creation *************
+                //************* date de creation *************
                 Date now = new Date();
                 String pattern = "yyyy-MM-dd hh:mm:ss";
                 SimpleDateFormat formatter = new SimpleDateFormat(pattern);
@@ -76,7 +83,6 @@ public class PanierService {
             }
 
             LigneCommande ligne = new LigneCommande();
-            ligne.setNumCmnd(cmd);
             ligne.setCodeArt(req.getCodeArt());
             ligne.setQte(req.getQte());
             ligne.setPu(req.getPu());
@@ -86,28 +92,28 @@ public class PanierService {
             ligne.setNomClient(req.getNomClient());
             ligne.setTotLigneHt(req.getQte()*req.getPu());
             ligne.setLibelle(req.getLibelle());
+
             ligneCommandeRepository.insertPanier(
-                    cmd.getNumCde(),
+                    pk,
                     ligne.getPu(),
                     ligne.getQte(),
                     ligne.getQteFacturee(),
                     ligne.getQteLivree(),
                     ligne.getTotLigneHt(),
                     ligne.getType_Cmd(),
-                    ligne.getNumCmnd().getDealer_Number().getLdbDealerNumber(),
+                    cmd.getDealer_Number().getLdbDealerNumber(),
                     ligne.getVin(),
                     ligne.getLibelle(),
                     ligne.getNomClient(),
                     ligne.getNumInterv(),
                     ligne.getCodeArt()
             );
-
             LignePanierResponse resp =  new LignePanierResponse();
             resp.setRetMsg("Ajouté avec succès !!");
             resp.setRetCd(0);
             return resp ;
         }catch(Exception e){
-            throw new ApiRequestException("message d'erreur : "+e.getMessage());
+            throw new ApiRequestException("message d'erreur : "+e.getCause());
         }
     }
     //******************************************************************************
@@ -117,7 +123,7 @@ public class PanierService {
         List<LigneCommande> newList = new ArrayList<>();
         for(int i=0;i< all.size();i++)
         {
-            if(all.get(i).getNumCmnd().getDealer_Number().getLdbDealerNumber()==dealerNbr)
+            if(all.get(i).getNumCmnd().getDealer_Number().getLdbDealerNumber()==dealerNbr && all.get(i).getNumCmnd().getNumCde()==9999)
                 newList.add(all.get(i));
         }
         return newList ;
@@ -191,7 +197,6 @@ public class PanierService {
             }
             Commande cmd = ligneCom.getNumCmnd() ;
             int res = ligneCommandeRepository.deleteLignePanier(lignePanier);
-            System.out.println("***********************"+res);
             if(res==1 )
             {
                 double newTot = cmd.getTotHt()-ligneCom.getTotLigneHt();

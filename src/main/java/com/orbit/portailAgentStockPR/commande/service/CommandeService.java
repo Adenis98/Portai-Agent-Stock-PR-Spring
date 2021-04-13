@@ -28,12 +28,25 @@ public class CommandeService {
     DealersRepository dealersRepository ;
 
     /************************************ PASSER COMMANDE ****************************************/
-    private List<LigneCommande> ligneCommandeRepositoryList(List<LigneCommande> oldList,int dNbr,int typeCmd  )
+
+    private Commande guessCommande(int dNbr)
+    {
+        List<Commande> oldList = commandeRepository.findAll();
+        for(int i = 0 ; i< oldList.size();i++)
+        {
+            if(oldList.get(i).getDealer_Number().getLdbDealerNumber() == dNbr && oldList.get(i).getNumCde()==9999)
+            {
+                return oldList.get(i) ;
+            }
+        }
+        throw new ApiRequestException("dealer number n'existe pas !!");
+    }
+    private List<LigneCommande> ligneCommandeRepositoryList(List<LigneCommande> oldList,int numCmd,int typeCmd  )
     {
         List<LigneCommande> newList = new ArrayList<>();
         for(int i =0;i<oldList.size() ; i++ )
         {
-            if(oldList.get(i).getNumCmnd().getDealer_Number().getLdbDealerNumber() == dNbr&&typeCmd == oldList.get(i).getType_Cmd())
+            if(oldList.get(i).getNumCmnd().getNumCde() == numCmd && typeCmd == oldList.get(i).getType_Cmd())
                 newList.add(oldList.get(i));
 
         }
@@ -82,12 +95,14 @@ public class CommandeService {
         }
         return ligneSupprimee;
     }
+
     public int  passerCommande(PasserCommandeRequest req )
     {
         try
         {
             int res =0;
-            List<LigneCommande> ligneCmdList =ligneCommandeRepositoryList(ligneCommandeRepository.findAll(),req.getDealerNumber(),req.getTypeCmd());
+            Commande myCmd = guessCommande(req.getDealerNumber());
+            List<LigneCommande> ligneCmdList =ligneCommandeRepositoryList(ligneCommandeRepository.findAll(),myCmd.getNumCde(),req.getTypeCmd());
             if(req.getTypeCmd()==1&&ligneCmdList.size()==ligneCommandeRepository.findAll().size())
             {
                 //Commande ferme sans creation d'un autre ligne commande avec update Commande
@@ -106,7 +121,7 @@ public class CommandeService {
                         newCmdFerme.getDate_Liv_S()
                 );
                 //delete all "ligne commande"
-                deleteAllLigneCommande(req.getDealerNumber(),ligneCommandeRepository.findAll());
+                //deleteAllLigneCommande(req.getDealerNumber(),ligneCommandeRepository.findAll());
                 commandeRepository.deleteCommandeNumCmd9999(req.getDealerNumber());
             }else if(req.getTypeCmd()==0&&ligneCmdList.size()==ligneCommandeRepository.findAll().size())
             {
@@ -127,7 +142,7 @@ public class CommandeService {
                         newCmdNormale.getDate_Liv_S()
                 );
                 //delete all "ligne commande"
-                deleteAllLigneCommande(req.getDealerNumber(),ligneCommandeRepository.findAll());
+                //deleteAllLigneCommande(req.getDealerNumber(),ligneCommandeRepository.findAll());
                 commandeRepository.deleteCommandeNumCmd9999(req.getDealerNumber());
             }else if(ligneCmdList.size()!=0)
             {
@@ -157,7 +172,7 @@ public class CommandeService {
                         cmd.getRef_Cmd(),
                         cmd.getDate_Liv_S()
                 );
-                deleteLigneCommandeType(req.getDealerNumber(),ligneCommandeRepository.findAll(),req.getTypeCmd());
+                //deleteLigneCommandeType(req.getDealerNumber(),ligneCommandeRepository.findAll(),req.getTypeCmd());
             }
             return res ;
         }catch(Exception e )
@@ -219,6 +234,23 @@ public class CommandeService {
 
             return resList ;
         }catch(Exception e ){
+            throw new ApiRequestException(""+e);
+        }
+    }
+    /*****************************************************************************************/
+    public List<LigneCommande> getLigneCommande(int nCmd)
+    {
+        try
+        {
+            List<LigneCommande> listLigneCmd  = ligneCommandeRepository.findAll() ,listLigneCmdResp = new ArrayList<>();
+            for(int i = 0 ; i< listLigneCmd.size() ; i++)
+            {
+                if(listLigneCmd.get(i).getNumCmnd().getNumCde() == nCmd)
+                    listLigneCmdResp.add(listLigneCmd.get(i)) ;
+            }
+            return listLigneCmdResp ;
+        }catch(Exception e )
+        {
             throw new ApiRequestException(""+e);
         }
     }

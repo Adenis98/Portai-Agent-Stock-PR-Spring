@@ -2,6 +2,7 @@ package com.orbit.portailAgentStockPR.commande.controller;
 
 import com.orbit.portailAgentStockPR.commande.models.Commande;
 import com.orbit.portailAgentStockPR.commande.models.GetCommandeResponse;
+import com.orbit.portailAgentStockPR.commande.models.LigneCommande;
 import com.orbit.portailAgentStockPR.commande.models.PasserCommandeRequest;
 import com.orbit.portailAgentStockPR.commande.service.CommandeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +27,12 @@ public class CommandeController {
     @GetMapping("/afficher/{dNbr}")
     public List<GetCommandeResponse> afficherCommande(@PathVariable int dNbr)
     {
-        System.out.println("*//**/*/*/*/RAEZE");
         return commandeService.getCommande(dNbr);
     }
 
     @GetMapping("/afficher/ligneCmd/{nCmd}")
-    public void afficherLigneCommande(@PathVariable int nCmd)
+    public List<LigneCommande>  afficherLigneCommande(@PathVariable int nCmd)
     {
-
+        return commandeService.getLigneCommande(nCmd) ;
     }
 }

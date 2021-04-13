@@ -188,20 +188,30 @@ public class CommandeService {
                     rObj.setType_Cmd(oldList.get(i).getType_Cmd());
                     rObj.setMode_Paiement(oldList.get(i).getMode_Paiement());
                     rObj.setRef_Cmd(oldList.get(i).getRef_Cmd());
-                    rObj.setEnregistree(oldList.get(i).getEnregistree());
+
                     rObj.setRef_Enregistrement(oldList.get(i).getRef_Enregistrement());
                     rObj.setDate_Enregistrement(oldList.get(i).getDate_Enregistrement());
-                    rObj.setLivree(oldList.get(i).getLivree());
+
                     rObj.setDate_Liv(oldList.get(i).getDate_Liv());
                     rObj.setDate_Liv_S(oldList.get(i).getDate_Liv_S());
-                    rObj.setFacturee(oldList.get(i).getFacturee());
+
                     rObj.setDate_Facture(oldList.get(i).getDate_Facture());
-                    rObj.setMontant_Facture(oldList.get(i).getMontant_Facture());
+
                     rObj.setN_Facture(oldList.get(i).getN_Facture());
-                    rObj.setAnnulee(oldList.get(i).getAnnulee());
-                    rObj.setArchivee(oldList.get(i).getArchivee());
+
                     rObj.setDate_Annulation(oldList.get(i).getDate_Annulation());
                     rObj.setDate_Archivage(oldList.get(i).getDate_Archivage());
+                    try{
+                        rObj.setAnnulee(oldList.get(i).getAnnulee());
+                        rObj.setArchivee(oldList.get(i).getArchivee());
+                        rObj.setEnregistree(oldList.get(i).getEnregistree());
+                        rObj.setFacturee(oldList.get(i).getFacturee());
+                        rObj.setLivree(oldList.get(i).getLivree());
+                        rObj.setMontant_Facture(oldList.get(i).getMontant_Facture());
+                    }catch(Exception e){
+
+                    }
+
 
                     resList.add(rObj);
                 }

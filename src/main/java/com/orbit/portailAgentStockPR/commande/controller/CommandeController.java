@@ -1,9 +1,14 @@
 package com.orbit.portailAgentStockPR.commande.controller;
 
+import com.orbit.portailAgentStockPR.commande.models.Commande;
+import com.orbit.portailAgentStockPR.commande.models.GetCommandeResponse;
 import com.orbit.portailAgentStockPR.commande.models.PasserCommandeRequest;
 import com.orbit.portailAgentStockPR.commande.service.CommandeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @CrossOrigin
 @RestController
@@ -19,7 +24,14 @@ public class CommandeController {
     }
 
     @GetMapping("/afficher/{dNbr}")
-    public void afficherCommande(@PathVariable int dNbr)
+    public List<GetCommandeResponse> afficherCommande(@PathVariable int dNbr)
+    {
+        System.out.println("*//**/*/*/*/RAEZE");
+        return commandeService.getCommande(dNbr);
+    }
+
+    @GetMapping("/afficher/ligneCmd/{nCmd}")
+    public void afficherLigneCommande(@PathVariable int nCmd)
     {
 
     }

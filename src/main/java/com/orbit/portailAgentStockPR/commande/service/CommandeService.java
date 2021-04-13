@@ -1,6 +1,7 @@
 package com.orbit.portailAgentStockPR.commande.service;
 
 import com.orbit.portailAgentStockPR.commande.models.Commande;
+import com.orbit.portailAgentStockPR.commande.models.GetCommandeResponse;
 import com.orbit.portailAgentStockPR.commande.models.LigneCommande;
 import com.orbit.portailAgentStockPR.commande.models.PasserCommandeRequest;
 import com.orbit.portailAgentStockPR.consulterStockPr.models.Dealers;
@@ -25,6 +26,8 @@ public class CommandeService {
 
     @Autowired
     DealersRepository dealersRepository ;
+
+    /************************************ PASSER COMMANDE ****************************************/
     private List<LigneCommande> ligneCommandeRepositoryList(List<LigneCommande> oldList,int dNbr,int typeCmd  )
     {
         List<LigneCommande> newList = new ArrayList<>();
@@ -92,7 +95,7 @@ public class CommandeService {
                 //update the existing commande
 
                 res=commandeRepository.passerCommandeIns(
-                        numCommandePasser()+1,
+                        numCommandePasser()+10000000+1,
                         newCmdFerme.getPanier(),
                         newCmdFerme.getTotHt(),
                         newCmdFerme.getDealer_Number().getLdbDealerNumber(),
@@ -113,7 +116,7 @@ public class CommandeService {
                 //update the existing commande
 
                 res=commandeRepository.passerCommandeIns(
-                        numCommandePasser()+1,
+                        numCommandePasser()+10000000+1,
                         0,
                         newCmdNormale.getTotHt(),
                         newCmdNormale.getDealer_Number().getLdbDealerNumber(),
@@ -144,7 +147,7 @@ public class CommandeService {
                 cmd.setDate_Creation(dateCreation);
                 //************************************************
                 res=commandeRepository.passerCommandeIns(
-                        numCommandePasser()+1,
+                        numCommandePasser()+10000000+1,
                         0,
                         cmd.getTotHt(),
                         cmd.getDealer_Number().getLdbDealerNumber(),
@@ -160,6 +163,53 @@ public class CommandeService {
         }catch(Exception e )
         {
             throw new ApiRequestException(e.getMessage());
+        }
+    }
+    /*****************************************************************************************/
+    public List<GetCommandeResponse> getCommande(int dNbr)
+    {
+        try
+        {
+
+            List<GetCommandeResponse> resList = new ArrayList<>() ;
+            List<Commande> oldList = commandeRepository.findAll();
+            for(int i = 0 ; i<oldList.size();i++)
+            {
+                if(oldList.get(i).getDealer_Number().getLdbDealerNumber() == dNbr)
+                {
+                    GetCommandeResponse rObj = new GetCommandeResponse();
+                    rObj.setdNumber(oldList.get(i).getDealer_Number().getLdbDealerNumber());
+                    rObj.setNumCde(oldList.get(i).getNumCde());
+                    rObj.setPanier(oldList.get(i).getPanier());
+                    rObj.setTotHt(oldList.get(i).getTotHt());
+                    rObj.setDate_Creation(oldList.get(i).getDate_Creation());
+                    rObj.setDate_Cmd(oldList.get(i).getDate_Cmd());
+                    rObj.setHeure_Cmd(oldList.get(i).getHeure_Cmd());
+                    rObj.setType_Cmd(oldList.get(i).getType_Cmd());
+                    rObj.setMode_Paiement(oldList.get(i).getMode_Paiement());
+                    rObj.setRef_Cmd(oldList.get(i).getRef_Cmd());
+                    rObj.setEnregistree(oldList.get(i).getEnregistree());
+                    rObj.setRef_Enregistrement(oldList.get(i).getRef_Enregistrement());
+                    rObj.setDate_Enregistrement(oldList.get(i).getDate_Enregistrement());
+                    rObj.setLivree(oldList.get(i).getLivree());
+                    rObj.setDate_Liv(oldList.get(i).getDate_Liv());
+                    rObj.setDate_Liv_S(oldList.get(i).getDate_Liv_S());
+                    rObj.setFacturee(oldList.get(i).getFacturee());
+                    rObj.setDate_Facture(oldList.get(i).getDate_Facture());
+                    rObj.setMontant_Facture(oldList.get(i).getMontant_Facture());
+                    rObj.setN_Facture(oldList.get(i).getN_Facture());
+                    rObj.setAnnulee(oldList.get(i).getAnnulee());
+                    rObj.setArchivee(oldList.get(i).getArchivee());
+                    rObj.setDate_Annulation(oldList.get(i).getDate_Annulation());
+                    rObj.setDate_Archivage(oldList.get(i).getDate_Archivage());
+
+                    resList.add(rObj);
+                }
+            }
+
+            return resList ;
+        }catch(Exception e ){
+            throw new ApiRequestException(""+e);
         }
     }
 }

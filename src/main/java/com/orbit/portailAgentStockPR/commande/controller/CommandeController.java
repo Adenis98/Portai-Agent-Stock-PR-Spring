@@ -32,4 +32,16 @@ public class CommandeController {
     {
         return commandeService.getLigneCommande(nCmd) ;
     }
+
+    @GetMapping("/afficheCmdr/{nCmd}")
+    public GetLigneCommandeResponse  getOneCommande(@PathVariable int nCmd)
+    {
+        return commandeService.getOneCmnd(nCmd);
+    }
+
+    @PostMapping("/annuler/{nCmd}")
+    public int  annulerCommande(@PathVariable int nCmd)
+    {
+       return commandeService.annulerCmd(nCmd) ;
+    }
 }

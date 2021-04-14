@@ -80,4 +80,14 @@ public interface CommandeRepository extends JpaRepository<Commande, CommandeId> 
     int deleteCommandeNumCmd9999(
             @Param("dNbr") int dNbr
     );
+
+    @Modifying
+    @Transactional
+    @Query( " UPDATE Commande c SET" +
+            " c.annulee= 1 , c.date_Annulation = :dateAnnulation  "+
+            " WHERE c.numCde = :numCmd")
+    int annulerCmdUpd(
+            @Param("numCmd") int numCmd  ,
+            @Param("dateAnnulation") Date dateAnnulation
+    );
 }

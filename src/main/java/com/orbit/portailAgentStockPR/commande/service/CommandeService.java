@@ -283,4 +283,54 @@ public class CommandeService {
             throw new ApiRequestException(""+e);
         }
     }
+    /*****************************************************************************************/
+    public GetLigneCommandeResponse getOneCmnd(int nCmd)
+    {
+        try
+        {
+            List<LigneCommande> listLigneCmd  = ligneCommandeRepository.findAll() ;
+            for(int i = 0 ; i< listLigneCmd.size() ; i++)
+            {
+                if(listLigneCmd.get(i).getNumCmnd().getNumCde() == nCmd)
+                {
+                    GetLigneCommandeResponse resp = new GetLigneCommandeResponse() ;
+                    resp.setNumLigne(listLigneCmd.get(i).getNumLigne());
+                    resp.setQte(listLigneCmd.get(i).getQte());
+                    resp.setPu(listLigneCmd.get(i).getPu());
+                    resp.setTotLigneHt(listLigneCmd.get(i).getTotLigneHt());
+                    resp.setLibelle(listLigneCmd.get(i).getLibelle());
+                    resp.setQteLivree(listLigneCmd.get(i).getQteLivree());
+                    resp.setType_Cmd(listLigneCmd.get(i).getType_Cmd());
+                    resp.setVin(listLigneCmd.get(i).getVin());
+                    resp.setNumInterv(listLigneCmd.get(i).getNumInterv());
+                    resp.setNomClient(listLigneCmd.get(i).getNomClient());
+                    resp.setQteFacturee(listLigneCmd.get(i).getQteFacturee());
+
+                    return resp;
+                }
+            }
+            return null ;
+        }catch(Exception e)
+        {
+            throw new ApiRequestException(""+e);
+        }
+    }
+    /*****************************************************************************************/
+    public int annulerCmd(int numCmd )
+    {
+        try
+        {
+            //************* date de annulation *************
+            Date now = new Date();
+            String pattern = "yyyy-MM-dd hh:mm:ss";
+            SimpleDateFormat formatter = new SimpleDateFormat(pattern);
+            String mysqlDateString = formatter.format(now);
+            Date dateAnnulation  = new SimpleDateFormat(pattern).parse(mysqlDateString);
+            //************************************************
+            return commandeRepository.annulerCmdUpd(numCmd,dateAnnulation);
+        }catch(Exception e)
+        {
+            throw new ApiRequestException(""+e);
+        }
+    }
 }

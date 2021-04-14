@@ -205,7 +205,7 @@ public class CommandeService {
             List<Commande> oldList = commandeRepository.findAll();
             for(int i = 0 ; i<oldList.size();i++)
             {
-                if(oldList.get(i).getDealer_Number().getLdbDealerNumber() == dNbr)
+                if(oldList.get(i).getDealer_Number().getLdbDealerNumber() == dNbr && oldList.get(i).getNumCde() != 9999)
                 {
                     GetCommandeResponse rObj = new GetCommandeResponse();
                     rObj.setdNumber(oldList.get(i).getDealer_Number().getLdbDealerNumber());

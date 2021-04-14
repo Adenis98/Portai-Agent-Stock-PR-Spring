@@ -113,7 +113,7 @@ public class PanierService {
             resp.setRetCd(0);
             return resp ;
         }catch(Exception e){
-            throw new ApiRequestException("message d'erreur : "+e.getCause());
+            throw new ApiRequestException(""+e);
         }
     }
     //******************************************************************************

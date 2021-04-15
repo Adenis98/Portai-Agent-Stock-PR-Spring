@@ -28,7 +28,8 @@ public class PanierService {
     {
         double result =0;
         for(int i = 0 ; i< listLigneCom.size();i++)
-            if(listLigneCom.get(i).getNumCmnd().getDealer_Number().getLdbDealerNumber()==dealerNbr)
+            if(listLigneCom.get(i).getNumCmnd().getDealer_Number().getLdbDealerNumber()==dealerNbr &&
+                    listLigneCom.get(i).getNumCmnd().getNumCde() == 9999)
                 result = result + listLigneCom.get(i).getTotLigneHt();
         return result ;
     }

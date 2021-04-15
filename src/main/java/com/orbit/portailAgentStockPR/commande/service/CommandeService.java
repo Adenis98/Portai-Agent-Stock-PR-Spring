@@ -272,6 +272,7 @@ public class CommandeService {
                     resp.setNumInterv(listLigneCmd.get(i).getNumInterv());
                     resp.setNomClient(listLigneCmd.get(i).getNomClient());
                     resp.setQteFacturee(listLigneCmd.get(i).getQteFacturee());
+                    resp.setCodeArt(listLigneCmd.get(i).getCodeArt());
 
                     listLigneCmdResp.add(resp) ;
                 }

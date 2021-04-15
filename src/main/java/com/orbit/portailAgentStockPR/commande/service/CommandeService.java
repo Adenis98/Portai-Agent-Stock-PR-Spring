@@ -284,29 +284,50 @@ public class CommandeService {
         }
     }
     /*****************************************************************************************/
-    public GetLigneCommandeResponse getOneCmnd(int nCmd)
+    public GetCommandeResponse getOneCmnd(int nCmd)
     {
         try
         {
-            List<LigneCommande> listLigneCmd  = ligneCommandeRepository.findAll() ;
-            for(int i = 0 ; i< listLigneCmd.size() ; i++)
+            List<Commande> oldList  = commandeRepository.findAll() ;
+            for(int i = 0 ; i< oldList.size() ; i++)
             {
-                if(listLigneCmd.get(i).getNumCmnd().getNumCde() == nCmd)
+                if(oldList.get(i).getNumCde() == nCmd)
                 {
-                    GetLigneCommandeResponse resp = new GetLigneCommandeResponse() ;
-                    resp.setNumLigne(listLigneCmd.get(i).getNumLigne());
-                    resp.setQte(listLigneCmd.get(i).getQte());
-                    resp.setPu(listLigneCmd.get(i).getPu());
-                    resp.setTotLigneHt(listLigneCmd.get(i).getTotLigneHt());
-                    resp.setLibelle(listLigneCmd.get(i).getLibelle());
-                    resp.setQteLivree(listLigneCmd.get(i).getQteLivree());
-                    resp.setType_Cmd(listLigneCmd.get(i).getType_Cmd());
-                    resp.setVin(listLigneCmd.get(i).getVin());
-                    resp.setNumInterv(listLigneCmd.get(i).getNumInterv());
-                    resp.setNomClient(listLigneCmd.get(i).getNomClient());
-                    resp.setQteFacturee(listLigneCmd.get(i).getQteFacturee());
+                    GetCommandeResponse rObj = new GetCommandeResponse();
+                    rObj.setdNumber(oldList.get(i).getDealer_Number().getLdbDealerNumber());
+                    rObj.setNumCde(oldList.get(i).getNumCde());
+                    rObj.setPanier(oldList.get(i).getPanier());
+                    rObj.setTotHt(oldList.get(i).getTotHt());
+                    rObj.setDate_Creation(oldList.get(i).getDate_Creation());
+                    rObj.setDate_Cmd(oldList.get(i).getDate_Cmd());
+                    rObj.setHeure_Cmd(oldList.get(i).getHeure_Cmd());
+                    rObj.setType_Cmd(oldList.get(i).getType_Cmd());
+                    rObj.setMode_Paiement(oldList.get(i).getMode_Paiement());
+                    rObj.setRef_Cmd(oldList.get(i).getRef_Cmd());
 
-                    return resp;
+                    rObj.setRef_Enregistrement(oldList.get(i).getRef_Enregistrement());
+                    rObj.setDate_Enregistrement(oldList.get(i).getDate_Enregistrement());
+
+                    rObj.setDate_Liv(oldList.get(i).getDate_Liv());
+                    rObj.setDate_Liv_S(oldList.get(i).getDate_Liv_S());
+
+                    rObj.setDate_Facture(oldList.get(i).getDate_Facture());
+
+                    rObj.setN_Facture(oldList.get(i).getN_Facture());
+
+                    rObj.setDate_Annulation(oldList.get(i).getDate_Annulation());
+                    rObj.setDate_Archivage(oldList.get(i).getDate_Archivage());
+                    try{
+                        rObj.setAnnulee(oldList.get(i).getAnnulee());
+                        rObj.setArchivee(oldList.get(i).getArchivee());
+                        rObj.setEnregistree(oldList.get(i).getEnregistree());
+                        rObj.setFacturee(oldList.get(i).getFacturee());
+                        rObj.setLivree(oldList.get(i).getLivree());
+                        rObj.setMontant_Facture(oldList.get(i).getMontant_Facture());
+                    }catch(Exception e){
+
+                    }
+                    return rObj;
                 }
             }
             return null ;

@@ -34,7 +34,7 @@ public class CommandeController {
     }
 
     @GetMapping("/afficheCmdr/{nCmd}")
-    public GetLigneCommandeResponse  getOneCommande(@PathVariable int nCmd)
+    public GetCommandeResponse  getOneCommande(@PathVariable int nCmd)
     {
         return commandeService.getOneCmnd(nCmd);
     }

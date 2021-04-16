@@ -276,7 +276,6 @@ public class CommandeService {
 
                     listLigneCmdResp.add(resp) ;
                 }
-
             }
             return listLigneCmdResp ;
         }catch(Exception e )

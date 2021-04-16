@@ -69,7 +69,7 @@ public interface CommandeRepository extends JpaRepository<Commande, CommandeId> 
 
     @Modifying
     @Transactional
-    @Query("DELETE FROM Commande c WHERE c.ss.ldbDealerNumber= :dNbr" )
+    @Query("DELETE FROM Commande c WHERE c.ss.ldbDealerNumber= :dNbr and c.numCde = 9999" )
     int deleteCommande(
             @Param("dNbr") int dNbr
     );

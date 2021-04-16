@@ -184,6 +184,17 @@ public class PanierService {
     }
     //********************************************************************************
     //************************** Supprimer ligne PANIER ******************************
+    private int numLigneCmdEncours(int dNbr )
+    {
+        List<LigneCommande> listLigneCmd = ligneCommandeRepository.findAll();
+        int res = 0;
+        for(int i=0 ; i< listLigneCmd.size() ; i++)
+        {
+            if(listLigneCmd.get(i).getNumCmnd().getNumCde() == 9999 && listLigneCmd.get(i).getNumCmnd().getDealer_Number().getLdbDealerNumber() == dNbr)
+                res ++ ;
+        }
+        return res ;
+    }
     public String supprimerLigne(int lignePanier)
     {
         try{
@@ -201,7 +212,7 @@ public class PanierService {
             if(res==1 )
             {
                 double newTot = cmd.getTotHt()-ligneCom.getTotLigneHt();
-                if(newTot>0)
+                if(numLigneCmdEncours(cmd.getDealer_Number().getLdbDealerNumber())>0)
                 {
                     //update ligne commande
                     cmd.setTotHt(newTot);

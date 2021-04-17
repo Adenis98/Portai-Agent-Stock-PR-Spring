@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -105,6 +106,17 @@ public class CommandeService {
         return taille ;
     }
 
+    private Date dateHeurCmd(String pattern) throws ParseException {
+
+        Date now = new Date();
+        //String patternDate = "yyyy-MM-dd";
+        //String patternHeure = "hh:mm:ss";
+
+        SimpleDateFormat formatter = new SimpleDateFormat(pattern);
+        String mysqlDateString = formatter.format(now);
+        return new SimpleDateFormat(pattern).parse(mysqlDateString);
+
+    }
     public int  passerCommande(PasserCommandeRequest req )
     {
         try
@@ -127,7 +139,9 @@ public class CommandeService {
                         newCmdFerme.getType_Cmd(),
                         newCmdFerme.getMode_Paiement(),
                         newCmdFerme.getRef_Cmd(),
-                        newCmdFerme.getDate_Liv_S()
+                        newCmdFerme.getDate_Liv_S(),
+                        dateHeurCmd("yyyy-MM-dd"),
+                        dateHeurCmd("hh:mm:ss")
                 );
                 //delete all "ligne commande"
                 //deleteAllLigneCommande(req.getDealerNumber(),ligneCommandeRepository.findAll());
@@ -150,7 +164,9 @@ public class CommandeService {
                         newCmdNormale.getType_Cmd(),
                         newCmdNormale.getMode_Paiement(),
                         newCmdNormale.getRef_Cmd(),
-                        newCmdNormale.getDate_Liv_S()
+                        newCmdNormale.getDate_Liv_S(),
+                        dateHeurCmd("yyyy-MM-dd"),
+                        dateHeurCmd("hh:mm:ss")
                 );
                 //delete all "ligne commande"
                 //deleteAllLigneCommande(req.getDealerNumber(),ligneCommandeRepository.findAll());
@@ -166,14 +182,7 @@ public class CommandeService {
                 cmd.setTotHt(00);
                 Dealers d = dealersRepository.getOne(req.getDealerNumber());
                 cmd.setDealer_Number(d);
-                //************* date de creation *************
-                Date now = new Date();
-                String pattern = "yyyy-MM-dd hh:mm:ss";
-                SimpleDateFormat formatter = new SimpleDateFormat(pattern);
-                String mysqlDateString = formatter.format(now);
-                Date dateCreation = new SimpleDateFormat(pattern).parse(mysqlDateString);
-                cmd.setDate_Creation(dateCreation);
-                //************************************************
+                cmd.setDate_Creation(dateHeurCmd("yyyy-MM-dd hh:mm:ss"));
                 int pk = numCommandePasser()+10000000+1;
                 res=commandeRepository.passerCommandeIns(
                         pk,
@@ -184,7 +193,9 @@ public class CommandeService {
                         cmd.getType_Cmd(),
                         cmd.getMode_Paiement(),
                         cmd.getRef_Cmd(),
-                        cmd.getDate_Liv_S()
+                        cmd.getDate_Liv_S(),
+                        dateHeurCmd("yyyy-MM-dd"),
+                        dateHeurCmd("hh:mm:ss")
                 );
                 //deleteLigneCommandeType(req.getDealerNumber(),ligneCommandeRepository.findAll(),req.getTypeCmd());
                 updateLigneCmd(req.getDealerNumber() , pk, req.getTypeCmd());

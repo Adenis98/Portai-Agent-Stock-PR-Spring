@@ -243,15 +243,12 @@ public class CommandeService {
                     rObj.setDate_Annulation(oldList.get(i).getDate_Annulation());
                     rObj.setDate_Archivage(oldList.get(i).getDate_Archivage());
 
-
                     try{ rObj.setAnnulee(oldList.get(i).getAnnulee()); }catch(Exception e){ }
                     try{ rObj.setArchivee(oldList.get(i).getArchivee()); }catch(Exception e){ }
                     try{ rObj.setEnregistree(oldList.get(i).getEnregistree()); }catch(Exception e){ }
                     try{ rObj.setFacturee(oldList.get(i).getFacturee()); }catch(Exception e){ }
                     try{ rObj.setLivree(oldList.get(i).getLivree()); }catch(Exception e){ }
                     try{ rObj.setMontant_Facture(oldList.get(i).getMontant_Facture()); }catch(Exception e){ }
-
-
 
 
                     resList.add(rObj);
@@ -330,16 +327,14 @@ public class CommandeService {
 
                     rObj.setDate_Annulation(oldList.get(i).getDate_Annulation());
                     rObj.setDate_Archivage(oldList.get(i).getDate_Archivage());
-                    try{
-                        rObj.setAnnulee(oldList.get(i).getAnnulee());
-                        rObj.setArchivee(oldList.get(i).getArchivee());
-                        rObj.setEnregistree(oldList.get(i).getEnregistree());
-                        rObj.setFacturee(oldList.get(i).getFacturee());
-                        rObj.setLivree(oldList.get(i).getLivree());
-                        rObj.setMontant_Facture(oldList.get(i).getMontant_Facture());
-                    }catch(Exception e){
 
-                    }
+                    try{ rObj.setAnnulee(oldList.get(i).getAnnulee()); }catch(Exception e){ }
+                    try{ rObj.setArchivee(oldList.get(i).getArchivee()); }catch(Exception e){ }
+                    try{ rObj.setEnregistree(oldList.get(i).getEnregistree()); }catch(Exception e){ }
+                    try{ rObj.setFacturee(oldList.get(i).getFacturee()); }catch(Exception e){ }
+                    try{ rObj.setLivree(oldList.get(i).getLivree()); }catch(Exception e){ }
+                    try{ rObj.setMontant_Facture(oldList.get(i).getMontant_Facture()); }catch(Exception e){ }
+
                     return rObj;
                 }
             }

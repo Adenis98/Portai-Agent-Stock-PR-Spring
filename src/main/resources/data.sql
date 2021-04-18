@@ -3,6 +3,7 @@
 INSERT INTO dealer_stock (cod_art, dealer_number, qte_achat, stock, ug) VALUES ('1C0121253C',95,52,6,1) ;
 INSERT INTO dealer_stock (cod_art, dealer_number, qte_achat, stock, ug) VALUES ('5F1955426',95,52,0,1) ;*/
 
+
 /*inserer les ligne de ArtMasters */
 /*INSERT INTO art_masters (cod_art, h, ht, htg, libelle , pu_agents, remisable) VALUES ("1C0121253A","","","","REFR. EAU",547.47,0) ;
 INSERT INTO art_masters (cod_art, h, ht, htg, libelle , pu_agents, remisable) VALUES ("1C0121253C","","","","REFR. EAU",1015.87,0)  ;

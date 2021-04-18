@@ -35,8 +35,8 @@ public class CommandeService {
         for(int i =0;i<oldList.size() ; i++ )
         {
             if(oldList.get(i).getNumCmnd().getNumCde() == 9999 &&
-                    typeCmd == oldList.get(i).getType_Cmd() &&
-                    oldList.get(i).getNumCmnd().getDealer_Number().getLdbDealerNumber() == dNbr
+                typeCmd == oldList.get(i).getType_Cmd() &&
+                oldList.get(i).getNumCmnd().getDealer_Number().getLdbDealerNumber() == dNbr
             )
                 newList.add(oldList.get(i));
 
@@ -365,4 +365,45 @@ public class CommandeService {
             throw new ApiRequestException(""+e);
         }
     }
+    /*****************************************************************************************/
+    public List<Integer> filtreCmdRefArt(String refArt)
+    {
+        List<Integer> res = new ArrayList<>( );
+        List<Commande> cmdList  = commandeRepository.findAll();
+        List<GetLigneCommandeResponse> ligneCmdList = new ArrayList<>( );
+        for(int i= 0 ; i < cmdList.size() ; i ++ )
+        {
+            ligneCmdList = getLigneCommande(cmdList.get(i).getNumCde());
+            for(int j = 0 ; j< ligneCmdList.size() ; j++)
+            {
+                if(ligneCmdList.get(j).getCodeArt().equals(refArt))
+                {
+                    res.add(cmdList.get(i).getNumCde());
+                    break ;
+                }
+            }
+        }
+        return res ;
+    }
+    /*****************************************************************************************/
+    public List<Integer> filtreCmdVin(String vin)
+    {
+        List<Integer> res = new ArrayList<>( );
+        List<Commande> cmdList  = commandeRepository.findAll();
+        List<GetLigneCommandeResponse> ligneCmdList = new ArrayList<>( );
+        for(int i= 0 ; i < cmdList.size() ; i ++ )
+        {
+            ligneCmdList = getLigneCommande(cmdList.get(i).getNumCde());
+            for(int j = 0 ; j< ligneCmdList.size() ; j++)
+            {
+                if(ligneCmdList.get(j).getVin( ).equals(vin))
+                {
+                    res.add(cmdList.get(i).getNumCde());
+                    break ;
+                }
+            }
+        }
+        return res ;
+    }
+
 }

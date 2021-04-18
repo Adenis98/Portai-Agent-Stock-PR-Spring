@@ -44,4 +44,15 @@ public class CommandeController {
     {
        return commandeService.annulerCmd(nCmd) ;
     }
+
+    @GetMapping("/filtreRefArt/{refArt}")
+    public List<Integer>  filtreCommandeRefArt(@PathVariable String refArt)
+    {
+        return commandeService.filtreCmdRefArt(refArt) ;
+    }
+    @GetMapping("/filtreVin/{vin}")
+    public List<Integer>  filtreCommandeVin(@PathVariable String vin)
+    {
+        return commandeService.filtreCmdVin(vin) ;
+    }
 }

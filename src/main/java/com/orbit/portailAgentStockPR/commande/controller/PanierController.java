@@ -30,4 +30,9 @@ public class PanierController {
     public String  deletePanierWS(@PathVariable("numLigne") int numLigne){
         return panierService.supprimerLigne(numLigne) ;
     }
+
+    @GetMapping("/GetPanierSize/{dNbr}")
+    public int getPanierSize(@PathVariable int dNbr){
+        return panierService.getPanierSize(dNbr);
+    }
 }

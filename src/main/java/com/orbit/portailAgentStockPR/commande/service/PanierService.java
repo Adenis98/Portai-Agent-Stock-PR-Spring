@@ -229,4 +229,24 @@ public class PanierService {
         }
     }
     //********************************************************************************
+    public int getPanierSize(int dNbr)
+    {
+        try
+        {
+            List<LigneCommande> lcList = ligneCommandeRepository.findAll();
+            int res = 0 ;
+            for(int i = 0 ; i< lcList.size() ; i++)
+            {
+                if(
+                        lcList.get(i).getNumCmnd().getDealer_Number().getLdbDealerNumber() == dNbr &&
+                        lcList.get(i).getNumCmnd().getNumCde() == 9999
+                )
+                    res ++ ;
+            }
+            return res ;
+        }catch(Exception e )
+        {
+            throw new ApiRequestException(""+e);
+        }
+    }
 }

@@ -2,6 +2,7 @@ package com.orbit.portailAgentStockPR.consulterStockPr.service;
 
 import com.orbit.portailAgentStockPR.consulterStockPr.models.*;
 import com.orbit.portailAgentStockPR.exception.ApiRequestException;
+import com.orbit.portailAgentStockPR.interAgent.models.DealerStockList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -64,6 +65,42 @@ public class StockPrService {
         }catch(Exception e)
         {
             throw new ApiRequestException("message d'erreur : "+e.getMessage());
+        }
+    }
+    /******************************************************/
+    public List<DealerStockList> getMonStock(int dNbr)
+    {
+        try
+        {
+            List<DealerStock> ds = dealerStockRepository .findAll() ;
+            List<ArtMasters> artList = artMastersRepository.findAll() ;
+            DealerStockList dsl ;
+            List<DealerStockList> res = new ArrayList<>( );
+            for(int i = 0 ; i< ds.size();i++){
+                if(ds.get(i).getDealer_number().getLdbDealerNumber() == dNbr)
+                {
+                    dsl = new DealerStockList() ;
+                    dsl.setStock(ds.get(i).getStock());
+                    dsl.setUg(ds.get(i).getUg());
+                    dsl.setQteAch(ds.get(i).getQte_achat());
+                    dsl.setCodArt(ds.get(i).getCodart());
+                    for(int j = 0 ; j< artList.size(); j++)
+                    {
+                        if(artList.get(j).getCodArt().equals( ds.get(i).getCodart()))
+                        {
+                            dsl.setLibelle(artList.get(j).getLibelle());
+                            dsl.setPuAgents(artList.get(j).getPu_agents());
+                            break ;
+                        }
+                    }
+                    res.add(dsl);
+                }
+            }
+            return res ;
+
+        }catch(Exception e)
+        {
+            throw new ApiRequestException(""+e);
         }
     }
 

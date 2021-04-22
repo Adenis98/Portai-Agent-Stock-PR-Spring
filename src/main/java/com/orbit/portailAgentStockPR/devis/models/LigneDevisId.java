@@ -1,4 +1,4 @@
-package com.orbit.portailAgentStockPR.DevisClasses;
+package com.orbit.portailAgentStockPR.devis.models;
 
 import com.orbit.portailAgentStockPR.consulterStockPr.models.Dealers;
 
@@ -7,8 +7,6 @@ import java.io.Serializable;
 
 public class LigneDevisId implements Serializable {
 
-
-    private Dealers dealer_Number ;
-    private int numDevis ;
+    private Devis ss ;
     private int numLigne ;
 }

@@ -1,49 +1,35 @@
-package com.orbit.portailAgentStockPR.DevisClasses;
+package com.orbit.portailAgentStockPR.devis.models;
 
 import com.orbit.portailAgentStockPR.consulterStockPr.models.Dealers;
 import com.sun.istack.NotNull;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
-/*@Entity
-@IdClass(LigneDevisId.class)*/
+@Entity
+@IdClass(LigneDevisId.class)
 public class LigneDevis {
-    /*@Id
-    @NotNull
-    @ManyToOne*/
-    private Dealers dealer_Number ;
-    /*@Id
-    @NotNull*/
-    private int numDevis ;//F.key
-    //@Id
-    //@NotNull
-    private int numLigne ;
-    //@NotNull
+
+    @Id
+    @ManyToOne
+    private Devis ss ;//F.key
+    @Id
+    private Integer numLigne ;
+
     private String codeArt ;
-    //@NotNull
+
     private String libelle ;
-    private double qte ;
-    private double pu ;
-    private double remise ;
-    private double totLigne ;
+    private Double qte ;
+    private Double pu ;
+    private Double remise ;
+    private Double totLigne ;
 
-    public Dealers getDealer_Number() {
-        return dealer_Number;
+
+    public Devis getNumDevis() {
+        return ss;
     }
 
-    public void setDealer_Number(Dealers dealer_Number) {
-        this.dealer_Number = dealer_Number;
-    }
-
-    public int getNumDevis() {
-        return numDevis;
-    }
-
-    public void setNumDevis(int numDevis) {
-        this.numDevis = numDevis;
+    public void setNumDevis(Devis dd) {
+        this.ss = dd;
     }
 
     public int getNumLigne() {

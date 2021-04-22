@@ -1,20 +1,18 @@
-package com.orbit.portailAgentStockPR.DevisClasses;
+package com.orbit.portailAgentStockPR.devis.models;
 
 import com.orbit.portailAgentStockPR.consulterStockPr.models.Dealers;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.util.Date;
 
-//@Entity
-//@IdClass(DevisId.class)
+@Entity
+@IdClass(DevisId.class)
 public class Devis {
-    //@Id
-    //@ManyToOne
-    private Dealers dealer_Number ;
-    //@Id
+    @Id
+    @ManyToOne
+    @JoinColumn(name = "dealer_number")
+    private Dealers ss ;
+    @Id
     private int numDevis ;
     private String modele ;
     private int promotion ;
@@ -36,11 +34,11 @@ public class Devis {
     private Date date_Archivage ;
 
     public Dealers getDealer_Number() {
-        return dealer_Number;
+        return ss;
     }
 
-    public void setDealer_Number(Dealers dealer_Number) {
-        this.dealer_Number = dealer_Number;
+    public void setDealer_Number(Dealers ss) {
+        this.ss = ss;
     }
 
     public int getNumDevis() {

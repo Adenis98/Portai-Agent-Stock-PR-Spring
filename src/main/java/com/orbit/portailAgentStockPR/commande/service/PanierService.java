@@ -70,6 +70,7 @@ public class PanierService {
                 cmd.setTotHt(req.getQte()*req.getPu());
                 Dealers d = dealersRepository.getOne(req.getDealerNumber());
                 cmd.setDealer_Number(d);
+
                 //************* date de creation *************
                 Date now = new Date();
                 String pattern = "yyyy-MM-dd hh:mm:ss";
@@ -79,8 +80,8 @@ public class PanierService {
                 cmd.setDate_Creation(dateCreation);
                 //************************************************
                 commandeRepository.insertCommande(9999,cmd.getPanier(),cmd.getTotHt(),cmd.getDealer_Number().getLdbDealerNumber(),cmd.getDate_Creation());
-                List<Commande> cmndList= commandeRepository.findAll();
-                cmd = cmndList.get(cmndList.size()-1);
+              //  List<Commande> cmndList= commandeRepository.findAll();
+              //  cmd = cmndList.get(cmndList.size()-1);
             }
 
             LigneCommande ligne = new LigneCommande();

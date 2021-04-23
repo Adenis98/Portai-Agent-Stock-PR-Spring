@@ -1,8 +1,8 @@
 package com.orbit.portailAgentStockPR.devis.controller;
 
 
-import com.orbit.portailAgentStockPR.devis.models.AjouterLigneDevisRequest;
-import com.orbit.portailAgentStockPR.devis.models.AjouterLigneDevisResponse;
+import com.orbit.portailAgentStockPR.devis.models.AjouterDevisRequest;
+import com.orbit.portailAgentStockPR.devis.models.AjouterDevisResponse;
 import com.orbit.portailAgentStockPR.devis.service.DevisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,8 +16,8 @@ public class DevisController {
     DevisService devisService ;
 
     @PostMapping("/ajouterLigneDevis")
-    public AjouterLigneDevisResponse ajouterLigneDevis(@RequestBody AjouterLigneDevisRequest req)
+    public AjouterDevisResponse ajouterLigneDevis(@RequestBody AjouterDevisRequest req)
     {
-        return devisService.ajouterLigne(req);
+        return devisService.ajouterDevis(req);
     }
 }

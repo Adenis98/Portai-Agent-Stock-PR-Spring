@@ -31,7 +31,8 @@ public class StockPrService {
         {
             DealerStock d = dstocklist.get(i);
             Dealers ds =d.getDealer_number();
-            returnList.add(new ListeStockAgentResponse(ds.getLdbDealerNumber(),ds.getDealerName(),ds.getDealerPhoneNo(),d.getCodart(),am.getLibelle(),am.getH(),am.getHt(),am.getHtg(),am.getPu_agents(),d.getStock(),am.getRemisable(),d.getQte_achat()));
+            if(ds.getLdbDealerNumber() == 95) // *********** 95 supposé le seul  concessionnaire
+                returnList.add(new ListeStockAgentResponse(ds.getLdbDealerNumber(),ds.getDealerName(),ds.getDealerPhoneNo(),d.getCodart(),am.getLibelle(),am.getH(),am.getHt(),am.getHtg(),am.getPu_agents(),d.getStock(),am.getRemisable(),d.getQte_achat()));
         }
         return returnList;
     }

@@ -1,4 +1,4 @@
 package com.orbit.portailAgentStockPR.devis.models;
 
-public class AjouterLigneDevisResponse {
+public class AjouterDevisResponse {
 }

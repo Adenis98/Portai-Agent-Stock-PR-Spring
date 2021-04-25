@@ -25,7 +25,7 @@ public class AjouterDevisRequest {
     private double toTaxes ;
     private double timbre ;
 
-    private List<Integer> listeArt  ;
+    private List<LigneArticleRequest> listeArt  ;
 
     public AjouterDevisRequest() {
     }
@@ -110,11 +110,11 @@ public class AjouterDevisRequest {
         this.timbre = timbre;
     }
 
-    public List<Integer> getListeArt() {
+    public List<LigneArticleRequest> getListeArt() {
         return listeArt;
     }
 
-    public void setListeArt(List<Integer> listeArt) {
+    public void setListeArt(List<LigneArticleRequest> listeArt) {
         this.listeArt = listeArt;
     }
 }

@@ -2,6 +2,7 @@ package com.orbit.portailAgentStockPR.devis.models;
 
 import com.orbit.portailAgentStockPR.consulterStockPr.models.Dealers;
 import com.sun.istack.NotNull;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
@@ -12,6 +13,14 @@ public class LigneDevis {
     @Id
     @ManyToOne
     private Devis ss ;//F.key
+    @GeneratedValue(
+            strategy= GenerationType.AUTO,
+            generator="native"
+    )
+    @GenericGenerator(
+            name = "native",
+            strategy = "native"
+    )
     @Id
     private Integer numLigne ;
 

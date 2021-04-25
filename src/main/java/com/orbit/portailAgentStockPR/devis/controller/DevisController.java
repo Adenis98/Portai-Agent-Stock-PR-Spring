@@ -16,7 +16,7 @@ public class DevisController {
     DevisService devisService ;
 
     @PostMapping("/ajouterLigneDevis")
-    public AjouterDevisResponse ajouterLigneDevis(@RequestBody AjouterDevisRequest req)
+    public int ajouterLigneDevis(@RequestBody AjouterDevisRequest req)
     {
         return devisService.ajouterDevis(req);
     }

@@ -51,13 +51,17 @@
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
 
-		<dependency>
+		<!--<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
+		</dependency>-->
+
+		<dependency>
+			<groupId>org.postgesql</groupId>
+			<artifactId>postgesql</artifactId>
+			<scope>runtime</scope>
 		</dependency>
-
-
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>

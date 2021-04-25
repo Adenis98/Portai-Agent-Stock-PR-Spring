@@ -1,6 +1,7 @@
 package com.orbit.portailAgentStockPR.devis.models;
 
 import com.orbit.portailAgentStockPR.consulterStockPr.models.Dealers;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -12,25 +13,41 @@ public class Devis {
     @ManyToOne
     @JoinColumn(name = "dealer_number")
     private Dealers ss ;
+    @GeneratedValue(
+            strategy= GenerationType.AUTO,
+            generator="native"
+    )
+    @GenericGenerator(
+            name = "native",
+            strategy = "native"
+    )
     @Id
-    private int numDevis ;
+    private Integer numDevis ;
     private String modele ;
-    private int promotion ;
+    @Column(nullable=true)
+    private Integer promotion ;
     private Date debutPromo ;
     private Date finPromo ;
     private String nomClient ;
     private String idFisc ;
-    private double totHt ;
-    private double toRemise ;
-    private double toTaxes ;
-    private double timbre ;
-    private double totTtc ;
+    @Column(nullable=true)
+    private Double totHt ;
+    @Column(nullable=true)
+    private Double toRemise ;
+    @Column(nullable=true)
+    private Double toTaxes ;
+    @Column(nullable=true)
+    private Double timbre ;
+    @Column(nullable=true)
+    private Double totTtc ;
     private Date date_Creation ;
     private Date date_Devis ;
     private String heure_Devis ;
-    private int annulee ;
+    @Column(nullable=true)
+    private Integer annulee ;
     private Date date_Annulation ;
-    private int Archivee ;
+    @Column(nullable=true)
+    private Integer Archivee ;
     private Date date_Archivage ;
 
     public Dealers getDealer_Number() {

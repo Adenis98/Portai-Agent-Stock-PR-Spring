@@ -58,10 +58,11 @@
 		</dependency>-->
 
 		<dependency>
-			<groupId>org.postgesql</groupId>
-			<artifactId>postgesql</artifactId>
-			<scope>runtime</scope>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>42.2.20</version>
 		</dependency>
+
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>

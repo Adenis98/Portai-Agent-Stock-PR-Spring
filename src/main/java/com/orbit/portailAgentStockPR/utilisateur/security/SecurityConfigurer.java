@@ -30,6 +30,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth )throws Exception {
         auth.userDetailsService(myUserDetailsService);
+
     }
 
     @Override

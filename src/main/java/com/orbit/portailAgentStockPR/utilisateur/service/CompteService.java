@@ -75,6 +75,7 @@ public class CompteService {
     public User updateUser(User user,int id) throws Exception {
         if(!userRepository.findById(id).get().getUserName().equals(user.getUserName())&&userNameExists((user.getUserName())))
             throw new Exception(" nom d'utilisateur existe dèja ");
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.updateUser(id,user.getUserName(),user.getDealer_Number(),user.getPermis(),user.getPassword());
         return userRepository.findById(id).get();
 

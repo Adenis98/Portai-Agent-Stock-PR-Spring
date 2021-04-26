@@ -5,6 +5,7 @@ import com.orbit.portailAgentStockPR.utilisateur.models.User;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.hibernate.SharedSessionContract;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -17,6 +18,8 @@ public class CompteService {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    PasswordEncoder passwordEncoder ;
 
     private boolean userNameExists(String userName)
     {
@@ -32,7 +35,10 @@ public class CompteService {
     {
         if(userNameExists((user.getUserName())))
             throw new Exception(" nom d'utilisateur existe dèja ");
-        return userRepository.save(user);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        User newUser = userRepository.save(user);
+        newUser.setPassword("• • • • •");
+        return newUser ;
     }
 
     public boolean delete(int id){
@@ -48,7 +54,11 @@ public class CompteService {
         List<User> newList = new ArrayList<>();
         for(int i = 0 ; i<allUsers.size() ; i++)
             if(allUsers.get(i).getDealer_Number()==dNbr)
+            {
+                allUsers.get(i).setPassword("• • • • •");
                 newList.add(allUsers.get(i));
+            }
+
         return newList;
     }
 

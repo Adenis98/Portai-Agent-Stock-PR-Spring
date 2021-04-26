@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -17,13 +18,16 @@ public class MyUserDetailsService implements UserDetailsService {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    PasswordEncoder passwordEncoder ;
+
     @Override
     public UserDetails loadUserByUsername(String userName) throws ApiRequestException {
         if(userName.equals("admin")){
             User user = new User();
             user.setUserName("admin");
-            user.setPassword("1234");
-            user.setPermis(2);
+            user.setPassword(passwordEncoder.encode("1234"));
+            user.setPermis(1);
             user.setDealer_Number(95);
             return new MyUserDetails(user);
         }

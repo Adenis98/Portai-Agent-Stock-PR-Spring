@@ -80,6 +80,12 @@
 			<version>1.5.2</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.10</version>
+			<scope>provided</scope>
+		</dependency>
     </dependencies>
 
 	<build>

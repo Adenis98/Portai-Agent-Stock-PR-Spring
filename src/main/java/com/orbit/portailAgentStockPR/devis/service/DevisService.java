@@ -3,12 +3,10 @@ package com.orbit.portailAgentStockPR.devis.service;
 import com.orbit.portailAgentStockPR.consulterStockPr.models.ArtMasters;
 import com.orbit.portailAgentStockPR.consulterStockPr.service.ArtMastersRepository;
 import com.orbit.portailAgentStockPR.devis.models.AjouterDevisRequest;
-import com.orbit.portailAgentStockPR.devis.models.AjouterDevisResponse;
 import com.orbit.portailAgentStockPR.devis.models.Devis;
 import com.orbit.portailAgentStockPR.devis.models.LigneArticleRequest;
 import com.orbit.portailAgentStockPR.exception.ApiRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -32,10 +30,6 @@ public class DevisService {
         {
             int insertion = this.devisRepository.insertDevis(
                     req.getDealerNbr() ,
-                    req.getModele() ,
-                    req.getPromotion() ,
-                    req.getDebutPromo() ,
-                    req.getFinPromo() ,
                     req.getNomClient() ,
                     req.getIdFisc() ,
                     req.getToRemise() ,

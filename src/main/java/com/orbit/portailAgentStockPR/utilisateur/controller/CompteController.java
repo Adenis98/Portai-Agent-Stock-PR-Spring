@@ -3,6 +3,9 @@ package com.orbit.portailAgentStockPR.utilisateur.controller;
 import com.orbit.portailAgentStockPR.exception.ApiRequestException;
 import com.orbit.portailAgentStockPR.utilisateur.models.User;
 import com.orbit.portailAgentStockPR.utilisateur.service.CompteService;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,12 +19,13 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @RequestMapping(path = "/compte")
+@AllArgsConstructor
 public class CompteController {
 
-    @Autowired
-    CompteService compteService;
-    @Autowired
-    ServletContext servletContext;
+
+    private final CompteService compteService;
+
+    private final ServletContext servletContext;
 
 
     @RequestMapping(path = "/ajout",method = RequestMethod.POST)

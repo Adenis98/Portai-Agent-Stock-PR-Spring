@@ -2,6 +2,7 @@ package com.orbit.portailAgentStockPR.commande.controller;
 
 import com.orbit.portailAgentStockPR.commande.models.*;
 import com.orbit.portailAgentStockPR.commande.service.CommandeService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,10 +12,11 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @RequestMapping(path="/commande")
+@AllArgsConstructor
 public class CommandeController {
 
-    @Autowired
-    CommandeService commandeService ;
+
+    private final CommandeService commandeService ;
     @PostMapping("/passer")
     public int  passerCommande(@RequestBody PasserCommandeRequest req)
     {

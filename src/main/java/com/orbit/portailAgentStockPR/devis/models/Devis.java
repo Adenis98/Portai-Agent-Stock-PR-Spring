@@ -23,11 +23,7 @@ public class Devis {
     )
     @Id
     private Integer numDevis ;
-    private String modele ;
     @Column(nullable=true)
-    private Integer promotion ;
-    private Date debutPromo ;
-    private Date finPromo ;
     private String nomClient ;
     private String idFisc ;
     @Column(nullable=true)
@@ -66,37 +62,6 @@ public class Devis {
         this.numDevis = numDevis;
     }
 
-    public String getModele() {
-        return modele;
-    }
-
-    public void setModele(String modele) {
-        this.modele = modele;
-    }
-
-    public int getPromotion() {
-        return promotion;
-    }
-
-    public void setPromotion(int promotion) {
-        this.promotion = promotion;
-    }
-
-    public Date getDebutPromo() {
-        return debutPromo;
-    }
-
-    public void setDebutPromo(Date debutPromo) {
-        this.debutPromo = debutPromo;
-    }
-
-    public Date getFinPromo() {
-        return finPromo;
-    }
-
-    public void setFinPromo(Date finPromo) {
-        this.finPromo = finPromo;
-    }
 
     public String getNomClient() {
         return nomClient;

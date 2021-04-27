@@ -2,6 +2,7 @@ package com.orbit.portailAgentStockPR.commande.models;
 
 
 import com.orbit.portailAgentStockPR.consulterStockPr.models.Dealers;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -48,8 +49,6 @@ public class Commande {
     private Integer archivee ;
     private Date date_Annulation ;
     private Date date_Archivage ;
-
-
     public int getNumCde() {
         return numCde;
     }

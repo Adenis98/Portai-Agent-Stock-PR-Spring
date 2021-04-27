@@ -2,6 +2,7 @@ package com.orbit.portailAgentStockPR.interAgent.controller;
 
 import com.orbit.portailAgentStockPR.interAgent.models.GetAllAgentsStockResponse;
 import com.orbit.portailAgentStockPR.interAgent.service.GetAllAgentsStockService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,10 +13,11 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
+@AllArgsConstructor
 public class InterAgentController {
 
-    @Autowired
-    GetAllAgentsStockService getAllAgentsStockService ;
+
+    private final GetAllAgentsStockService getAllAgentsStockService ;
 
     @GetMapping("/getAllAgentsStock/{dNbr}")
     public List<GetAllAgentsStockResponse> getAgentsStock(@PathVariable int dNbr)

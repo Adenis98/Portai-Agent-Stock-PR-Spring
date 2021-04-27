@@ -7,6 +7,7 @@ import com.orbit.portailAgentStockPR.utilisateur.models.AuthenticationResponse;
 import com.orbit.portailAgentStockPR.utilisateur.models.MyUserDetails;
 import com.orbit.portailAgentStockPR.utilisateur.service.MyUserDetailsService;
 import com.orbit.portailAgentStockPR.utilisateur.util.JwtUtil;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,13 +18,14 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
 @RestController
+@AllArgsConstructor
 public class LoginController {
 
-    @Autowired
+
     private AuthenticationManager authenticationManager ;
-    @Autowired
+
     private MyUserDetailsService userDetailService;
-    @Autowired
+
     private JwtUtil jwtTokenUtil ;
 
 

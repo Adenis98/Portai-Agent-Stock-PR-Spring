@@ -12,12 +12,6 @@ public class AjouterDevisRequest {
 
     private int dealerNbr ;
 
-    private String modele ;
-
-    private int promotion ;
-    private Date debutPromo ;
-    private Date finPromo ;
-
     private String nomClient ;
     private String idFisc ;
 
@@ -38,37 +32,7 @@ public class AjouterDevisRequest {
         this.dealerNbr = dealerNbr;
     }
 
-    public String getModele() {
-        return modele;
-    }
 
-    public void setModele(String modele) {
-        this.modele = modele;
-    }
-
-    public int getPromotion() {
-        return promotion;
-    }
-
-    public void setPromotion(int promotion) {
-        this.promotion = promotion;
-    }
-
-    public Date getDebutPromo() {
-        return debutPromo;
-    }
-
-    public void setDebutPromo(Date debutPromo) {
-        this.debutPromo = debutPromo;
-    }
-
-    public Date getFinPromo() {
-        return finPromo;
-    }
-
-    public void setFinPromo(Date finPromo) {
-        this.finPromo = finPromo;
-    }
 
     public String getNomClient() {
         return nomClient;

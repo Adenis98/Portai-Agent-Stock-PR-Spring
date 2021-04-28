@@ -3,12 +3,15 @@ package com.orbit.portailAgentStockPR.devis.service;
 import com.orbit.portailAgentStockPR.consulterStockPr.models.ArtMasters;
 import com.orbit.portailAgentStockPR.consulterStockPr.service.ArtMastersRepository;
 import com.orbit.portailAgentStockPR.devis.models.AjouterDevisRequest;
+import com.orbit.portailAgentStockPR.devis.models.AjouterDevisResponse;
 import com.orbit.portailAgentStockPR.devis.models.Devis;
 import com.orbit.portailAgentStockPR.devis.models.LigneArticleRequest;
 import com.orbit.portailAgentStockPR.exception.ApiRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -24,7 +27,15 @@ public class DevisService {
     @Autowired
     ArtMastersRepository artMastersRepository;
 
-    public int ajouterDevis(AjouterDevisRequest req)
+    private Date dateHeurDevis(String pattern) throws ParseException {
+        Date now = new Date();
+        //String patternDate = "yyyy-MM-dd";
+        //String patternHeure = "hh:mm:ss";
+        SimpleDateFormat formatter = new SimpleDateFormat(pattern);
+        String mysqlDateString = formatter.format(now);
+        return new SimpleDateFormat(pattern).parse(mysqlDateString);
+    }
+    public AjouterDevisResponse ajouterDevis(AjouterDevisRequest req)
     {
         try
         {
@@ -34,11 +45,21 @@ public class DevisService {
                     req.getIdFisc() ,
                     req.getToRemise() ,
                     req.getToTaxes() ,
-                    req.getTimbre()
+                    req.getTimbre(),
+                    this.dateHeurDevis("yyyy-MM-dd hh:mm:ss")
             );
+
             List<Devis> listeDevis =  devisRepository.findAll();
 
             Devis numDevis = listeDevis.get(listeDevis.size()-1);
+
+            AjouterDevisResponse resp = new AjouterDevisResponse();
+            if(insertion == 1 )
+            {
+                resp.setInsertionError(false);
+                resp.setNumDevis(numDevis.getNumDevis());
+                resp.setDateCreation(numDevis.getDate_Creation());
+            }
 
             int insertLigneDevisResp = 1;
             for(int i = 0 ; i<req.getListeArt().size() ; i++){
@@ -58,9 +79,12 @@ public class DevisService {
             }
 
             if(insertion !=0 && insertLigneDevisResp !=0)
-                return 1;
+                return resp;
             else
-                return 0 ;
+            {
+                resp.setInsertionError(true);
+                return resp ;
+            }
         }catch(Exception e)
         {
             throw new ApiRequestException(""+e);

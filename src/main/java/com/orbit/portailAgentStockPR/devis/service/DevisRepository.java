@@ -17,14 +17,15 @@ public interface DevisRepository extends JpaRepository<Devis, DevisId> {
     @Modifying
     @Transactional
     @Query( value = "insert into devis  (" +
-            "dealer_number,id_fisc,nom_client,to_remise,to_taxes,timbre )" +
-            " values (:dNbr,:idFisc,:nomClient,:toRemise,:toTaxe,:timbre)" , nativeQuery = true)
+            "dealer_number,id_fisc,nom_client,to_remise,to_taxes,timbre,date_creation )" +
+            " values (:dNbr,:idFisc,:nomClient,:toRemise,:toTaxe,:timbre,:dateCreation)" , nativeQuery = true)
     int insertDevis(
             @Param("dNbr") int dNbr ,
             @Param("nomClient") String nomClient ,
             @Param("idFisc") String idFisc ,
             @Param("toRemise") double toRemise ,
             @Param("toTaxe") double toTaxe ,
-            @Param("timbre") double timbre
+            @Param("timbre") double timbre ,
+            @Param("dateCreation") Date dateCreation
     );
 }

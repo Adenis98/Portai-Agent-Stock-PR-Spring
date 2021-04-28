@@ -78,7 +78,7 @@ public class DevisService {
                         artMast.getPu_agents() ,
                         art.getQte() ,
                         artMast.getPu_agents() * art.getQte() ,
-                        numDevis.getNumDevis() ,
+                        devis.getNumDevis() ,
                         req.getDealerNbr()
                 );
             }

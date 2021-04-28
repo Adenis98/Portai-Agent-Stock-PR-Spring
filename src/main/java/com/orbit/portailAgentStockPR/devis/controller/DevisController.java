@@ -21,4 +21,10 @@ public class DevisController {
     {
         return devisService.ajouterDevis(req);
     }
+
+    @GetMapping("/ajouterLigneDevis")
+    public void getListeDevis( AjouterDevisRequest req)
+    {
+
+    }
 }

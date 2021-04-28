@@ -50,15 +50,20 @@ public class DevisService {
             );
 
             List<Devis> listeDevis =  devisRepository.findAll();
-
-            Devis numDevis = listeDevis.get(listeDevis.size()-1);
+            Devis devis = listeDevis.get(listeDevis.size()-1);
+            int numDevis =1;
+            for(int i =0;i<listeDevis.size();i++)
+            {
+                if(listeDevis.get(i).getNumDevis()>numDevis&&listeDevis.get(i).getDealer_Number().getLdbDealerNumber()==req.getDealerNbr())
+                    devis=listeDevis.get(i) ;
+            }
 
             AjouterDevisResponse resp = new AjouterDevisResponse();
             if(insertion == 1 )
             {
                 resp.setInsertionError(false);
-                resp.setNumDevis(numDevis.getNumDevis());
-                resp.setDateCreation(numDevis.getDate_Creation());
+                resp.setNumDevis(devis.getNumDevis());
+                resp.setDateCreation(devis.getDate_Creation());
             }
 
             int insertLigneDevisResp = 1;

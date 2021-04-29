@@ -105,4 +105,21 @@ public class StockPrService {
         }
     }
 
+
+    /******************************** Dealer Info **********************************/
+
+    public DealerInfo getDealerInfo(int dNbr)
+    {
+        try
+        {
+            Dealers dealers=dealersRepository.getOne(dNbr);
+            DealerInfo dInfo = new DealerInfo() ;
+            dInfo.setDealerName(dealers.getDealerName());
+            dInfo.setSalesMan(dealers.getSalesMan());
+            return dInfo;
+        }catch(Exception e)
+        {
+            throw new ApiRequestException(""+e.getMessage());
+        }
+    }
 }

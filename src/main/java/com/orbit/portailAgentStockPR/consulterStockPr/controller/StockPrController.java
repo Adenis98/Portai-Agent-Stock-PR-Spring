@@ -1,5 +1,6 @@
 package com.orbit.portailAgentStockPR.consulterStockPr.controller;
 
+import com.orbit.portailAgentStockPR.consulterStockPr.models.DealerInfo;
 import com.orbit.portailAgentStockPR.consulterStockPr.models.DealerStock;
 import com.orbit.portailAgentStockPR.consulterStockPr.models.ListeStockAgentRequest;
 import com.orbit.portailAgentStockPR.consulterStockPr.service.StockPrService;
@@ -29,5 +30,11 @@ public class StockPrController {
     public List<DealerStockList> getMonStock(@PathVariable int dNbr)
     {
         return stockPrService.getMonStock(dNbr);
+    }
+
+    @GetMapping("/getDealerInfo/{dNbr}")
+    public DealerInfo getDealerInfo(@PathVariable int dNbr)
+    {
+        return stockPrService.getDealerInfo(dNbr);
     }
 }

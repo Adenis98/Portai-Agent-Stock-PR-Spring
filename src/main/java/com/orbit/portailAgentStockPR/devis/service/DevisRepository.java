@@ -17,8 +17,8 @@ public interface DevisRepository extends JpaRepository<Devis, DevisId> {
     @Modifying
     @Transactional
     @Query( value = "insert into devis  (" +
-            "dealer_number,id_fisc,nom_client,to_remise,to_taxes,timbre,date_creation ,date_devis,heure_devis)" +
-            " values (:dNbr,:idFisc,:nomClient,:toRemise,:toTaxe,:timbre,:dateCreation,:dateDevis,:heureDevis)" , nativeQuery = true)
+            "dealer_number,id_fisc,nom_client,to_remise,to_taxes,timbre,date_creation ,date_devis,heure_devis,tot_ht,tot_ttc)" +
+            " values (:dNbr,:idFisc,:nomClient,:toRemise,:toTaxe,:timbre,:dateCreation,:dateDevis,:heureDevis,:totHt,:totTtc)" , nativeQuery = true)
     int insertDevis(
             @Param("dNbr") int dNbr ,
             @Param("nomClient") String nomClient ,
@@ -28,6 +28,8 @@ public interface DevisRepository extends JpaRepository<Devis, DevisId> {
             @Param("timbre") double timbre ,
             @Param("dateCreation") Date dateCreation,
             @Param("dateDevis") Date dateDevis ,
-            @Param("heureDevis") Date heureDevis
+            @Param("heureDevis") Date heureDevis,
+            @Param("totHt") double totHt ,
+            @Param("totTtc") double totTtc
     );
 }

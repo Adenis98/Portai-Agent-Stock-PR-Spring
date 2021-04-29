@@ -18,6 +18,9 @@ public class AjouterDevisRequest {
     private double toRemise ;
     private double toTaxes ;
     private double timbre ;
+    private double totHt ;
+    private double totTtc ;
+
     private Date dateCreation ;
     private List<LigneArticleRequest> listeArt  ;
 
@@ -70,6 +73,22 @@ public class AjouterDevisRequest {
 
     public void setTimbre(double timbre) {
         this.timbre = timbre;
+    }
+
+    public double getTotHt() {
+        return totHt;
+    }
+
+    public void setTotHt(double totHt) {
+        this.totHt = totHt;
+    }
+
+    public double getTotTtc() {
+        return totTtc;
+    }
+
+    public void setTotTtc(double totTtc) {
+        this.totTtc = totTtc;
     }
 
     public Date getDateCreation() {

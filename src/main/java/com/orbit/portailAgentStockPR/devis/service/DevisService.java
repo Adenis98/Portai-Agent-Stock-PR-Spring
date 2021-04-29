@@ -97,8 +97,7 @@ public class DevisService {
             throw new ApiRequestException(""+e);
         }
     }
-
-
+    /***************************************************************************/
     public List< GetListeDevisResponse > getDevisList(int dNbr){
         try
         {
@@ -122,10 +121,10 @@ public class DevisService {
                     response.setDate_Annulation(allDevis.get(i).getDate_Annulation());
                     response.setDate_Archivage(allDevis.get(i).getDate_Archivage()) ;
 
-                    try{response.setTotHt(allDevis.get(i).getTotHt()); }catch(Exception e){ }
-                    try{response.setTotTtc(allDevis.get(i).getTotTtc()); }catch(Exception e){ }
-                    try{response.setAnnulee(allDevis.get(i).getAnnulee()); }catch(Exception e){ }
-                    try{response.setArchivee(allDevis.get(i).getArchivee()); }catch(Exception e){ }
+                    try{response.setTotHt(allDevis.get(i).getTotHt());      }catch(Exception e){ }
+                    try{response.setTotTtc(allDevis.get(i).getTotTtc());    }catch(Exception e){ }
+                    try{response.setAnnulee(allDevis.get(i).getAnnulee());  }catch(Exception e){ }
+                    try{response.setArchivee(allDevis.get(i).getArchivee());}catch(Exception e){ }
 
                     resp.add(response);
                 }
@@ -134,6 +133,67 @@ public class DevisService {
             return resp ;
         }catch(Exception e)
         {
+            throw new ApiRequestException(e.getMessage());
+        }
+    }
+
+    /***************************************************************************/
+
+    public OneDevisResponse getOneDevis(int numDevis) {
+        try
+        {
+            List<GetListeDevisResponse> resp = new ArrayList<>() ;
+            List<Devis >allDevis = devisRepository.findAll();
+            OneDevisResponse oneDevisResp =new OneDevisResponse();
+            for(int i = 0 ; i< allDevis.size();i++)
+            {
+                if(allDevis.get(i).getNumDevis() == numDevis)
+                {
+                    GetListeDevisResponse response = new GetListeDevisResponse();
+                    List<GetLigneDevisResponse> ligneDevisL= new ArrayList<>();
+
+                    response.setDealerNbr( allDevis.get(i).getDealer_Number().getLdbDealerNumber() );
+                    response.setNumDevis(allDevis.get(i).getNumDevis()) ;
+                    response.setNomClient(allDevis.get(i).getNomClient()) ;
+                    response.setIdFisc(allDevis.get(i).getIdFisc());
+                    response.setToRemise(allDevis.get(i).getToRemise());
+                    response.setToTaxes(allDevis.get(i).getToTaxes());
+                    response.setTimbre(allDevis.get(i).getTimbre());
+                    response.setDate_Creation(allDevis.get(i).getDate_Creation());
+                    response.setDate_Devis(allDevis.get(i).getDate_Devis());
+                    response.setHeure_Devis(allDevis.get(i).getHeure_Devis());
+                    response.setDate_Annulation(allDevis.get(i).getDate_Annulation());
+                    response.setDate_Archivage(allDevis.get(i).getDate_Archivage()) ;
+
+                    try{response.setTotHt(allDevis.get(i).getTotHt())      ;}catch(Exception e){ }
+                    try{response.setTotTtc(allDevis.get(i).getTotTtc())    ;}catch(Exception e){ }
+                    try{response.setAnnulee(allDevis.get(i).getAnnulee())  ;}catch(Exception e){ }
+                    try{response.setArchivee(allDevis.get(i).getArchivee());}catch(Exception e){ }
+                    List<LigneDevis> allLigneDevis = ligneDevisRepository.findAll();
+
+                    for(int j=0 ; j< allLigneDevis.size();j++){
+                        if(allLigneDevis.get(i).getNumDevis().getNumDevis() == numDevis)
+                        {
+                            GetLigneDevisResponse ligneDevisList = new GetLigneDevisResponse();
+                            ligneDevisList.setdNbr(allLigneDevis.get(i).getNumDevis().getDealer_Number().getLdbDealerNumber());
+                            ligneDevisList.setCodeArt(allLigneDevis.get(i).getCodeArt());
+                            ligneDevisList.setLibelle(allLigneDevis.get(i).getLibelle());
+                            ligneDevisList.setQte(allLigneDevis.get(i).getQte());
+                            ligneDevisList.setPu(allLigneDevis.get(i).getPu());
+                            ligneDevisList.setRemise(allLigneDevis.get(i).getRemise());
+                            ligneDevisList.setTotLigne(allLigneDevis.get(i).getTotLigne());
+
+                            ligneDevisL.add(ligneDevisList);
+                        }
+                    }
+                    oneDevisResp =  new OneDevisResponse(response , ligneDevisL);
+                    break ;
+                }
+            }
+            return oneDevisResp;
+        }catch(Exception e)
+        {
+            System.out.println("EXCEPTION MSG : "+e.getMessage());
             throw new ApiRequestException(e.getMessage());
         }
     }

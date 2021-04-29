@@ -3,9 +3,13 @@ package com.orbit.portailAgentStockPR.devis.controller;
 
 import com.orbit.portailAgentStockPR.devis.models.AjouterDevisRequest;
 import com.orbit.portailAgentStockPR.devis.models.AjouterDevisResponse;
+import com.orbit.portailAgentStockPR.devis.models.Devis;
+import com.orbit.portailAgentStockPR.devis.models.GetListeDevisResponse;
 import com.orbit.portailAgentStockPR.devis.service.DevisService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @CrossOrigin
 @RestController
@@ -22,9 +26,9 @@ public class DevisController {
         return devisService.ajouterDevis(req);
     }
 
-    @GetMapping("/ajouterLigneDevis")
-    public void getListeDevis( AjouterDevisRequest req)
+    @GetMapping("/getAllDevis/{dNbr}")
+    public List<GetListeDevisResponse>  getListeDevis(@PathVariable int dNbr)
     {
-
+        return devisService.getDevisList(dNbr);
     }
 }

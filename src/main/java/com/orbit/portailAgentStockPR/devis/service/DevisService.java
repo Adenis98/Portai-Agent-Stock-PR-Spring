@@ -2,16 +2,14 @@ package com.orbit.portailAgentStockPR.devis.service;
 
 import com.orbit.portailAgentStockPR.consulterStockPr.models.ArtMasters;
 import com.orbit.portailAgentStockPR.consulterStockPr.service.ArtMastersRepository;
-import com.orbit.portailAgentStockPR.devis.models.AjouterDevisRequest;
-import com.orbit.portailAgentStockPR.devis.models.AjouterDevisResponse;
-import com.orbit.portailAgentStockPR.devis.models.Devis;
-import com.orbit.portailAgentStockPR.devis.models.LigneArticleRequest;
+import com.orbit.portailAgentStockPR.devis.models.*;
 import com.orbit.portailAgentStockPR.exception.ApiRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -93,6 +91,47 @@ public class DevisService {
         }catch(Exception e)
         {
             throw new ApiRequestException(""+e);
+        }
+    }
+
+
+    public List< GetListeDevisResponse > getDevisList(int dNbr){
+        try
+        {
+            List<GetListeDevisResponse> resp = new ArrayList<>() ;
+            List<Devis >allDevis = devisRepository.findAll();
+            System.out.println("*************** 1 " );
+            for(int i = 0 ; i< allDevis.size();i++)
+            {
+                if(allDevis.get(i).getDealer_Number().getLdbDealerNumber() == dNbr)
+                {
+                    GetListeDevisResponse response = new GetListeDevisResponse();
+                    response.setDealerNbr( allDevis.get(i).getDealer_Number().getLdbDealerNumber() );
+                    response.setNumDevis(allDevis.get(i).getNumDevis()) ;
+                    response.setNomClient(allDevis.get(i).getNomClient()) ;
+                    response.setIdFisc(allDevis.get(i).getIdFisc());
+                    response.setToRemise(allDevis.get(i).getToRemise());
+                    response.setToTaxes(allDevis.get(i).getToTaxes());
+                    response.setTimbre(allDevis.get(i).getTimbre());
+                    response.setDate_Creation(allDevis.get(i).getDate_Creation());
+                    response.setDate_Devis(allDevis.get(i).getDate_Devis());
+                    response.setHeure_Devis(allDevis.get(i).getHeure_Devis());
+                    response.setDate_Annulation(allDevis.get(i).getDate_Annulation());
+                    response.setDate_Archivage(allDevis.get(i).getDate_Archivage()) ;
+
+                    try{response.setTotHt(allDevis.get(i).getTotHt()); }catch(Exception e){ }
+                    try{response.setTotTtc(allDevis.get(i).getTotTtc()); }catch(Exception e){ }
+                    try{response.setAnnulee(allDevis.get(i).getAnnulee()); }catch(Exception e){ }
+                    try{response.setArchivee(allDevis.get(i).getArchivee()); }catch(Exception e){ }
+
+                    resp.add(response);
+                }
+
+            }
+            return resp ;
+        }catch(Exception e)
+        {
+            throw new ApiRequestException(e.getMessage());
         }
     }
 }

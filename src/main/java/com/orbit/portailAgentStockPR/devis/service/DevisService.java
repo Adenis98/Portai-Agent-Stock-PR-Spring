@@ -104,7 +104,6 @@ public class DevisService {
         {
             List<GetListeDevisResponse> resp = new ArrayList<>() ;
             List<Devis >allDevis = devisRepository.findAll();
-            System.out.println("*************** 1 " );
             for(int i = 0 ; i< allDevis.size();i++)
             {
                 if(allDevis.get(i).getDealer_Number().getLdbDealerNumber() == dNbr)

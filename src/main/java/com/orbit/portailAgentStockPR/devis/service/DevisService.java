@@ -44,7 +44,9 @@ public class DevisService {
                     req.getToRemise() ,
                     req.getToTaxes() ,
                     req.getTimbre(),
-                    this.dateHeurDevis("yyyy-MM-dd hh:mm:ss")
+                    req.getDateCreation(),
+                    this.dateHeurDevis("yyyy-MM-dd") ,
+                    this.dateHeurDevis("hh:mm:ss")
             );
 
             List<Devis> listeDevis =  devisRepository.findAll();

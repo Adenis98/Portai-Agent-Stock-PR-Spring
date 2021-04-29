@@ -18,7 +18,7 @@ public class AjouterDevisRequest {
     private double toRemise ;
     private double toTaxes ;
     private double timbre ;
-
+    private Date dateCreation ;
     private List<LigneArticleRequest> listeArt  ;
 
     public AjouterDevisRequest() {
@@ -31,8 +31,6 @@ public class AjouterDevisRequest {
     public void setDealerNbr(int dealerNbr) {
         this.dealerNbr = dealerNbr;
     }
-
-
 
     public String getNomClient() {
         return nomClient;
@@ -72,6 +70,14 @@ public class AjouterDevisRequest {
 
     public void setTimbre(double timbre) {
         this.timbre = timbre;
+    }
+
+    public Date getDateCreation() {
+        return dateCreation;
+    }
+
+    public void setDateCreation(Date dateCreation) {
+        this.dateCreation = dateCreation;
     }
 
     public List<LigneArticleRequest> getListeArt() {

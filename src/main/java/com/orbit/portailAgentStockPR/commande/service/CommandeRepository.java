@@ -28,8 +28,9 @@ public interface CommandeRepository extends JpaRepository<Commande, CommandeId> 
     @Modifying
     @Transactional
     @Query( value = "insert into commande  (num_cde,panier,tot_ht,dealer_number,date_creation ," +
-             "type_cmd ,mode_paiement,ref_cmd , date_liv_s , date_cmd , heure_cmd)"+
-            " values (:pk,:panier , :totHt ,:dealer,:datecrea,:typeCmd,:modeP,:refCmd,:dateLivS ,:dateCmd ,:heureCmd)" , nativeQuery = true)
+             "type_cmd ,mode_paiement,ref_cmd , date_liv_s , date_cmd , heure_cmd,enregistree,facturee,livree,annulee,archivee)"+
+            " values (:pk,:panier , :totHt ,:dealer,:datecrea,:typeCmd,:modeP,:refCmd,:dateLivS ,:dateCmd ,:heureCmd," +
+            "0,0,0,0,0)" , nativeQuery = true)
     int passerCommandeIns(
             @Param("pk") int pk ,
             @Param("panier") int panier ,

@@ -8,15 +8,16 @@ import com.orbit.portailAgentStockPR.statistique.models.Stat2Resp;
 import com.orbit.portailAgentStockPR.statistique.models.Stat3Resp;
 import com.orbit.portailAgentStockPR.statistique.models.Stat4Resp;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@AllArgsConstructor
 public class StatsService {
 
-    private final CommandeRepository commandeRepository ;
+    @Autowired
+    CommandeRepository commandeRepository ;
 
     /***************************************  Ring Stat   ****************************************/
     public Stat1Resp stat1(int dNbr ) {
@@ -24,15 +25,16 @@ public class StatsService {
             List<Commande> allCmd = commandeRepository.findAll();
             int cmdFermeNbr = 0 ,cmdNormNbr=0 ;
             for(int i = 0 ; i< allCmd.size() ; i++ ){
-                if(allCmd.get(i).getDealer_Number().getLdbDealerNumber() == dNbr && allCmd.get(i).getType_Cmd() == 0)
+                if(allCmd.get(i).getNumCde()!=9999&&allCmd.get(i).getDealer_Number().getLdbDealerNumber() == dNbr && allCmd.get(i).getType_Cmd() == 0)
                     cmdNormNbr++;
-                else if(allCmd.get(i).getDealer_Number().getLdbDealerNumber() == dNbr && allCmd.get(i).getType_Cmd() == 1)
+                else if(allCmd.get(i).getNumCde()!=9999&&allCmd.get(i).getDealer_Number().getLdbDealerNumber() == dNbr && allCmd.get(i).getType_Cmd() == 1)
                     cmdFermeNbr++;
             }
             return new Stat1Resp(cmdFermeNbr,cmdNormNbr);
 
         }catch(Exception e)
         {
+            System.out.println("******************"+e);
             throw new ApiRequestException(e.getMessage());
         }
     }
@@ -54,11 +56,11 @@ public class StatsService {
             List<Commande> allCmd = commandeRepository.findAll();
             int enrg = 0 ,liv=0  , fact=0;
             for(int i = 0 ; i< allCmd.size() ; i++ ){
-                if(allCmd.get(i).getDealer_Number().getLdbDealerNumber() == dNbr && allCmd.get(i).getEnregistree() == 1)
+                if(allCmd.get(i).getNumCde()!=9999&&allCmd.get(i).getDealer_Number().getLdbDealerNumber() == dNbr && allCmd.get(i).getEnregistree() == 1)
                     enrg++;
-                if(allCmd.get(i).getDealer_Number().getLdbDealerNumber() == dNbr && allCmd.get(i).getLivree() == 1)
+                if(allCmd.get(i).getNumCde()!=9999&&allCmd.get(i).getDealer_Number().getLdbDealerNumber() == dNbr && allCmd.get(i).getLivree() == 1)
                     liv++;
-                if(allCmd.get(i).getDealer_Number().getLdbDealerNumber() == dNbr && allCmd.get(i).getFacturee() == 1)
+                if(allCmd.get(i).getNumCde()!=9999&&allCmd.get(i).getDealer_Number().getLdbDealerNumber() == dNbr && allCmd.get(i).getFacturee() == 1)
                     fact++;
             }
             return new Stat3Resp(enrg , liv , fact);

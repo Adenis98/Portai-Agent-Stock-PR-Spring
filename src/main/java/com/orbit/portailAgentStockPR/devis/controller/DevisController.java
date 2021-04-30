@@ -34,4 +34,10 @@ public class DevisController {
     {
         return devisService.getOneDevis(nDevis);
     }
+
+    @PostMapping("/annuler/{nDevis}")
+    public int annulerDevis(@PathVariable int nDevis)
+    {
+        return devisService.annulerDevis(nDevis);
+    }
 }

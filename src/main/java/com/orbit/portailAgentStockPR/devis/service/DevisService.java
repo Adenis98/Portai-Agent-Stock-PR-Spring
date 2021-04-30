@@ -197,4 +197,17 @@ public class DevisService {
             throw new ApiRequestException(e.getMessage());
         }
     }
+
+    /*********************************** Annulation *****************************************/
+    public int annulerDevis(int numDevis )
+    {
+        try
+        {
+            Date dateAnnulation  = dateHeurDevis("yyyy-MM-dd hh:mm:ss");
+            return devisRepository.annulerCmdUpd(numDevis,dateAnnulation);
+        }catch(Exception e)
+        {
+            throw new ApiRequestException(""+e);
+        }
+    }
 }

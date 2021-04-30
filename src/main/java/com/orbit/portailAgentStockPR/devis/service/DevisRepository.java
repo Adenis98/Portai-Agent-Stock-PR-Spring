@@ -42,4 +42,14 @@ public interface DevisRepository extends JpaRepository<Devis, DevisId> {
             @Param("numDevis") int numDevis  ,
             @Param("dateAnnulation") Date dateAnnulation
     );
+
+  /*  @Modifying
+    @Transactional
+    @Query( " UPDATE Devis d SET" +
+            " d.Archivee = 1 , d.date_Archivage = :dateArchivage  "+
+            " WHERE d.numDevis = :numDevis")
+    int archiverCmdUpd(
+            @Param("numDevis") int numDevis  ,
+            @Param("date_Archivage") Date dateArchivage
+    );*/
 }

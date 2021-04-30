@@ -172,16 +172,16 @@ public class DevisService {
                     List<LigneDevis> allLigneDevis = ligneDevisRepository.findAll();
 
                     for(int j=0 ; j< allLigneDevis.size();j++){
-                        if(allLigneDevis.get(i).getNumDevis().getNumDevis() == numDevis)
+                        if(allLigneDevis.get(j).getNumDevis().getNumDevis() == numDevis)
                         {
                             GetLigneDevisResponse ligneDevisList = new GetLigneDevisResponse();
-                            ligneDevisList.setdNbr(allLigneDevis.get(i).getNumDevis().getDealer_Number().getLdbDealerNumber());
-                            ligneDevisList.setCodeArt(allLigneDevis.get(i).getCodeArt());
-                            ligneDevisList.setLibelle(allLigneDevis.get(i).getLibelle());
-                            ligneDevisList.setQte(allLigneDevis.get(i).getQte());
-                            ligneDevisList.setPu(allLigneDevis.get(i).getPu());
-                            ligneDevisList.setRemise(allLigneDevis.get(i).getRemise());
-                            ligneDevisList.setTotLigne(allLigneDevis.get(i).getTotLigne());
+                            ligneDevisList.setdNbr(allLigneDevis.get(j).getNumDevis().getDealer_Number().getLdbDealerNumber());
+                            ligneDevisList.setCodeArt(allLigneDevis.get(j).getCodeArt());
+                            ligneDevisList.setLibelle(allLigneDevis.get(j).getLibelle());
+                            ligneDevisList.setQte(allLigneDevis.get(j).getQte());
+                            ligneDevisList.setPu(allLigneDevis.get(j).getPu());
+                            ligneDevisList.setRemise(allLigneDevis.get(j).getRemise());
+                            ligneDevisList.setTotLigne(allLigneDevis.get(j).getTotLigne());
 
                             ligneDevisL.add(ligneDevisList);
                         }
@@ -210,4 +210,22 @@ public class DevisService {
             throw new ApiRequestException(""+e);
         }
     }
+    /*********************************** Archivage ****************************************
+
+    public void archiverDevis()
+    {
+        try
+        {
+            List<Devis> allDevis = devisRepository.findAll() ;
+            Date dateAuj = dateHeurDevis("yyyy-MM-dd hh:mm:ss");
+            for(int i = 0 ; i< allDevis.size();i++){
+                if(allDevis.get(i).getDate_Devis())
+            }
+        }catch(Exception e){
+            throw new ApiRequestException(""+e);
+        }
+
+
+
+    }*/
 }

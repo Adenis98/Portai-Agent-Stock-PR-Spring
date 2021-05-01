@@ -38,15 +38,14 @@ public class ArchivageCmd {
          * every 5 seconds : "0/5 * * ? * *"
          * every 10 minutes: "0 0/10 * * * *"
          *  */
-        @Scheduled(cron = "0/5 * * ? * *")
+        @Scheduled(cron = "0 0/10 * * * *")
         public void archiverCmd()
         {
             try
             {
-                System.out.println("***** Scheduled ");
+                System.out.println("***** Scheduled cmd *****");
                 List<Commande> allCmd = commandeRepository.findAll() ;
                 for(int i = 0 ; i< allCmd.size();i++){
-
 
                     String hereCmd = allCmd.get(i).getHeure_Cmd().substring(11);
                     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
@@ -59,7 +58,7 @@ public class ArchivageCmd {
                             dateToConvert.toInstant()
                                     .atZone(ZoneId.systemDefault())
                     );
-                    System.out.println(allCmd.get(i).getNumCde()+"***"+dateHeureCmd+" = "+dateToConvert+"**"+Math.abs(diff));
+
                     if(Math.abs(diff)>=10&&allCmd.get(i).getArchivee()==0)
                         this.commandeRepository.archiverCmdUpd(allCmd.get(i).getNumCde(),dateHeurCmd("yyyy-MM-dd hh:mm:ss"));
                 }

@@ -207,7 +207,7 @@ public class CommandeService {
         }
     }
     /*****************************************************************************************/
-    public List<GetCommandeResponse> getCommande(int dNbr)
+    public List<GetCommandeResponse> getCommande(int dNbr,int archivee)
     {
         try
         {
@@ -216,7 +216,11 @@ public class CommandeService {
             List<Commande> oldList = commandeRepository.findAll();
             for(int i = 0 ; i<oldList.size();i++)
             {
-                if(oldList.get(i).getDealer_Number().getLdbDealerNumber() == dNbr && oldList.get(i).getNumCde() != 9999)
+                if(
+                        oldList.get(i).getDealer_Number().getLdbDealerNumber() == dNbr &&
+                        oldList.get(i).getNumCde() != 9999 &&
+                        oldList.get(i).getArchivee() == archivee
+                )
                 {
                     GetCommandeResponse rObj = new GetCommandeResponse();
                     rObj.setdNumber(oldList.get(i).getDealer_Number().getLdbDealerNumber());

@@ -102,14 +102,14 @@ public class DevisService {
         }
     }
     /***************************************************************************/
-    public List< GetListeDevisResponse > getDevisList(int dNbr){
+    public List< GetListeDevisResponse > getDevisList(int dNbr,int archivee){
         try
         {
             List<GetListeDevisResponse> resp = new ArrayList<>() ;
             List<Devis >allDevis = devisRepository.findAll();
             for(int i = 0 ; i< allDevis.size();i++)
             {
-                if(allDevis.get(i).getDealer_Number().getLdbDealerNumber() == dNbr)
+                if(allDevis.get(i).getDealer_Number().getLdbDealerNumber() == dNbr&&allDevis.get(i).getArchivee()==archivee)
                 {
                     GetListeDevisResponse response = new GetListeDevisResponse();
                     response.setDealerNbr( allDevis.get(i).getDealer_Number().getLdbDealerNumber() );
@@ -132,7 +132,6 @@ public class DevisService {
 
                     resp.add(response);
                 }
-
             }
             return resp ;
         }catch(Exception e)
@@ -214,5 +213,6 @@ public class DevisService {
             throw new ApiRequestException(""+e);
         }
     }
+
 
 }

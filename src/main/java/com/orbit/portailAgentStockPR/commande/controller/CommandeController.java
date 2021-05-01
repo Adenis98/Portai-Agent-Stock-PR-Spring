@@ -23,10 +23,10 @@ public class CommandeController {
         return commandeService.passerCommande(req);
     }
 
-    @GetMapping("/afficher/{dNbr}")
-    public List<GetCommandeResponse> afficherCommande(@PathVariable int dNbr)
+    @GetMapping("/afficher/{dNbr}/{arch}")
+    public List<GetCommandeResponse> afficherCommande(@PathVariable int dNbr,@PathVariable int arch)
     {
-        return commandeService.getCommande(dNbr);
+        return commandeService.getCommande(dNbr,arch);
     }
 
     @GetMapping("/afficher/ligneCmd/{nCmd}")

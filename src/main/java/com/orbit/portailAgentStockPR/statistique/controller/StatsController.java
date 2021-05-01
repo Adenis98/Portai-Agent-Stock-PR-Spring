@@ -4,14 +4,12 @@ import com.orbit.portailAgentStockPR.statistique.models.Stat1Resp;
 import com.orbit.portailAgentStockPR.statistique.models.Stat3Resp;
 import com.orbit.portailAgentStockPR.statistique.service.StatsService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
 @RequestMapping("/stat")
+@CrossOrigin
 public class StatsController {
 
     private final StatsService statsService ;

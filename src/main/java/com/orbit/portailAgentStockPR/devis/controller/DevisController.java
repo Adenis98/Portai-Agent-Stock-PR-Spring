@@ -23,10 +23,10 @@ public class DevisController {
         return devisService.ajouterDevis(req);
     }
 
-    @GetMapping("/getAllDevis/{dNbr}")
-    public List<GetListeDevisResponse>  getListeDevis(@PathVariable int dNbr)
+    @GetMapping("/getAllDevis/{dNbr}/{arch}")
+    public List<GetListeDevisResponse>  getListeDevis(@PathVariable int dNbr,@PathVariable int arch)
     {
-        return devisService.getDevisList(dNbr);
+        return devisService.getDevisList(dNbr,arch);
     }
 
     @GetMapping("/getOneAllDevis/{nDevis}")

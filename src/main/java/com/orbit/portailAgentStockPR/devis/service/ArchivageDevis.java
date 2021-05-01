@@ -57,7 +57,6 @@ public class ArchivageDevis {
                         dateToConvert.toInstant()
                                 .atZone(ZoneId.systemDefault())
                 );
-                System.out.println(allDevis.get(i).getNumDevis()+"***"+dateHeureDevis+" = "+dateToConvert+"**"+Math.abs(diff));
                 if(Math.abs(diff)>=15&&allDevis.get(i).getArchivee()==0)
                     this.devisRepository.archiverCmdUpd(allDevis.get(i).getNumDevis(),dateHeurDevis("yyyy-MM-dd hh:mm:ss"));
             }

@@ -93,4 +93,14 @@ public interface CommandeRepository extends JpaRepository<Commande, CommandeId> 
             @Param("numCmd") int numCmd  ,
             @Param("dateAnnulation") Date dateAnnulation
     );
+
+    @Modifying
+    @Transactional
+    @Query( " UPDATE Commande c SET" +
+            " c.archivee = 1 , c.date_Archivage = :date_Archivage  "+
+            " WHERE c.numCde = :numCmd")
+    int archiverCmdUpd(
+            @Param("numCmd") int numCmd  ,
+            @Param("date_Archivage") Date dateArchivage
+    );
 }

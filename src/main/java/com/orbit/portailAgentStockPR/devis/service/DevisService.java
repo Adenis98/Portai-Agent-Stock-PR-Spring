@@ -5,10 +5,14 @@ import com.orbit.portailAgentStockPR.consulterStockPr.service.ArtMastersReposito
 import com.orbit.portailAgentStockPR.devis.models.*;
 import com.orbit.portailAgentStockPR.exception.ApiRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -210,22 +214,5 @@ public class DevisService {
             throw new ApiRequestException(""+e);
         }
     }
-    /*********************************** Archivage ****************************************
 
-    public void archiverDevis()
-    {
-        try
-        {
-            List<Devis> allDevis = devisRepository.findAll() ;
-            Date dateAuj = dateHeurDevis("yyyy-MM-dd hh:mm:ss");
-            for(int i = 0 ; i< allDevis.size();i++){
-                if(allDevis.get(i).getDate_Devis())
-            }
-        }catch(Exception e){
-            throw new ApiRequestException(""+e);
-        }
-
-
-
-    }*/
 }

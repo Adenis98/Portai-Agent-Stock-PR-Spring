@@ -1,5 +1,6 @@
 package com.orbit.portailAgentStockPR.devis.service;
 
+import com.orbit.portailAgentStockPR.commande.models.Commande;
 import com.orbit.portailAgentStockPR.consulterStockPr.models.ArtMasters;
 import com.orbit.portailAgentStockPR.consulterStockPr.service.ArtMastersRepository;
 import com.orbit.portailAgentStockPR.devis.models.*;
@@ -29,6 +30,7 @@ public class DevisService {
     @Autowired
     ArtMastersRepository artMastersRepository;
 
+
     private Date dateHeurDevis(String pattern) throws ParseException {
         Date now = new Date();
         //String patternDate = "yyyy-MM-dd";
@@ -41,7 +43,12 @@ public class DevisService {
     {
         try
         {
+
+            int year =new  Date().getYear() % 100;
+            year*=1000000;
+
             int insertion = this.devisRepository.insertDevis(
+                    devisRepository.findAll().size()+year +1,
                     req.getDealerNbr() ,
                     req.getNomClient() ,
                     req.getIdFisc() ,

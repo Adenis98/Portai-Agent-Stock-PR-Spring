@@ -45,7 +45,6 @@ public class ArchivageDevis {
             List<Devis> allDevis = devisRepository.findAll() ;
             for(int i = 0 ; i< allDevis.size();i++){
 
-
                 String hereDevis = allDevis.get(i).getHeure_Devis().substring(11);
                 DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                 String dateDevis = dateFormat.format(allDevis.get(i).getDate_Devis()).substring(0,10);

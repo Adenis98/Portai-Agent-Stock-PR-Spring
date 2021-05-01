@@ -13,14 +13,6 @@ public class Devis {
     @ManyToOne
     @JoinColumn(name = "dealer_number")
     private Dealers ss ;
-    @GeneratedValue(
-            strategy= GenerationType.AUTO,
-            generator="native"
-    )
-    @GenericGenerator(
-            name = "native",
-            strategy = "native"
-    )
     @Id
     private Integer numDevis ;
     @Column(nullable=true)

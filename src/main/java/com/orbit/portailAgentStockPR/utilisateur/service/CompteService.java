@@ -49,15 +49,23 @@ public class CompteService {
         return false;
     }
 
-    public List<User> findAll(int dNbr){
+    public List<User> findAll(int dNbr,int admin){
         List<User> allUsers = userRepository.findAll();
         List<User> newList = new ArrayList<>();
         for(int i = 0 ; i<allUsers.size() ; i++)
-            if(allUsers.get(i).getDealer_Number()==dNbr)
+        {
+            if(admin==1&&allUsers.get(i).getPermis()==3)
             {
                 allUsers.get(i).setPassword("• • • • •");
                 newList.add(allUsers.get(i));
             }
+            if(admin==0&&allUsers.get(i).getDealer_Number()==dNbr)
+            {
+                allUsers.get(i).setPassword("• • • • •");
+                newList.add(allUsers.get(i));
+            }
+        }
+
 
         return newList;
     }

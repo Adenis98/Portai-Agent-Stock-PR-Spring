@@ -1,5 +1,7 @@
 package com.orbit.portailAgentStockPR.utilisateur.service;
 
+import com.orbit.portailAgentStockPR.consulterStockPr.models.Dealers;
+import com.orbit.portailAgentStockPR.consulterStockPr.service.DealersRepository;
 import com.orbit.portailAgentStockPR.exception.ApiRequestException;
 import com.orbit.portailAgentStockPR.utilisateur.models.User;
 import org.apache.tomcat.util.codec.binary.Base64;
@@ -21,6 +23,9 @@ public class CompteService {
     @Autowired
     PasswordEncoder passwordEncoder ;
 
+    @Autowired
+    DealersRepository dealersRepository ;
+
     private boolean userNameExists(String userName)
     {
         int myUserId=-1;
@@ -31,10 +36,21 @@ public class CompteService {
         return false ;
     }
 
+    private boolean dealerNbrExists(int dNbr)
+    {
+        List<Dealers> allDealers = dealersRepository.findAll() ;
+        for(int i = 0 ; i< allDealers.size() ; i++)
+            if(allDealers.get(i).getLdbDealerNumber() == dNbr)
+                return true ;
+        return false ;
+    }
+
     public User save(User user) throws Exception
     {
         if(userNameExists((user.getUserName())))
             throw new Exception(" nom d'utilisateur existe dèja ");
+        if(!dealerNbrExists(user.getDealer_Number()))
+            throw new Exception(" dealer number n'existe pas ");
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         User newUser = userRepository.save(user);
         newUser.setPassword("• • • • •");

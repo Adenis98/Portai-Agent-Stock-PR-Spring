@@ -1,12 +1,12 @@
-INSERT INTO dealers (ldb_dealer_number ,dealer_name  , dealer_phone_no  , sales_man )VALUES (001,"COMPTOIR CC","128787","CL000001")  ;
-INSERT INTO dealers (ldb_dealer_number ,dealer_name  , dealer_phone_no  , sales_man )VALUES (002,"ATELIER CC","11878","CL000001")  ;
-INSERT INTO dealers (ldb_dealer_number ,dealer_name  , dealer_phone_no  , sales_man )VALUES (095,"GARANTIE CC","13278","CL000001")  ;
-INSERT INTO dealers (ldb_dealer_number ,dealer_name  , dealer_phone_no  , sales_man )VALUES (004,"GARANTIE AGENCE","224578","CL000001")  ;
+INSERT INTO dealers(ldb_dealer_number ,dealer_name  , dealer_phone_no  , sales_man ) VALUES (001,"COMPTOIR_CC","128787","CL000001")  ;
+INSERT INTO dealers(ldb_dealer_number ,dealer_name  , dealer_phone_no  , sales_man ) VALUES (002,"ATELIER CC","11878","CL000001")  ;
+INSERT INTO dealers(ldb_dealer_number ,dealer_name  , dealer_phone_no  , sales_man ) VALUES (095,"GARANTIE CC","13278","CL000001")  ;
+INSERT INTO dealers(ldb_dealer_number ,dealer_name  , dealer_phone_no  , sales_man ) VALUES (004,"GARANTIE AGENCE","224578","CL000001")  ;
 
-INSERT INTO art_masters (cod_art, h, ht, htg, libelle , pu_agents, remisable) VALUES ("1C0121253A","","","","REFR. EAU",547.47,0) ;
-INSERT INTO art_masters (cod_art, h, ht, htg, libelle , pu_agents, remisable) VALUES ("1C0121253C","","","","REFR. EAU",1015.87,0)  ;
-INSERT INTO art_masters (cod_art, h, ht, htg, libelle , pu_agents, remisable) VALUES ("5F1955426","","","","BALAIESSUI",53.29,0)  ;
-INSERT INTO art_masters (cod_art, h, ht, htg, libelle , pu_agents, remisable) VALUES ("AAE8111500","","","","DEMO",0.001,0)  ;
+INSERT INTO art_masters (cod_art, h, ht, htg, libelle , pu_agents, remisable) VALUES ("1C0121253A","0","0","0","REFR. EAU",547.47,0) ;
+INSERT INTO art_masters (cod_art, h, ht, htg, libelle , pu_agents, remisable) VALUES ("1C0121253C","0","0","0","REFR. EAU",1015.87,0)  ;
+INSERT INTO art_masters (cod_art, h, ht, htg, libelle , pu_agents, remisable) VALUES ("5F1955426","0","0","0","BALAIESSUI",53.29,0)  ;
+INSERT INTO art_masters (cod_art, h, ht, htg, libelle , pu_agents, remisable) VALUES ("AAE8111500","0","0","0","DEMO",0.001,0)  ;
 
 INSERT INTO dealer_stock (cod_art, dealer_number, qte_achat, stock, ug) VALUES ('1C0121253A',95,52,20,1) ;
 INSERT INTO dealer_stock (cod_art, dealer_number, qte_achat, stock, ug) VALUES ('1C0121253C',95,52,6,1) ;

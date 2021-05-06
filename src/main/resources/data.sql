@@ -1,7 +1,7 @@
-INSERT INTO dealers (ldb_dealer_number ,dealer_name  , dealer_phone_no  , sales_man )VALUES (001,"COMPTOIR CC","","CL000001")  ;
-INSERT INTO dealers (ldb_dealer_number ,dealer_name  , dealer_phone_no  , sales_man )VALUES (002,"ATELIER CC","","CL000001")  ;
-INSERT INTO dealers (ldb_dealer_number ,dealer_name  , dealer_phone_no  , sales_man )VALUES (095,"GARANTIE CC","","CL000001")  ;
-INSERT INTO dealers (ldb_dealer_number ,dealer_name  , dealer_phone_no  , sales_man )VALUES (004,"GARANTIE AGENCE","","CL000001")  ;
+INSERT INTO dealers (ldb_dealer_number ,dealer_name    , sales_man )VALUES (001,"COMPTOIR CC","CL000001")  ;
+INSERT INTO dealers (ldb_dealer_number ,dealer_name   , sales_man )VALUES (002,"ATELIER CC","CL000001")  ;
+INSERT INTO dealers (ldb_dealer_number ,dealer_name   , sales_man )VALUES (095,"GARANTIE CC","CL000001")  ;
+INSERT INTO dealers (ldb_dealer_number ,dealer_name    , sales_man )VALUES (004,"GARANTIE AGENCE","CL000001")  ;
 
 INSERT INTO art_masters (cod_art, h, ht, htg, libelle , pu_agents, remisable) VALUES ("1C0121253A","","","","REFR. EAU",547.47,0) ;
 INSERT INTO art_masters (cod_art, h, ht, htg, libelle , pu_agents, remisable) VALUES ("1C0121253C","","","","REFR. EAU",1015.87,0)  ;

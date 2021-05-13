@@ -5,8 +5,10 @@ import com.orbit.portailAgentStockPR.commande.models.GetPanierWsResponse;
 import com.orbit.portailAgentStockPR.commande.models.LignePanierRequest;
 import com.orbit.portailAgentStockPR.commande.models.LignePanierResponse;
 import com.orbit.portailAgentStockPR.commande.service.PanierService;
+import com.orbit.portailAgentStockPR.utilisateur.models.MyUserDetails;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
@@ -24,7 +26,9 @@ public class PanierController {
     }
 
     @GetMapping("/GetPanierWS")
-    public GetPanierWsResponse getPanierWS(@RequestHeader("DealerNumber") int dNbr){
+    public GetPanierWsResponse getPanierWS(){
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        int dNbr = userDetails.getDealerNumber();
         return panierService.getPanier(dNbr);
     }
 
@@ -33,8 +37,10 @@ public class PanierController {
         return panierService.supprimerLigne(numLigne) ;
     }
 
-    @GetMapping("/GetPanierSize/{dNbr}")
-    public int getPanierSize(@PathVariable int dNbr){
+    @GetMapping("/GetPanierSize")
+    public int getPanierSize(){
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        int dNbr = userDetails.getDealerNumber();
         return panierService.getPanierSize(dNbr);
     }
 }

@@ -2,8 +2,10 @@ package com.orbit.portailAgentStockPR.commande.controller;
 
 import com.orbit.portailAgentStockPR.commande.models.*;
 import com.orbit.portailAgentStockPR.commande.service.CommandeService;
+import com.orbit.portailAgentStockPR.utilisateur.models.MyUserDetails;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -23,9 +25,11 @@ public class CommandeController {
         return commandeService.passerCommande(req);
     }
 
-    @GetMapping("/afficher/{dNbr}/{arch}")
-    public List<GetCommandeResponse> afficherCommande(@PathVariable int dNbr,@PathVariable int arch)
+    @GetMapping("/afficher/{arch}")
+    public List<GetCommandeResponse> afficherCommande(@PathVariable int arch)
     {
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        int dNbr = userDetails.getDealerNumber();
         return commandeService.getCommande(dNbr,arch);
     }
 

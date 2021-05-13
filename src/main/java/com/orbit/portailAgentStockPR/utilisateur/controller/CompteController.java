@@ -1,6 +1,7 @@
 package com.orbit.portailAgentStockPR.utilisateur.controller;
 
 import com.orbit.portailAgentStockPR.exception.ApiRequestException;
+import com.orbit.portailAgentStockPR.utilisateur.models.MyUserDetails;
 import com.orbit.portailAgentStockPR.utilisateur.models.User;
 import com.orbit.portailAgentStockPR.utilisateur.service.CompteService;
 import lombok.AllArgsConstructor;
@@ -8,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletContext;
@@ -57,9 +59,10 @@ public class CompteController {
     }
 
 
-    @GetMapping(path="/avoirTout/{dNbr}/{admin}")
-    public List<User> getall(@PathVariable int dNbr,@PathVariable int admin)
-    {
+    @GetMapping(path="/avoirTout/{admin}")
+    public List<User> getall(@PathVariable int admin){
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        int dNbr = userDetails.getDealerNumber();
         return compteService.findAll(dNbr,admin);
     }
 

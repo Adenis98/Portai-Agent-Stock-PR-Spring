@@ -3,7 +3,9 @@ package com.orbit.portailAgentStockPR.devis.controller;
 
 import com.orbit.portailAgentStockPR.devis.models.*;
 import com.orbit.portailAgentStockPR.devis.service.DevisService;
+import com.orbit.portailAgentStockPR.utilisateur.models.MyUserDetails;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,9 +25,11 @@ public class DevisController {
         return devisService.ajouterDevis(req);
     }
 
-    @GetMapping("/getAllDevis/{dNbr}/{arch}")
-    public List<GetListeDevisResponse>  getListeDevis(@PathVariable int dNbr,@PathVariable int arch)
+    @GetMapping("/getAllDevis/{arch}")
+    public List<GetListeDevisResponse>  getListeDevis(@PathVariable int arch)
     {
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        int dNbr = userDetails.getDealerNumber();
         return devisService.getDevisList(dNbr,arch);
     }
 

@@ -1,9 +1,9 @@
 package com.orbit.portailAgentStockPR.commande.models;
 
 public class LignePanierRequest {
-    private int editMode ;
-    private int numLigne ;
-    private int dealerNumber ;
+    private int editMode ;//
+    private int numLigne ;//
+    private int dealerNumber ;//
     private String codeArt ;
     private String libelle ;
     private double qte ;

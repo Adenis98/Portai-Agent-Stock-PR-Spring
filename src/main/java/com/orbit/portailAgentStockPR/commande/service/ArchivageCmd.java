@@ -59,7 +59,7 @@ public class ArchivageCmd {
                                     .atZone(ZoneId.systemDefault())
                     );
 
-                    if(Math.abs(diff)>=10&&allCmd.get(i).getArchivee()==0)
+                    if(Math.abs(diff)>=10&&allCmd.get(i).getArchivee()==0&&allCmd.get(i).getNumCde()!=9999)
                         this.commandeRepository.archiverCmdUpd(allCmd.get(i).getNumCde(),dateHeurCmd("yyyy-MM-dd hh:mm:ss"));
                 }
             }catch(Exception e){

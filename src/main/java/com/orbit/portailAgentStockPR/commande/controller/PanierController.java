@@ -22,6 +22,8 @@ public class PanierController {
 
     @PostMapping("/LignePanier")
     public LignePanierResponse lignePanier(@RequestBody LignePanierRequest lpr){
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        lpr.setDealerNumber(userDetails.getDealerNumber());
         return panierService.insertLigneCommande(lpr);
     }
 

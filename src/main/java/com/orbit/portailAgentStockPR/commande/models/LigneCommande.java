@@ -11,15 +11,17 @@ import javax.persistence.*;
 @IdClass(LigneCommandeId.class)
 public class LigneCommande {
 
-    @GeneratedValue(
+   /* @GeneratedValue(
             strategy= GenerationType.AUTO,
             generator="native"
     )
     @GenericGenerator(
             name = "native",
             strategy = "native"
-    )
+    )*/
+
     @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private int numLigne ;
 
     @Id

@@ -43,24 +43,24 @@ public class ArchivageCmd {
         {
             try
             {
-                System.out.println("***** Scheduled cmd *****");
+                System.out.println("***** Scheduled cmd 10 min *****");
                 List<Commande> allCmd = commandeRepository.findAll() ;
                 for(int i = 0 ; i< allCmd.size();i++){
+                    if(allCmd.get(i).getNumCde()!=9999&&allCmd.get(i).getArchivee()==0) {
+                        String hereCmd = allCmd.get(i).getHeure_Cmd().substring(11);
+                        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                        String dateCmd = dateFormat.format(allCmd.get(i).getDate_Cmd()).substring(0, 10);
+                        String dateHeureCmd = dateCmd + ' ' + hereCmd;
+                        Date dateToConvert = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(dateHeureCmd);
+                        long diff = ChronoUnit.DAYS.between(
+                                LocalDateTime.now(),
+                                dateToConvert.toInstant()
+                                        .atZone(ZoneId.systemDefault())
+                        );
 
-                    String hereCmd = allCmd.get(i).getHeure_Cmd().substring(11);
-                    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-                    String dateCmd = dateFormat.format(allCmd.get(i).getDate_Cmd()).substring(0,10);
-                    String dateHeureCmd = dateCmd+' '+hereCmd ;
-                    Date dateToConvert=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(dateHeureCmd);
-
-                    long diff = ChronoUnit.DAYS.between(
-                            LocalDateTime.now(),
-                            dateToConvert.toInstant()
-                                    .atZone(ZoneId.systemDefault())
-                    );
-
-                    if(Math.abs(diff)>=10&&allCmd.get(i).getArchivee()==0&&allCmd.get(i).getNumCde()!=9999)
-                        this.commandeRepository.archiverCmdUpd(allCmd.get(i).getNumCde(),dateHeurCmd("yyyy-MM-dd hh:mm:ss"));
+                        if (Math.abs(diff) >= 10)
+                            this.commandeRepository.archiverCmdUpd(allCmd.get(i).getNumCde(), dateHeurCmd("yyyy-MM-dd hh:mm:ss"));
+                    }
                 }
             }catch(Exception e){
                 throw new ApiRequestException(""+e);

@@ -22,11 +22,11 @@ public class ApiExceptionHandler {
         return new ResponseEntity<>(apiException, badRequest);
     }
 
-    /*@ExceptionHandler(Exception.class)
+    @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiException> handleException(Exception exception)
     {
         return new ResponseEntity<>(new ApiException("Internal Server Error",HttpStatus.INTERNAL_SERVER_ERROR ,null),HttpStatus.INTERNAL_SERVER_ERROR);
-    }*/
+    }
 }
 
 

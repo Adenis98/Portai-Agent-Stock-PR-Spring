@@ -37,7 +37,7 @@ public class MyUserDetails implements UserDetails {
             myRole ="RESPONSABLE" ;
         else
             myRole ="ADMIN" ;
-        System.out.println("myrole : "+myRole+" permission : "+this.permis+" username : "+this.userName);
+        //System.out.println("myrole : "+myRole+" permission : "+this.permis+" username : "+this.userName);
         list.add(new SimpleGrantedAuthority(myRole));
         if(myRole.equals("AGENT")||myRole.equals("RESPONSABLE"))
             list.add(new SimpleGrantedAuthority("AGENT_RESPONSABLE"));

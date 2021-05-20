@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +30,7 @@ public class CompteController {
 
     private final ServletContext servletContext;
 
-
+    @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(path = "/ajout",method = RequestMethod.POST)
     public User ajouterCompte(@RequestBody User user)
     {
@@ -42,6 +43,7 @@ public class CompteController {
     }
 
    //UPDATE retourne null si le user n'existe pas
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping("/maj/{id}")
     public User majCompte(@RequestBody User user, @PathVariable int id){
         try{
@@ -52,6 +54,7 @@ public class CompteController {
 
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping(path="/supprimer/{id}")
     public boolean suppCompte(@PathVariable int id)
     {
@@ -59,6 +62,7 @@ public class CompteController {
     }
 
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping(path="/avoirTout/{admin}")
     public List<User> getall(@PathVariable int admin){
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

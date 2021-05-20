@@ -5,6 +5,7 @@ import com.orbit.portailAgentStockPR.interAgent.service.GetAllAgentsStockService
 import com.orbit.portailAgentStockPR.utilisateur.models.MyUserDetails;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +22,7 @@ public class InterAgentController {
 
     private final GetAllAgentsStockService getAllAgentsStockService ;
 
+    @PreAuthorize("hasAuthority('AGENT_RESPONSABLE')")
     @GetMapping("/getAllAgentsStock")
     public List<GetAllAgentsStockResponse> getAgentsStock()
     {

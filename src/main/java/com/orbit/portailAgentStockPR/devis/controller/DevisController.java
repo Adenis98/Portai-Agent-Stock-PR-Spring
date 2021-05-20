@@ -5,6 +5,7 @@ import com.orbit.portailAgentStockPR.devis.models.*;
 import com.orbit.portailAgentStockPR.devis.service.DevisService;
 import com.orbit.portailAgentStockPR.utilisateur.models.MyUserDetails;
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +13,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
+@PreAuthorize("hasAuthority('AGENT_RESPONSABLE')")
 @RequestMapping("/devis")
 @AllArgsConstructor
 public class DevisController {

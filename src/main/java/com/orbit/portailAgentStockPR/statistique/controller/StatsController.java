@@ -5,11 +5,13 @@ import com.orbit.portailAgentStockPR.statistique.models.Stat3Resp;
 import com.orbit.portailAgentStockPR.statistique.service.StatsService;
 import com.orbit.portailAgentStockPR.utilisateur.models.MyUserDetails;
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
+@PreAuthorize("hasAuthority('AGENT_RESPONSABLE')")
 @RequestMapping("/stat")
 @CrossOrigin
 public class StatsController {

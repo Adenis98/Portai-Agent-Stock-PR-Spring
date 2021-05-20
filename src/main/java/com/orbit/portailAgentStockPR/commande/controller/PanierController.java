@@ -7,12 +7,16 @@ import com.orbit.portailAgentStockPR.commande.models.LignePanierResponse;
 import com.orbit.portailAgentStockPR.commande.service.PanierService;
 import com.orbit.portailAgentStockPR.utilisateur.models.MyUserDetails;
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
+
 @CrossOrigin
 @RestController
+@PreAuthorize("hasAuthority('AGENT_RESPONSABLE')")
 @RequestMapping(path="/panier")
 @AllArgsConstructor
 public class PanierController {

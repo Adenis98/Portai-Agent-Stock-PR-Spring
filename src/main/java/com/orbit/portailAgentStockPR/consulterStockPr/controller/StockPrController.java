@@ -9,6 +9,7 @@ import com.orbit.portailAgentStockPR.utilisateur.models.MyUserDetails;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +17,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
+@PreAuthorize("hasAuthority('AGENT_RESPONSABLE')")
 @RequestMapping(path="/ListeStockAgent")
 @AllArgsConstructor
 public class StockPrController {

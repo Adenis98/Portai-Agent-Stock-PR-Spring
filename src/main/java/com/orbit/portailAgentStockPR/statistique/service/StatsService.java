@@ -53,6 +53,7 @@ public class StatsService {
     /***************************************  Radar Stat   ****************************************/
     public Stat3Resp stat3(int dNbr ) {
         try{
+
             List<Commande> allCmd = commandeRepository.findAll();
             int enrg = 0 ,liv=0  , fact=0;
             for(int i = 0 ; i< allCmd.size() ; i++ ){

@@ -27,7 +27,7 @@ public class MyUserDetailsService implements UserDetailsService {
             User user = new User();
             user.setUserName("admin");
             user.setPassword(passwordEncoder.encode("1234"));
-            user.setPermis(4);
+            user.setPermis(3);
             user.setDealer_Number(95);
             return new MyUserDetails(user);
         }

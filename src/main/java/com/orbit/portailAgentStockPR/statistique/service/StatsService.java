@@ -1,7 +1,9 @@
 package com.orbit.portailAgentStockPR.statistique.service;
 
 import com.orbit.portailAgentStockPR.commande.models.Commande;
+import com.orbit.portailAgentStockPR.commande.models.LigneCommande;
 import com.orbit.portailAgentStockPR.commande.service.CommandeRepository;
+import com.orbit.portailAgentStockPR.commande.service.LigneCommandeRepository;
 import com.orbit.portailAgentStockPR.exception.ApiRequestException;
 import com.orbit.portailAgentStockPR.statistique.models.Stat1Resp;
 import com.orbit.portailAgentStockPR.statistique.models.Stat2Resp;
@@ -11,6 +13,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,6 +21,8 @@ public class StatsService {
 
     @Autowired
     CommandeRepository commandeRepository ;
+    @Autowired
+    LigneCommandeRepository ligneCommandeRepository ;
 
     /***************************************  Ring Stat   ****************************************/
     public Stat1Resp stat1(int dNbr ) {
@@ -72,14 +77,49 @@ public class StatsService {
         }
     }
     /***************************************  Bar Stat top5Art   ****************************************/
-    public Stat4Resp stat4(int dNbr ) {
+    private int  maxOccurence(List<Integer> occurences){
+        int max = occurences.get(0);
+        int maxIndex = 0 ;
+        for(int i = 0 ; i< occurences.size();i++){
+            if(occurences.get(i)>max)
+            {
+                max = occurences.get(i);
+                maxIndex =i ;
+            }
+        }
+        return maxIndex ;
+    }
+    public List<Stat4Resp> stat4(int dNbr ) {
         try{
-            List<Commande> allCmd = commandeRepository.findAll();
-
-            return new Stat4Resp();
-
+            List<LigneCommande> allLigneCmd = ligneCommandeRepository.findAll();
+            List<Integer> occurences = new ArrayList<>();
+            int occ =0;
+            System.out.println("taille : "+allLigneCmd.size());
+            for(int i=0 ; i< allLigneCmd.size();i++){
+                occ = 1 ;
+                for(int j=i+1;j<allLigneCmd.size();j++){
+                    String firstCodArt = allLigneCmd.get(i).getCodeArt() ;
+                    if(allLigneCmd.get(j).getCodeArt().equals(firstCodArt)){
+                        occ++;
+                        allLigneCmd.remove(allLigneCmd.get(j));
+                        j--;
+                    }
+                }
+                occurences.add(occ);
+            }
+            List<Stat4Resp> top5LigneCmd = new ArrayList<>();
+            for(int i = 1 ; i<=5;i++)
+            {
+                int maxIndex = maxOccurence(occurences);
+                top5LigneCmd.add(new Stat4Resp(allLigneCmd.get(maxIndex).getCodeArt(),occurences.get(maxIndex)));
+                occurences.remove(maxIndex);
+                allLigneCmd.remove(maxIndex);
+            }
+            System.out.println("taille : "+allLigneCmd.size());
+            return top5LigneCmd;
         }catch(Exception e)
         {
+            System.out.println(e.getMessage()+"<= message");
             throw new ApiRequestException(e.getMessage());
         }
     }

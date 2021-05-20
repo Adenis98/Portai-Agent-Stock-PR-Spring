@@ -24,6 +24,8 @@ public class DevisController {
     @PostMapping("/ajouterLigneDevis")
     public AjouterDevisResponse ajouterLigneDevis(@RequestBody AjouterDevisRequest req)
     {
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        req.setDealerNbr(userDetails.getDealerNumber());
         return devisService.ajouterDevis(req);
     }
 

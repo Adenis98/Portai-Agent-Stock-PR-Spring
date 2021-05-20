@@ -25,6 +25,8 @@ public class CommandeController {
     @PostMapping("/passer")
     public int  passerCommande(@RequestBody PasserCommandeRequest req)
     {
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        req.setDealerNumber(userDetails.getDealerNumber());
         return commandeService.passerCommande(req);
     }
 

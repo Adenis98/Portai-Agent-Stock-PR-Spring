@@ -71,12 +71,6 @@ public class CompteController {
     }
 
 
-  /*  @PostMapping(path="/majPhoto/{id}")
-    public boolean majPhoto(@RequestBody String photo,@PathVariable int id)
-    {
-        return compteService.majPhoto(id, photo);
-    }*/
-
     @PostMapping(path="/majPhoto/{userName}")
     public String uploadImage(@RequestBody String photo,@PathVariable String userName)
     {

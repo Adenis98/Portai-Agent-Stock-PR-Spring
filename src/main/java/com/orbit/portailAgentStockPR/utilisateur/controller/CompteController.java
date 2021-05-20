@@ -36,7 +36,7 @@ public class CompteController {
     {
         try{
             MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            if(userDetails.getPermis()==4)
+            if(userDetails.getPermis()==3)
                 user.setDealer_Number(userDetails.getDealerNumber());
             return compteService.save(user);
         }catch(Exception e){

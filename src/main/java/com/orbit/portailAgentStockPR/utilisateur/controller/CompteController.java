@@ -35,6 +35,9 @@ public class CompteController {
     public User ajouterCompte(@RequestBody User user)
     {
         try{
+            MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            if(userDetails.getPermis()==4)
+                user.setDealer_Number(userDetails.getDealerNumber());
             return compteService.save(user);
         }catch(Exception e){
             throw new ApiRequestException(e.getMessage());

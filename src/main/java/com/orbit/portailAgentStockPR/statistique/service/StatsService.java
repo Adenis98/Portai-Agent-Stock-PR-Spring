@@ -108,7 +108,11 @@ public class StatsService {
                 occurences.add(occ);
             }
             List<Stat4Resp> top5LigneCmd = new ArrayList<>();
-            for(int i = 1 ; i<=5;i++)
+            System.out.println("taille : "+allLigneCmd.size());
+            int nbPiece=5;
+            if(allLigneCmd.size()<5)
+                nbPiece=allLigneCmd.size();
+            for(int i = 1 ; i<=nbPiece;i++)
             {
                 int maxIndex = maxOccurence(occurences);
                 top5LigneCmd.add(new Stat4Resp(allLigneCmd.get(maxIndex).getCodeArt(),occurences.get(maxIndex)));

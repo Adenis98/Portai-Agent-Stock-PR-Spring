@@ -47,7 +47,7 @@ public class StatsService {
     public Stat2Resp stat2(int dNbr ) {
         try{
             List<Commande> allCmd = commandeRepository.findAll();
-
+            System.out.println(""+allCmd.get(0).getDate_Cmd().getMonth());
             return new Stat2Resp();
 
         }catch(Exception e)

@@ -13,6 +13,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,9 +49,31 @@ public class StatsService {
     public Stat2Resp stat2(int dNbr ) {
         try{
             List<Commande> allCmd = commandeRepository.findAll();
-            System.out.println(""+allCmd.get(0).getDate_Cmd().getMonth());
-            return new Stat2Resp();
+            for(int i = 0 ; i< allCmd.size(); i ++){
+                if(allCmd.get(i).getDealer_Number().getLdbDealerNumber() != dNbr){
+                    allCmd.remove(i);
+                    i--;
+                }
+            }
+            List<Integer> dataCmdFerme = new ArrayList<>();
+            List<Integer> dataCmdStock = new ArrayList<>();
+            int numCmdFerme = 0  ;
+            int numCmdStock = 0 ;
+            for(int i = 0 ; i< 12 ; i++){
+                numCmdFerme = 0;
+                numCmdStock = 0 ;
+                for(int j = 0 ; j< allCmd.size() ; j++){
+                    if(allCmd.get(j).getNumCde()!=9999&&allCmd.get(j).getDate_Cmd().getMonth()==i&&allCmd.get(j).getType_Cmd()==1){
+                        numCmdFerme++;
+                    }else if(allCmd.get(j).getNumCde()!=9999&&allCmd.get(j).getDate_Cmd().getMonth()==i&&allCmd.get(j).getType_Cmd()==0){
+                        numCmdStock++;
+                    }
+                }
+                dataCmdFerme.add(numCmdFerme);
+                dataCmdStock.add(numCmdStock);
+            }
 
+            return new Stat2Resp(dataCmdFerme,dataCmdStock);
         }catch(Exception e)
         {
             throw new ApiRequestException(e.getMessage());
@@ -92,6 +116,14 @@ public class StatsService {
     public List<Stat4Resp> stat4(int dNbr ) {
         try{
             List<LigneCommande> allLigneCmd = ligneCommandeRepository.findAll();
+            System.out.println("taille : "+allLigneCmd.size());
+            for(int i = 0 ; i< allLigneCmd.size(); i ++){
+                if(allLigneCmd.get(i).getNumCmnd().getDealer_Number().getLdbDealerNumber() != dNbr){
+                    allLigneCmd.remove(i);
+                    i--;
+                }
+
+            }
             List<Integer> occurences = new ArrayList<>();
             int occ =0;
             System.out.println("taille : "+allLigneCmd.size());
@@ -112,8 +144,7 @@ public class StatsService {
             int nbPiece=5;
             if(allLigneCmd.size()<5)
                 nbPiece=allLigneCmd.size();
-            for(int i = 1 ; i<=nbPiece;i++)
-            {
+            for(int i = 1 ; i<=nbPiece;i++){
                 int maxIndex = maxOccurence(occurences);
                 top5LigneCmd.add(new Stat4Resp(allLigneCmd.get(maxIndex).getCodeArt(),occurences.get(maxIndex)));
                 occurences.remove(maxIndex);

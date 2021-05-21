@@ -2,6 +2,7 @@ package com.orbit.portailAgentStockPR.statistique.controller;
 
 import com.orbit.portailAgentStockPR.commande.models.LigneCommande;
 import com.orbit.portailAgentStockPR.statistique.models.Stat1Resp;
+import com.orbit.portailAgentStockPR.statistique.models.Stat2Resp;
 import com.orbit.portailAgentStockPR.statistique.models.Stat3Resp;
 import com.orbit.portailAgentStockPR.statistique.models.Stat4Resp;
 import com.orbit.portailAgentStockPR.statistique.service.StatsService;
@@ -29,9 +30,10 @@ public class StatsController {
         return this.statsService.stat1(dNbr);
     }
     @GetMapping("/AllCmdStockFermeMonth")
-    public void stat2( ) {
+    public Stat2Resp stat2( ) {
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         int dNbr = userDetails.getDealerNumber();
+        return this.statsService.stat2(dNbr);
     }
     @GetMapping("/CmdLivEnrgFact")
     public Stat3Resp stat3() {

@@ -48,4 +48,13 @@ public class DevisController {
     {
         return devisService.annulerDevis(nDevis);
     }
+
+
+    @PostMapping("/ajouterUnLigneDevis/{remise}/{numDevis}")
+    public int ajouterUnLigneDevis(@RequestBody LigneArticleRequest ligneArticleRequest, @PathVariable double remise, @PathVariable int numDevis)
+    {
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        int dNbr = userDetails.getDealerNumber();
+        return devisService.ajouterUnLigneDevis(dNbr,numDevis,remise,ligneArticleRequest);
+    }
 }

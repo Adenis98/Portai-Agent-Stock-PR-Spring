@@ -53,4 +53,16 @@ public interface DevisRepository extends JpaRepository<Devis, DevisId> {
             @Param("numDevis") int numDevis  ,
             @Param("date_Archivage") Date dateArchivage
     );
+
+    @Modifying
+    @Transactional
+    @Query( " UPDATE Devis d SET" +
+            " d.totHt = :totHt , d.totTtc= :totTtc ,d.toTaxes=:toTaxes  "+
+            " WHERE d.numDevis = :numDevis")
+    int ajouterAutreLigneDevis(
+            @Param("totHt") double totHt  ,
+            @Param("totTtc") double totTtc ,
+            @Param("toTaxes") double toTaxes ,
+            @Param("numDevis") Integer numDevis
+    );
 }

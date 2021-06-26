@@ -90,7 +90,7 @@ public class DevisService {
                         req.getToRemise() ,
                         artMast.getPu_agents() ,
                         art.getQte() ,
-                        artMast.getPu_agents() * art.getQte() ,
+                        artMast.getPu_agents() * art.getQte(),
                         devis.getNumDevis() ,
                         req.getDealerNbr()
                 );
@@ -220,6 +220,44 @@ public class DevisService {
             throw new ApiRequestException(""+e);
         }
     }
+    /*********************************** ajouter un ligne devis *****************************************/
+    public int ajouterUnLigneDevis(int dNbr,int numDevis,double remise , LigneArticleRequest ligneArticleRequest){
+        try{
+            int returnCode = 1 ;
+            ArtMasters artMast = artMastersRepository.getOne(ligneArticleRequest.getCodArt()) ;
+            List<LigneDevis> ligneDevis = this.ligneDevisRepository.findAll();
+            for(int i= 0 ; i<ligneDevis.size();i++){
+                if(ligneDevis.get(i).getCodeArt().equals(ligneArticleRequest.getCodArt()) &&
+                    ligneDevis.get(i).getNumDevis().getDealer_Number().getLdbDealerNumber()==dNbr &&
+                        ligneDevis.get(i).getNumDevis().getNumDevis() == numDevis)
+                    throw new ApiRequestException("Article existe dèja !! ");
+            }
+            returnCode*=this.ligneDevisRepository.insertLigneDevis(
+                    ligneArticleRequest.getCodArt() ,
+                    artMast.getLibelle(),
+                    remise ,
+                    artMast.getPu_agents() ,
+                    ligneArticleRequest.getQte() ,
+                    artMast.getPu_agents() * ligneArticleRequest.getQte() * (1-(remise/100)) ,
+                    numDevis ,
+                    dNbr
+            );
 
-
+            List<Devis> listDevis = this.devisRepository.findAll();
+            Devis monDevis =null ;
+            for(int i = 0 ; i< listDevis.size();i++){
+                if(listDevis.get(i).getNumDevis() == numDevis){
+                    monDevis = listDevis.get(i);
+                }
+            }
+            double qtePu= artMast.getPu_agents() * ligneArticleRequest.getQte();
+            double  ttc =monDevis.getTotTtc() + qtePu * (1-(remise/100)) * (1+(19 /100)),
+                    totTaxes=monDevis.getToTaxes()+qtePu * (1-(remise/100)) * (19 /100) ,
+                    totHt =monDevis.getTotHt() +  qtePu* (1-(remise/100));
+            returnCode*=this.devisRepository.ajouterAutreLigneDevis(totHt,ttc,totTaxes,numDevis);
+            return returnCode ;
+        }catch(Exception  exception ){
+            throw new ApiRequestException(""+exception);
+        }
+    }
 }

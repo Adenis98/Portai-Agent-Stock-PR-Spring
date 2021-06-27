@@ -253,8 +253,9 @@ public class DevisService {
             double qtePu= artMast.getPu_agents() * ligneArticleRequest.getQte();
             double  ttc =monDevis.getTotTtc() + qtePu * (1-(remise/100)) * (1+(19 /100)),
                     totTaxes=monDevis.getToTaxes()+qtePu * (1-(remise/100)) * (19 /100) ,
-                    totHt =monDevis.getTotHt() +  qtePu* (1-(remise/100));
-            returnCode*=this.devisRepository.ajouterAutreLigneDevis(totHt,ttc,totTaxes,numDevis);
+                    totHt =monDevis.getTotHt() +  qtePu* (1-(remise/100)),
+                    totRemise = monDevis.getToRemise() + remise;
+            returnCode*=this.devisRepository.ajouterAutreLigneDevis(totHt,ttc,totTaxes,numDevis,totRemise);
             return returnCode ;
         }catch(Exception  exception ){
             throw new ApiRequestException(""+exception);

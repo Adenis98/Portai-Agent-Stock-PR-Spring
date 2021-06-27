@@ -57,12 +57,13 @@ public interface DevisRepository extends JpaRepository<Devis, DevisId> {
     @Modifying
     @Transactional
     @Query( " UPDATE Devis d SET" +
-            " d.totHt = :totHt , d.totTtc= :totTtc ,d.toTaxes=:toTaxes  "+
+            " d.totHt = :totHt , d.totTtc= :totTtc ,d.toTaxes=:toTaxes  , d.toRemise = :totRemise "+
             " WHERE d.numDevis = :numDevis")
     int ajouterAutreLigneDevis(
             @Param("totHt") double totHt  ,
             @Param("totTtc") double totTtc ,
             @Param("toTaxes") double toTaxes ,
-            @Param("numDevis") Integer numDevis
+            @Param("numDevis") Integer numDevis,
+            @Param("totRemise") double totRemise
     );
 }
